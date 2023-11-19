@@ -14,7 +14,8 @@ def signUp():
         account = data['account']
         email = data['email']
         password = data['password']
-        hashed_password = generate_password_hash(password, method='sha256')
+        hashed_password = generate_password_hash(password, method='scrypt')
+        # hashed_password = generate_password_hash(password, method='sha256')
         databaseConnect("INSERT INTO member (account, email, password) VALUE (%s, %s, %s)",\
                         (account, email, hashed_password))
         return results_convert({'data':'success'})
@@ -31,7 +32,9 @@ def login():
         if memberInfo == []:
             return results_convert({'error':True,'message':"您尚未註冊會員"}), 400
         else:
-            if check_password_hash(memberInfo[0][1],password):
+            check = check_password_hash(memberInfo[0][1],password)
+            print(check)
+            if check:
                 baseInfor = databaseConnect("SELECT id,account,email,merchant_id,delever_id,record_id,cart_id FROM member WHERE email = %s",(email,))
                 filedict = {
                     "id":baseInfor[0][0],

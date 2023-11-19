@@ -16,7 +16,7 @@ shopCategory.addEventListener('click',()=>{
 })
 let storeLat;
 let storeLng;
-fileBTN.addEventListener('click',()=>{
+fileBTN.addEventListener('click',async()=>{
     let dishmenu = new Map();
     let formData = new FormData();
     let dishCat;
@@ -39,7 +39,6 @@ fileBTN.addEventListener('click',()=>{
             selectedDays.push(holiday[i].value);
         }
     }
-    console.log(memberEmail, )
     formData.append('holiday', selectedDays);
     const allElements = document.querySelectorAll('.newCat, .newDish');
     for(element of allElements){
@@ -71,7 +70,12 @@ fileBTN.addEventListener('click',()=>{
         formData.append(`photo${id}`,photo);
         id += 1;
     }
-    merchantSetUp(formData);
+    let sendReply = await merchantSetUp(formData);
+    if(sendReply.data){
+        id = parseInt(sendReply.merchant_id);
+        let url = `/store/${id}`;
+        window.location.href = url;
+    }
 })
 //建立地圖資訊
 initMap();
@@ -114,5 +118,5 @@ async function merchantSetUp(formData){
         }
     )
     let result = await store.json();
-    console.log(result);
+    return result;
 }

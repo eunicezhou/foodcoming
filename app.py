@@ -18,15 +18,16 @@ app.register_blueprint(auth_blueprint,url_prefix= '/api/auth')
 @app.route("/")
 def index():
 	return render_template("index.html")
-@app.route("/editStore")
-def Edit_Store():
-	return render_template("merchantPage.html")
+
+@app.route("/store/<int:id>")
+def Store(id):
+	merchantData = databaseConnect("SELECT * FROM merchant WHERE merchant_id = %s",(int,))
+	return render_template("merchantpage.html", data = merchantData)
+
 @app.route("/merchantSetup")
 def setup_Store():
 	return render_template("merchantfile.html")
-@app.route("/store/<id>")
-def store(id):
-	return render_template("store.html")
 
 
-app.run(debug=True, host="0.0.0.0", port=3000)
+
+app.run(debug=True, host="0.0.0.0", port=4400)
