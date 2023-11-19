@@ -6,6 +6,7 @@ config = {
     'password':'password',
     'host':'localhost',
     'database':'foodcoming',
+	'port':3306,
 }
 connection_pool = pooling.MySQLConnectionPool(pool_name='postgram',pool_size=5,**config)
 
