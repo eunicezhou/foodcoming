@@ -19,7 +19,7 @@ def signUp():
                         (account, email, hashed_password))
         return results_convert({'data':'success'})
     except Exception as err:
-        return results_convert({'error':True,'message':err})
+        return results_convert({'error':True,'message':str(err)})
     
 @auth_blueprint.route("/login",methods=['PUT'])
 def login():
@@ -45,7 +45,7 @@ def login():
             else:
                 return results_convert({'error':True,'message':"密碼錯誤"}), 403
     except Exception as err:
-        return results_convert({'error':True,'message':err}), 500
+        return results_convert({'error':True,'message':str(err)}), 500
     
 @auth_blueprint.route("/login",methods=['GET'])
 def idenify():
@@ -59,6 +59,6 @@ def idenify():
         else:
             return redirect("/")
     except Exception as err:
-        result = {"error": True,"message": err}
+        result = {"error": True,"message": str(err)}
         finalresult = results_convert(result)
         return finalresult,500

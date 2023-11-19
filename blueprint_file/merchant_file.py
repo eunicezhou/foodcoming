@@ -64,7 +64,7 @@ def setupStore():
             index += 1
         return results_convert({'data':'success'})
     except Exception as err:
-        return results_convert({'error':True,'message':err})
+        return results_convert({'error':True,'message':str(err)})
     
 def shopCategoryDecide(category_value):
     if category_value == "主食":
