@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block title %}FoodComing{% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="../static/css/base.css">
+<link rel="stylesheet" href="../static/css/text.css">
+<link rel="stylesheet" href="../static/css/index.css">
+{% endblock css %}
+{% block nav %}
+    <div class="title nav--left">
+        <img src="../static/image/logo.png" alt="Logo" class="logo">
+        <div class="tilte nav--title">
+            <h1>FOOD COMING</h1>
+            <h3>Mouth Open And Food Come</h3>
+        </div>
+    </div>
+    <div class="nav--location">
+        <label for="location" class="location-icon">
+            <input type="text" id="location" name="location" placeholder="請輸入外送目的地">
+            <img src="../static/image/search.png" alt="查詢" id="search">
+        </label>
+    </div>
+    <div class="nav--right">
+        <div class="purchase title">購物車</div>
+        <div class="member">
+            <span class="signup title">註冊/</span>
+            <span class="login title">登入</span>
+        </div>
+        <img src="../static/image/showMore.png" alt="看更多" id="lines">
+    </div>
+{% endblock nav %} 
+{% block content %}
+<section class="header">
+    <div class="category">
+        <div class="icon">
+            <img src="../static/image/shop_category/spaghetti.png" alt="主食">
+        </div>
+        <div class="catTitle">主食</div>
+    </div>
+    <div class="category">
+        <div class="icon">
+            <img src="../static/image/shop_category/BBQ.png" alt="燒烤/小吃">
+        </div>
+        <div class="catTitle">燒烤/小吃</div>
+    </div>
+    <div class="category">
+        <div class="icon">
+            <img src="../static/image/shop_category/vegan.png" alt="素食">
+        </div>
+        <div class="catTitle">素食</div>
+    </div>
+    <div class="category">
+        <div class="icon">
+            <img src="../static/image/shop_category/bubble-tea.png" alt="飲品">
+        </div>
+        <div class="catTitle">飲品</div>
+    </div>
+    <div class="category">
+        <div class="icon">
+            <img src="../static/image/shop_category/desert.png" alt="冰品/甜點">
+        </div>
+        <div class="catTitle">冰品/甜點</div>
+    </div>
+    <div class="category">
+        <div class="icon">
+            <img src="../static/image/shop_category/healthy_food.png" alt="健康餐盒">
+        </div>
+        <div class="catTitle">健康餐盒</div>
+    </div>
+    <div class="category">
+        <div class="icon">
+            <img src="../static/image/shop_categorY/breakfast.png" alt="早餐">
+        </div>
+        <div class="catTitle">早餐</div>
+    </div>
+    <div class="category">
+        <div class="icon">
+            <img src="../static/image/shop_category/bread.png" alt="麵包">
+        </div>
+        <div class="catTitle">麵包</div>
+    </div>
+    <div class="category">
+        <div class="icon">
+            <img src="../static/image/shop_category/grocery.png" alt="生鮮雜貨">
+        </div>
+        <div class="catTitle">生鮮雜貨</div>
+    </div>
+    <div class="category">
+        <div class="icon">
+            <img src="../static/image/shop_category/coffee.png" alt="咖啡廳">
+        </div>
+        <div class="catTitle">咖啡廳</div>
+    </div>
+</section>
+<section class="content">
+    <div class="content--header">
+    </div>
+    <div class="content--buttom">
+        <h1 class="bold storeNearby">您附近的熱門店家</h1>
+    </div>
+</section>
+{% endblock content %}
+
+{% block otherelement %}
+    <section class="sidebar">
+        <div class="shelder" style="flex-grow: 1;"></div>
+        <div class="sidebar--right">
+            <div class="sidebar--top">
+                <div class="fakeBTN signup">註冊</div>
+                <div class="fakeBTN login">登入</div>
+            </div>
+            <div class="sidebar--button">
+                <a href="/merchantSetup" class="sidebar--text">成為合作店家</a>
+                <div class="sidebar--text" id="deleverMember">成為外送夥伴</div>
+            </div>
+            <div class="sidebar--footer">
+                <img src="../static/image/logo.png" alt="logo" class="logo">
+                <div class="slogan">
+                    <div class="title">更多關於</div>   
+                    <div class="title">FOOD COMING</div>          
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="signUpForm">
+        <div class="shelder" style="width:100%"></div>
+        <div class="form">
+            <h1>註冊會員</h1>
+            <div class="formContent">
+                <input type="text" class="SignupAccount" placeholder="請輸入帳號">
+                <input type="email" class="SignupEmail" placeholder="請輸入信箱">
+                <input type="password" class="SignupPassword" placeholder="請輸入密碼">
+                <div class="alert"></div>
+                <div class="fakeBTN" id="SignUp">註冊會員</div>
+            </div>
+        </div>
+    </section>
+    <section class="signInForm">
+        <div class="shelder"style="width:100%"></div>
+        <div class="form">
+            <h1>請先登入會員</h1>
+            <div class="formContent">
+                <input type="email" class="LoginEmail" placeholder="請輸入會員信箱">
+                <input type="password" class="LoginPassword" placeholder="請輸入密碼">
+                <div class="alert"></div>
+                <div class="fakeBTN" id="SignIn">登入會員</div>
+            </div>
+        </div>
+    </section>
+{% endblock otherelement %}   
+{% block script %}
+    <script src="../static/javascript/model/fetchInfo.js"></script>
+    <script src="../static/javascript/view/member.js"></script>
+    <script src="../static/javascript/model/memberData.js"></script>
+    <script src="../static/javascript/control/confirmMember.js"></script>
+{% endblock script %}

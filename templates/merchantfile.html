@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block title %}merchant{% endblock title %}
+{% block css %}
+    <link rel="stylesheet" href="../static/css/text.css">
+    <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" href="../static/css/merchantfile.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"/>
+{% endblock css %}
+{% block nav %}
+    <div class="title">
+        <h1 class="title">FOOD COMING</h1>
+        <h3 class="title">for Merchants</h3>
+    </div>
+    <div class="member">
+        <img src="../static/image/memberHead.png" alt="登入會員">
+    </div>
+{% endblock nav %}
+{% block content %}
+<section class="contain">
+    <div class="contain--left">
+        <a href="#bossInfo" class="fileCat label">業主資訊</a>
+        <a href="#shopInfo" class="fileCat label">店家資訊</a>
+        <a href="#shopLocation" class="fileCat label">店家地址</a>
+        <a href="#openTime" class="fileCat label">店家營業時間</a>
+        <a href="#shopMenu" class="fileCat label">提供菜單</a>
+    </div> 
+    <div class="contain--right">
+        <h1 class="startStore"></h1>
+        <div id="bossInfo" class="titleBox no-topborder">
+            <div class="label">業主姓名</div>
+            <input type="text" class="realInput" id="bossname" placeholder="請輸入姓名">
+            <div class="label">業主電子郵件</div>
+            <input type="email" class="realInput" id="bossemail" placeholder="請輸入電子郵件">
+            <div class="label">業主連絡電話</div>
+            <input type="text" class="realInput" id="bossphone" placeholder="請輸入電話">
+        </div>
+        <div id="shopInfo" class="titleBox">
+            <div class="label">商家名稱</div>
+            <input type="text" id="shopname" class="realInput" placeholder="範例:香香早午餐">
+            <div id="inputShopPhoto" class="inputPhoto">
+                <div class="label" style="display:block;">商家圖片</div>
+                <div class="ShopPhotoUpload fileUpload" id="shopPhoto" onclick="document.getElementById('shopImg').click();">+</div>
+                <input type="file" id="shopImg" accept="image/*" style="display:none;">
+                <img id="previewShopImg" alt="Image Preview" style="display:none;">    
+            </div>
+            <div class="label">商家類型</div>
+            <div class="fakeCategoryChoice realInput" id="shopcategory">請選擇
+                <img src="../static/image/down.png" alt="選擇" style="width:20px;height:20px;">
+            </div>
+            <div class="categoryChoose">
+                <div>主食</div>
+                <div>燒烤/小吃</div>
+                <div>素食</div>
+                <div>飲品</div>
+                <div>冰品/甜點</div>
+                <div>健康餐盒</div>
+                <div>早餐</div>
+                <div>麵包</div>
+                <div>生鮮雜貨</div>
+                <div>咖啡廳</div>
+            </div>
+        </div>
+        <div id="shopLocation" class="titleBox">
+            <div class="label">商家地址</div>
+            <input id="address" class="realInput" placeholder="範例:台北市信義區">
+            <div id="map"></div>
+        </div>
+        <div id="openTime" class="titleBox">
+            <div class="label">Food Comming平台上營業時間</div>
+            <input type="time" id="startTime" name="startTime">
+            <span>到</span>
+            <input type="time" id="endTime" name="endTime"><br><br>
+            <div class="label">固定公休日</div>
+            <div class="chooseWeekDay">
+                <input type="checkbox" id="sunday" name="holiday" value="星期日">
+                <span>&nbsp;星期日</span>
+            </div>
+            <div class="chooseWeekDay">
+                <input type="checkbox" id="monday" name="holiday" value="星期一">
+                <span>&nbsp;星期一</span>
+            </div>
+            <div class="chooseWeekDay">
+                <input type="checkbox" id="tuesday" name="holiday" value="星期二">
+                <span>&nbsp;星期二</span>
+            </div>
+            <div class="chooseWeekDay">
+                <input type="checkbox" id="wednesday" name="holiday" value="星期三">
+                <span>&nbsp;星期三</span>
+            </div>
+            <div class="chooseWeekDay">
+                <input type="checkbox" id="thursday" name="holiday" value="星期四">
+                <span>&nbsp;星期四</span>
+            </div>
+            <div class="chooseWeekDay">
+                <input type="checkbox" id="friday" name="holiday" value="星期五">
+                <span>&nbsp;星期五</span>
+            </div>
+            <div class="chooseWeekDay">
+                <input type="checkbox" id="saturday" name="holiday" value="星期六">
+                <span>&nbsp;星期六</span>
+            </div>
+        </div>
+        <div id="shopMenu" class="titleBox">
+            <div id="shopMenuPackage">
+                <div style="margin:0 0 30px;" class="label">建立菜單</div>
+                <div class="inputItem">
+                    <div>+</div>
+                    <div class="fakefile CategoryInput">新增種類</div>
+                </div>
+                <div class="inputItem">
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;+</div>
+                    <div class="fakefile DishInput">新增項目</div>
+                </div>
+            </div> 
+            <div class="menubook--wrap">
+                <div class="book"></div>
+            </div>                  
+        </div> 
+        <div class="submitBTN">提交表單</div>
+    </div>
+</section>
+{% endblock content %}
+{% block script %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2sw2FO9nxUBiPPFC0ZDN8kqtdANk7sEQ&libraries=places&callback=initMap&region=TW&language=zh-TW">
+    </script>
+    <script src="../static/javascript/model/fetchInfo.js"></script>
+    <script src="../static/javascript/control/confirmMember.js"></script>
+    <script src="../static/javascript/view/maps.js"></script>
+    <script src="../static/javascript/view/menu.js"></script>
+    <script src="../static/javascript/model/merchantFile.js"></script>
+{% endblock script %}
