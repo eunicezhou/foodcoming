@@ -27,5 +27,12 @@ def databaseConnect(execute_str,execute_argument=None):
 	return result
 
 # category_name = ["主食","燒烤/小吃","素食","飲品","冰品/甜點","健康餐盒","早餐","麵包","生鮮雜貨","咖啡廳"]
-# for category in category_name:
-#     databaseConnect("INSERT INTO shop_category (category_name) VALUE (%s)",(category,))
+	# category_photo = ["../static/image/shop_category/spaghetti.png", "../static/image/shop_category/BBQ.png",
+	# 				"../static/image/shop_category/vegan.png", "../static/image/shop_category/bubble_tea.png",
+	# 				"../static/image/shop_category/desert.png", "../static/image/shop_category/healthy_food.png",
+	# 				"../static/image/shop_category/breakfast.png", "../static/image/shop_category/bread.png",
+	# 				"../static/image/shop_category/grocery.png", "../static/image/shop_category/coffee.png"]
+	# for category in category_name:
+	# 	icon = category_photo.pop(0)
+	# 	print(icon)
+	# 	databaseConnect("INSERT INTO shop_category (category_name, category_photo) VALUE (%s,%s)",(category,icon))

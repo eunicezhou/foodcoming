@@ -32,10 +32,10 @@
                     <img src="../static/image/pencil.png" alt="" class="edit" id="editShopName">
                 </div>
                 <div class="description">
-                    <img src="../static/image/shop_category/bread.png" alt="" class="shopCat">
+                    <img alt="" class="shopCat">
                     <div class="decriptionDiv">
                         <div class="category">
-                            {商店種類}
+                            <div class="categoryName"></div>
                             <img src="../static/image/pencil.png" alt="" class="edit" id="editShopCat">
                             <img src="../static/image/dot.png" alt="" style="width:24px;">
                             <div class="detail">詳細資訊</div>
@@ -52,7 +52,19 @@
 
                 </div>
                 <div class="content--right">
-                    
+                    <div class="className">{餐點種類}</div>
+                    <div class="itemClass">
+                        <div class="item">
+                            <div class="itemPhoto">
+                                <img alt="">
+                            </div>
+                            <div class="itemDetail">
+                                <div class="itemName">{餐點名稱}</div>
+                                <div class="itemDetail">{餐點說明}</div>
+                                <div class="price">{餐點價格}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="detailForm">
@@ -65,5 +77,7 @@
             </div>
         </section>
    </div> 
+   <script src="../static/javascript/model/fetchInfo.js"></script>
+   <script src="../static/javascript/view/store.js"></script>
 </body>
 </html>

@@ -15,7 +15,6 @@ def signUp():
         email = data['email']
         password = data['password']
         hashed_password = generate_password_hash(password, method='scrypt')
-        # hashed_password = generate_password_hash(password, method='sha256')
         databaseConnect("INSERT INTO member (account, email, password) VALUE (%s, %s, %s)",\
                         (account, email, hashed_password))
         return results_convert({'data':'success'})
