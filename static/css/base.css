@@ -28,6 +28,9 @@
     font-size: 1.4em;
     font-weight: 700;
 }
+.contain{
+    margin:30px 0;
+}
 .footer{
     background-color: var(--primary-color);
     color:#ffffff;
@@ -36,4 +39,5 @@
     justify-content: center;
     align-items: center;
     width:100%;
+    min-height: 150px;
 }
