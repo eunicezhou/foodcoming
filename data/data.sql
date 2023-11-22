@@ -34,7 +34,7 @@ CREATE TABLE `member` (
   PRIMARY KEY (`id`),
   KEY `merchant_id` (`merchant_id`),
   CONSTRAINT `member_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (1,'member1','member1@gmail.com','scrypt:32768:8:1$upSChadwbATsN83R$1dbe68e35a20f6e4490eae8bedc8ad146601bf4363f04a5f5952073009558ef1d1da44e90e39ea9982fe0b8ee36be6a986a1552a63b5b289aacf2f35c9a20518',1,NULL,NULL,NULL);
+INSERT INTO `member` VALUES (1,'member1','member1@gmail.com','scrypt:32768:8:1$upSChadwbATsN83R$1dbe68e35a20f6e4490eae8bedc8ad146601bf4363f04a5f5952073009558ef1d1da44e90e39ea9982fe0b8ee36be6a986a1552a63b5b289aacf2f35c9a20518',1,NULL,NULL,NULL),(2,'member2','member2@gmail.com','scrypt:32768:8:1$493Awy0uMJvBsDAm$1b070fe5d25a6734e97c8fdbabcd9f563ef93cd88c6b7ba79f0cdf6a80cd48b1a5052f56e6ea469bd56f6af9041d7882d96574f67422c9c83eddf4a77cda9d21',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,4 +149,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-20 18:33:27
+-- Dump completed on 2023-11-21  0:40:10

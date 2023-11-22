@@ -1,7 +1,7 @@
 .nav{
     background-color: var(--primary-color);
 }
-.memberHead>img{
+.member>img{
     width:60px;
 }
 .contain{

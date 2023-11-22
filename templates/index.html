@@ -15,7 +15,7 @@
     </div>
     <div class="nav--location">
         <label for="location" class="location-icon">
-            <input type="text" id="location" name="location" placeholder="請輸入外送目的地">
+            <input type="text" id="address" name="location" placeholder="請輸入外送目的地">
             <img src="../static/image/search.png" alt="查詢" id="search">
         </label>
     </div>
@@ -28,7 +28,15 @@
         <img src="../static/image/showMore.png" alt="看更多" id="lines">
     </div>
 {% endblock nav %} 
+
 {% block content %}
+<!-- <div class="mapShield"></div>
+<section class="searchPosition">
+    <div class="mapDiv">
+        <div id="map"></div>
+        <input type="text" id="location2" class="mapDiv-input" placeholder="請輸入地址">
+    </div>
+</section> -->
 <section class="header">
     <div class="category">
         <div class="icon">
@@ -92,10 +100,13 @@
     </div>
 </section>
 <section class="content">
-    <div class="content--header">
-    </div>
+    <!-- <div class="content--header">
+    </div> -->
     <div class="content--buttom">
         <h1 class="bold storeNearby">您附近的熱門店家</h1>
+        <div class="stores">
+            
+        </div>
     </div>
 </section>
 {% endblock content %}
@@ -110,7 +121,7 @@
             </div>
             <div class="sidebar--button">
                 <a href="/merchantSetup" class="sidebar--text">成為合作店家</a>
-                <div class="sidebar--text" id="deleverMember">成為外送夥伴</div>
+                <a href="/deleverSetup" class="sidebar--text">成為外送夥伴</a>
             </div>
             <div class="sidebar--footer">
                 <img src="../static/image/logo.png" alt="logo" class="logo">
@@ -148,6 +159,10 @@
     </section>
 {% endblock otherelement %}   
 {% block script %}
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2sw2FO9nxUBiPPFC0ZDN8kqtdANk7sEQ&libraries=places&callback=initMap&region=TW&language=zh-TW">
+    </script>
+    <script src="../static/javascript/view/maps.js"></script>
+    <script src="../static/javascript/model/memberLocation.js"></script>
     <script src="../static/javascript/model/fetchInfo.js"></script>
     <script src="../static/javascript/view/member.js"></script>
     <script src="../static/javascript/model/memberData.js"></script>

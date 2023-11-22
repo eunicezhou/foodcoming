@@ -83,32 +83,7 @@ document.getElementById('address').addEventListener('click',async()=>{
     let locateStore = await searchLocation();
     storeLat = locateStore.location.lat;
     storeLng = locateStore.location.lng;
-});
-function searchLocation() {
-    return new Promise((resolve) => {
-        const autocomplete = createAutocomplete();
-
-        autocomplete.addListener('place_changed', () => {
-            const place = autocomplete.getPlace();
-
-            if (place.geometry) {
-                const lat = place.geometry.location.lat();
-                const lng = place.geometry.location.lng();
-                const selectedRestaurant = {
-                    location: { lat: lat, lng: lng },
-                    placeId: place.place_id,
-                    name: place.name,
-                    address: place.formatted_address,
-                };
-
-                setMapCenterAndMarker(selectedRestaurant.location);
-                resolve(selectedRestaurant);
-            } else {
-                resolve(null); // 或者你可以根據實際需求拒絕 Promise
-            }
-        });
-    });
-}
+})
 
 // 將資料送到後端
 async function merchantSetUp(formData){

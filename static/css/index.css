@@ -12,7 +12,7 @@ position: absolute;
 top: 50%;
 transform: translateY(-50%);
 }
-#location{
+#address{
 width:250px;
 height:50px;
 box-sizing: border-box;
@@ -22,7 +22,7 @@ border-radius: 10px;
 background-color: var(--secondary-color);
 color:var(--forth-color);
 }
-#location::placeholder{
+#address::placeholder{
     color:var(--forth-color);
 }
 #search{
@@ -33,6 +33,49 @@ color:var(--forth-color);
 }
 .nav{
     background-color: var(--primary-color);
+}
+.searchPosition{
+    position:relative;
+}
+.mapShield{
+    width:100%;
+    min-height:100%;
+    margin:auto;
+    background-color: var(--primary-color);
+    opacity: 0.7;
+    z-index:10;
+    position:absolute;
+    top:0;
+    left:0;
+    display: none;
+}
+.searchPosition{
+    width:600px;
+    min-height:440px;
+    z-index:15;
+    margin: auto;
+    position:relative;
+    top:calc(100vh - 800px);
+    background-color: var(--forth-color);
+    display: none;
+    justify-content: center;
+}
+#map{
+    width:400px;
+    height:300px;
+    border-radius: 10px;
+    border:1px solid var(--secondary-color);
+    position: absolute;
+    margin: 30px auto;
+}
+.mapDiv-input{
+    position: relative;
+    top:355px;
+    width:400px;
+    height:50px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding-left: 10px;
 }
 .header{
     display: flex;
@@ -70,8 +113,7 @@ color:var(--forth-color);
     margin:0 auto;
 }
 .content--buttom{
-    width:1200px;
-    margin:0 auto;
+    margin:0 200px;
     box-sizing: border-box;
     padding:30px 10px;
 }
@@ -175,4 +217,31 @@ color:var(--forth-color);
 }
 .formContent .fakeBTN:hover{
     box-shadow: inset 2px 2px 5px rgba(0,0,0,0.4);
+}
+.stores{
+    margin: 30px auto;
+    display:flex;
+    flex-direction: row;
+    gap:30px;
+}
+.store{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--title-color);
+    box-sizing: border-box;
+    padding:10px;
+}
+.storePhoto{
+    width:400px;
+    height:300px;
+    background-color: var(--forth-color);
+}
+.shopImg{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+}
+.storeDetail{
+    display:flex;
+    flex-direction: column;
 }

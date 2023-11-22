@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}merchant{% endblock title %}
+{% block css %}
+    <link rel="stylesheet" href="../static/css/text.css">
+    <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" href="../static/css/deleverfile.css">
+{% endblock css %}
+{% block nav %}
+    <a href="/" class="title textDeUnderline">
+        <h1 class="title">FOOD COMING</h1>
+        <h3 class="title">for Delevers</h3>
+    </a>
+    <div class="member">
+        <img src="../static/image/memberHead.png" alt="登入會員">
+    </div>
+{% endblock nav %}
+{% block content %}
+<section class="contain">
+    <div class="personalInfo">
+        <div class="label">姓名</div>
+        <input type="text" class="realInput" id="name" placeholder="請輸入姓名">
+        <div class="label">電子郵件</div>
+        <input type="email" class="realInput" id="email" placeholder="請輸入電子郵件">
+        <div class="label">連絡電話</div>
+        <input type="text" class="realInput" id="phone" placeholder="請輸入電話">
+
+        <div class="label" style="display:block;">請上傳個人大頭照</div>
+        <div class="shot fileUpload" id="shot" onclick="document.getElementById('shot_Img').click();">+</div>
+        <input type="file" id="shot_Img" accept="image/*" style="display:none;">
+        <img id="preview_shot_Img" alt="Image Preview" style="display:none;">
+    </div>
+    <div class="uploadFile">
+        <div class="label" style="display:block;">請上傳身分證</div>
+        <div class="identity fileUpload" id="identityFront" onclick="document.getElementById('identity_FrontImg').click();">正面</div>
+        <input type="file" id="identity_FrontImg" accept="image/*" style="display:none;">
+        <img id="preview_identity_FrontImg" alt="Image Preview" style="display:none;">
+
+        <div class="identity fileUpload" id="identityBack" onclick="document.getElementById('identity_BackImg').click();">背面</div>
+        <input type="file" id="identity_BackImg" accept="image/*" style="display:none;">
+        <img id="preview_identity_BackImg" alt="Image Preview" style="display:none;">
+
+        <div class="label" style="display:block;">請上傳機車駕照</div>
+        <div class="licence fileUpload" id="licence" onclick="document.getElementById('licence_Img').click();">+</div>
+        <input type="file" id="licence_Img" accept="image/*" style="display:none;">
+        <img id="preview_licence_Img" alt="Image Preview" style="display:none;">
+
+        <div class="label" style="display:block;">請上傳機車行照</div>
+        <div class="travel_licence fileUpload" id="travel_licence" onclick="document.getElementById('travel_licenceImg').click();">+</div>
+        <input type="file" id="travel_licenceImg" accept="image/*" style="display:none;">
+        <img id="preview_travel_licenceImg" alt="Image Preview" style="display:none;">
+    </div>
+    <div class="submitBTN">提交表單</div>
+</section>
+{% endblock content %}
+
+{% block script %}
+    <script src="../static/javascript/control/previewPhoto.js"></script>
+    <script src="../static/javascript/view/deleverPhoto.js"></script>
+    <script src="../static/javascript/model/deleverData.js"></script>
+{% endblock script %}

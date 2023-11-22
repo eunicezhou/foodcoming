@@ -19,14 +19,17 @@ function getCurrentLocation(){
 }
 async function initMap(){
     try{
-        map = new google.maps.Map(document.getElementById('map'),
-        {center:{lat:23.553118,lng:121.0211024},
-        zoom:11,});
         currentPosition = await getCurrentLocation();
-        map.setCenter(currentPosition);
-        map.setZoom(16); //當獲取到當前位置後，希望將地圖放大顯示
+        if(document.getElementById('map')){
+            map = new google.maps.Map(document.getElementById('map'),
+            {center:{lat:23.553118,lng:121.0211024},
+            zoom:11,});
+            map.setCenter(currentPosition);
+            map.setZoom(16); //當獲取到當前位置後，希望將地圖放大顯示
+        }
+        return currentPosition;
     }catch(error){
-        console.error(error.message);
+       return error.message;
     }   
 }
 
@@ -34,7 +37,7 @@ function createAutocomplete() {
     return new google.maps.places.Autocomplete(
         document.getElementById('address'),
         {
-            types: ['geocode'],
+            types: ['geocode','establishment'],
             bounds: {
                 east: currentPosition.lng + 0.001,
                 west: currentPosition.lng - 0.001,
@@ -60,7 +63,32 @@ function setMapCenterAndMarker(location) {
     marker.setPosition(location);
 }
 
+function searchLocation(selectedRestaurant) {
+    return new Promise((resolve) => {
+        const autocomplete = createAutocomplete();
 
+        autocomplete.addListener('place_changed', () => {
+            const place = autocomplete.getPlace();
+
+            if (place.geometry) {
+                const lat = place.geometry.location.lat();
+                const lng = place.geometry.location.lng();
+                const selectedRestaurant = {
+                    location: { lat: lat, lng: lng },
+                    placeId: place.place_id,
+                    name: place.name,
+                    address: place.formatted_address,
+                };
+                if(document.querySelector('#map')){
+                    setMapCenterAndMarker(selectedRestaurant.location);
+                }
+                resolve(selectedRestaurant);
+            } else {
+                resolve(null); // 或者你可以根據實際需求拒絕 Promise
+            }
+        });
+    });
+}
 
 
 

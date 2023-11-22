@@ -23,14 +23,21 @@ def setupStore():
         shopCategoryValue = request.form['shopCategoryValue']
         category_id = shopCategoryDecide(shopCategoryValue)
         address = request.form['address']
+        country = address[:3]
+        keywords = ["區", "鄉", "鎮", "市"]
+        for word in keywords:
+            isWord = address.find(word)
+            if isWord > 0:
+                area = address[3:isWord+1]
+        print(area)
         lat = request.form['lat']
         lng = request.form['lng']
         startTime = request.form['startTime']
         endTime = request.form['endTime']
         holiday = request.form['holiday']
-        databaseConnect('INSERT INTO merchant (hostname, hostemail, phone, shopname, photo, shopaddress, lat, lng, start, end, holiday, category_id) \
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',\
-            (bossName, bossEmail, bossPhone, shopName, s3_shopPhotoUrl, address, lat, lng, startTime, endTime, holiday, category_id))
+        databaseConnect('INSERT INTO merchant (hostname, hostemail, phone, shopname, photo, shopaddress, lat, lng, start, end, holiday, category_id, country, area) \
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',\
+            (bossName, bossEmail, bossPhone, shopName, s3_shopPhotoUrl, address, lat, lng, startTime, endTime, holiday, category_id, country, area))
         merchant_id = databaseConnect("SELECT merchant_id FROM merchant \
                                 WHERE hostemail = %s AND phone = %s AND shopname = %s AND shopaddress = %s",(bossEmail, bossPhone, shopName, address))
         databaseConnect('UPDATE member SET merchant_id = %s WHERE email = %s',(merchant_id[0][0], memberEmail))
@@ -63,6 +70,7 @@ def setupStore():
                                 (merchant_id[0][0], dishCat, dish_name, describe, dish_photo, price, start, end))
             index += 1
         return results_convert({'data':'success','merchant_id':merchant_id})
+        return results_convert({'data':'success'})
     except Exception as err:
         return results_convert({'error':True,'message':str(err)})
     

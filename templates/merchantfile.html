@@ -4,13 +4,14 @@
     <link rel="stylesheet" href="../static/css/text.css">
     <link rel="stylesheet" href="../static/css/base.css">
     <link rel="stylesheet" href="../static/css/merchantfile.css">
+    <link rel="stylesheet" href="../static/css/file.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"/>
 {% endblock css %}
 {% block nav %}
-    <div class="title">
+    <a href="/" class="title textDeUnderline">
         <h1 class="title">FOOD COMING</h1>
         <h3 class="title">for Merchants</h3>
-    </div>
+    </a>
     <div class="member">
         <img src="../static/image/memberHead.png" alt="登入會員">
     </div>
@@ -126,6 +127,7 @@
     <script src="../static/javascript/model/fetchInfo.js"></script>
     <script src="../static/javascript/control/confirmMember.js"></script>
     <script src="../static/javascript/view/maps.js"></script>
+    <script src="../static/javascript/control/previewPhoto.js"></script>
     <script src="../static/javascript/view/menu.js"></script>
     <script src="../static/javascript/model/merchantFile.js"></script>
 {% endblock script %}
