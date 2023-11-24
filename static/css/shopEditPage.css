@@ -74,9 +74,14 @@
 .content--right{
     display:flex;
     flex-direction: column;
+    flex-grow: 1;
+    box-sizing: border-box;
+    padding-right: 200px;
 }
 .item{
     margin:20px;
+    box-sizing: border-box;
+    padding: 10px;
     border: 1px solid var(--secondary-color);
 }
 .className{
@@ -110,4 +115,7 @@
 .itemDetail{
     display:flex;
     flex-direction: column;
+}
+.itemName{
+    margin: 0;
 }

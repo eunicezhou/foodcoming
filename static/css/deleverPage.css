@@ -1,0 +1,39 @@
+.contain{
+    flex-grow: 1;
+    margin:30px 200px;
+}
+#map{
+    width:100%;
+    height:500px;
+}
+.nearbyBooking{
+    display: flex;
+    flex-direction: column;
+}
+.bookingList{
+    display:grid;
+    grid-template-columns: 2fr 1fr 3fr 1fr 1fr; 
+    grid-template-rows: 80px; 
+    justify-content: center;
+    align-items: center;
+}
+.bookingNumber, .store, .order, .destination, .accept{
+    margin: 0;
+    height: 80px;
+    box-sizing: border-box;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--secondary-color);
+}
+.order{
+    display: flex;
+    flex-direction: column;
+}
+.order div{
+    font-size: 1em;
+}
+.accept{
+    text-align: center;
+}
+.accept img{
+    width:30px;
+}

@@ -1,32 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        {% block head %}
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}{% endblock title %}</title>
-        {% block css %}{% endblock css %}
-        {% endblock head %}
-    </head>
-    <body>
-        <div class="wrapper">
-            <section class="nav">
-                {% block nav %}{% endblock nav %} 
-            </section>
-            {% block content %}
-            
-            {% endblock content %}
-            <section class="footer">
-                <div class="footer--text">
-                    Food Comming &copy 2023
-                </div>
-            </section>
-            {% block otherelement %}
-            
-            {% endblock otherelement %}
-        </div>
-        {% block script %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    {% block css %}
+    {% endblock css %}
+</head>
+<body>
+    <div class="wrapper">
+        <section class="nav">
+        {% block nav %}
         
-        {% endblock script %}
-    </body>
+        {% endblock nav %} 
+        </section>
+        {% block content %}
+        
+        {% endblock content %}
+        <section class="footer">
+            <div class="footer--text">
+                Food Comming &copy 2023
+            </div>
+        </section>
+        {% block otherelement %}
+        
+        {% endblock otherelement %}
+    </div>
+    {% block script %}
+    
+    {% endblock script %}
+</body>
 </html>

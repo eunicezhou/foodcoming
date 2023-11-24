@@ -22,8 +22,12 @@ h1{
     font-size:1.8em;
     font-weight:900;
 }
+h2{
+    font-size:1.5em;
+    font-weight:900;
+}
 h3{
-    font-size:1.1em;
+    font-size:1.2em;
     font-weight:600;
 }
 .bold{
@@ -32,8 +36,10 @@ h3{
     margin:5px 0;
 }
 .subtitle{
-    color:#777777;
-    margin:5px 0 20px;
+    color:var(--primary-color);
+    margin:5px 0px 20px;
+    font-size: 1.2em;
+    font-weight: 500;
 }
 .textdecoration{
     text-decoration: underline;

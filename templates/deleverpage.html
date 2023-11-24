@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}deleverPage{% endblock title %}
+{% block css %}
+    <link rel="stylesheet" href="../static/css/text.css">
+    <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" href="../static/css/deleverPage.css">
+{% endblock css %}
+{% block nav %}
+    <a href="/" class="title textDeUnderline">
+        <h1 class="title">FOOD COMING</h1>
+        <h3 class="title">for Delevers</h3>
+    </a>
+    <div class="member">
+        <img src="../static/image/memberHead.png" alt="登入會員">
+    </div>
+{% endblock nav %}
+{% block content %}
+<div class="contain">
+    <h1 class="bold">{delever}，您好</h1>
+    <div id="map"></div>
+    
+    <div class="nearbyBooking">
+        <h2 class="bold">附近訂單</h2>
+        <div class="bookingList">
+            <div class="bookingNumber label">訂單編號</div>
+            <div class="store label">取貨店家</div>
+            <div class="order label">訂單內容</div>
+            <div class="destination label">外送目的地</div>
+            <div class="accept label">是否接單</div>
+
+            <div class="bookingNumber label">8925966546879565</div>
+            <div class="store label">香香炸雞店</div>
+            <div class="order label">
+                <div>炸雞 1份</div>
+                <div>炸黑輪 1份</div>
+            </div>
+            <div class="destination label">
+                台南市北區市公所
+            </div>
+            <div class="accept label">
+                <img src="../static/image/icons8-square-50.png">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block script %}
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2sw2FO9nxUBiPPFC0ZDN8kqtdANk7sEQ&libraries=places&callback=initMap&region=TW&language=zh-TW">
+    </script>
+    <script src="../static/javascript/view/maps.js"></script>
+    <script src="../static/javascript/model/fetchInfo.js"></script>
+    <script src="../static/javascript/control/confirmMember.js"></script>
+    <script src="../static/javascript/view/bookList.js"></script>
+{% endblock script %}

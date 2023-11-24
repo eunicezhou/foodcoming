@@ -1,8 +1,10 @@
 from flask import *
+from urllib.parse import urlparse, parse_qs, unquote
 from datetime import datetime, timedelta
 from module.jsonify import *
 from module.database import *
 from module.countDistance import *
+from module.token import *
 import json
 
 store_blueprint = Blueprint('api_store',__name__,template_folder= 'api')
@@ -72,3 +74,38 @@ def search():
         data[f"data{id}"] = store_data_str
         id += 1
     return results_convert(data)
+
+@store_blueprint.route("/item",methods=['PUT'])
+def showItem():
+    query = request.get_json()['query']
+    # 解析 URL 中的 query string
+    parsed_url = urlparse(query)
+    query_params = parse_qs(parsed_url.query)
+
+    # 取得 "item" 參數的值，並進行 URL 解碼
+    encoded_item = query_params.get("item", [""])[0]
+    decoded_item = unquote(encoded_item)
+    store = query_params.get("store", [""])[0]
+    shopname = databaseConnect("SELECT shopname FROM merchant WHERE merchant_id = %s",(store,))
+    itemData = databaseConnect("SELECT * FROM menu WHERE merchant_id = %s AND dishname = %s",(store, decoded_item))
+    for item in itemData:
+        item_data_str = [str(data) for data in item]
+    return results_convert({'shop':shopname, 'data':item_data_str})
+
+@store_blueprint.route("/cart",methods=['PUT','DELETE','POST'])
+def purchase():
+    if request.method == "POST":
+        data = request.get_json()
+        email = data['email']
+        item = data['item']
+        piece = data['piece']
+        price = data['price']
+        merchant_id = data['shopID']
+        member_id = databaseConnect("SELECT id FROM member WHERE email = %s",(email,))
+        databaseConnect("INSERT INTO cart VALUES (%s, %s, %s, %s, %s)",(member_id[0][0], int(merchant_id), item, piece, price))
+        return results_convert({'data':'success'})
+    elif request.method == "PUT":
+        data = request.get_json()
+        id = data['id']
+        cartList = databaseConnect("SELECT * FROM cart WHERE member_id = %s",(id,))
+        return results_convert({'data':cartList})

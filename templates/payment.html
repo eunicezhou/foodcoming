@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}payment{% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="../static/css/base.css">
+<link rel="stylesheet" href="../static/css/text.css">
+<link rel="stylesheet" href="../static/css/payment.css">
+{% endblock css %}
+{% block nav %}
+<div class="title nav--left">
+    <img src="../static/image/logo.png" alt="Logo" class="logo">
+    <div class="tilte nav--title">
+        <h1>FOOD COMING</h1>
+        <h3>Order Page</h3>
+    </div>
+</div>
+<div class="nav--right">
+    <img src="../static/image/showMore.png" alt="看更多" id="lines">
+</div>
+{% endblock nav %}
+{% block content %}
+<section class="content">
+    <h2 class="bold order">訂單內容</h2>
+    <div class="order--content">
+        <div class="itemPict label">餐點照片</div>
+        <div class="itemname label">餐點名稱</div>
+        <div class="count label">餐點數量</div>
+        <div class="price label">餐點價格</div>
+        <div class="shopname label">店家名稱</div>
+    </div>
+    <div class="creditCardInfo">
+        <h2 class="title bold">信用卡付款資訊</h2>
+        <label for="creditCard" class="label tpfield">卡片號碼 :
+            <div id="card-number"></div>
+        </label><br>
+        <label for="expDate" class="label tpfield">到期日期 :
+            <div id="card-expiration-date"></div>
+        </label><br>
+        <label for="ccv" class="label tpfield">驗證密碼 :
+            <div id="card-ccv"></div>
+        </label>
+    </div>
+    <div class="main"></div>
+    <div class="content__div left">
+        <div class="summary" style="height: 100px;">
+            <h2 class="bold title">總價:<span id="total"></span></h2>
+            <div id="fakeButton" class="label">確認訂購並付款</div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+{% block script %}
+<script src="../static/javascript/model/fetchInfo.js"></script>
+<script src="../static/javascript/control/confirmMember.js"></script>
+<script src="https://js.tappaysdk.com/sdk/tpdirect/v5.15.1"></script>
+<!-- <script src="https://pay.google.com/gp/p/js/pay.js"></script> -->
+<script>
+    TPDirect.setupSDK('137075', 'app_txMHDecsEW8QxquSi1sB6C5x4mk8GysladlwC2UNcnR3K5caIoL7cDtzw9VB', 'sandbox');
+</script>
+<script src="../static/javascript/view/tappay.js"></script>
+{% endblock script %}

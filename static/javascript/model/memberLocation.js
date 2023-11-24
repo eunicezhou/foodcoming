@@ -56,7 +56,7 @@ function nearbyStore(nearByStoreResult){
     let shopDetail = document.createElement('div');
     let name = document.createElement('div');
     name.className = "name bold label";
-    name.textContent = `${nearByStoreResult[1]}`
+    name.textContent = `${nearByStoreResult[4]}`
     let deleverTime = document.createElement('div');
     deleverTime.className = "準備時間";
     shopDetail.appendChild(name);

@@ -1,71 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>shopPage</title>
-    <link rel="stylesheet" href="../static/css/base.css">
-    <link rel="stylesheet" href="../static/css/text.css">
-    <link rel="stylesheet" href="../static/css/shopEditPage.css">
-</head>
-<body>
-   <div class="wrap">
-        <section class="nav">
-            <div class="nav--logo">
-                <img src="../static/image/logo.png" alt="Logo" class="logo">
-                <a href="/" class="title  nav--title textDeUnderline">
-                    <h1>FOOD COMING</h1>
-                    <h3>Mouth Open And Food Come</h3>
-                </a>
+{% extends "groceryBase.html" %}
+{% block title %}shopPage{% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="../static/css/shopEditPage.css">
+{% endblock css %}
+
+{% block content %}
+<section class="header">
+    <img alt="" class="shopPhoto">
+    <img src="../static/image/pencil_bg.png" alt="" class="header--pencil edit" id="editShopPhoto">
+</section>
+<section class="contain">
+    <div class="contain--header">
+        <div class="shopname">
+            <span id="shopName" class="bold">{商店名稱}</span>
+            <img src="../static/image/pencil.png" alt="" class="edit" id="editShopName">
+        </div>
+        <div class="description">
+            <img alt="" class="shopCat">
+            <div class="decriptionDiv">
+                <div class="category">
+                    <div class="categoryName"></div>
+                    <img src="../static/image/pencil.png" alt="" class="edit" id="editShopCat">
+                    <img src="../static/image/dot.png" alt="" style="width:24px;">
+                    <div class="detail">詳細資訊</div>
+                </div>
+                <div class="prepareTime">
+                    <span id="editPrepareTime">{準備}</span><span>分鐘</span>
+                </div>
             </div>
-            <div class="title purchase">購物車</div>
+        </div>
+        
+    </div>
+    <div class="contain--content">
+        <div class="content--left">
+
+        </div>
+        <div class="content--right">
             
-        </section>
-        <section class="header">
-            <img alt="" class="shopPhoto">
-            <img src="../static/image/pencil_bg.png" alt="" class="header--pencil edit" id="editShopPhoto">
-        </section>
-        <section class="contain">
-            <div class="contain--header">
-                <div class="shopname">
-                    <span id="shopName" class="bold">{商店名稱}</span>
-                    <img src="../static/image/pencil.png" alt="" class="edit" id="editShopName">
-                </div>
-                <div class="description">
-                    <img alt="" class="shopCat">
-                    <div class="decriptionDiv">
-                        <div class="category">
-                            <div class="categoryName"></div>
-                            <img src="../static/image/pencil.png" alt="" class="edit" id="editShopCat">
-                            <img src="../static/image/dot.png" alt="" style="width:24px;">
-                            <div class="detail">詳細資訊</div>
-                        </div>
-                        <div class="prepareTime">
-                            <span id="editPrepareTime">{準備}</span><span>分鐘</span>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="contain--content">
-                <div class="content--left">
+        </div>
+    </div>
+    <div class="detailForm">
 
-                </div>
-                <div class="content--right">
-                    
-                </div>
-            </div>
-            <div class="detailForm">
-
-            </div>
-        </section>
-        <section class="footer">
-            <div class="footer--text">
-                Food Comming &copy 2023
-            </div>
-        </section>
-   </div> 
-   <script src="../static/javascript/model/fetchInfo.js"></script>
-   <script src="../static/javascript/view/store.js"></script>
-</body>
-</html>
+    </div>
+</section>     
+{% endblock content %}
+{% block script %}
+<script src="../static/javascript/view/store.js"></script> 
+{% endblock script %}   

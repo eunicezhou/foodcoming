@@ -70,7 +70,6 @@ def setupStore():
                                 (merchant_id[0][0], dishCat, dish_name, describe, dish_photo, price, start, end))
             index += 1
         return results_convert({'data':'success','merchant_id':merchant_id})
-        return results_convert({'data':'success'})
     except Exception as err:
         return results_convert({'error':True,'message':str(err)})
     

@@ -3,6 +3,7 @@ import jwt
 import json
 
 token_key = 'foodcoming_eunice'
+decode_algorithms = ['HS256']
 def encoding(filedict, token_key ,algorithm):
     encode_token = jwt.encode(filedict, token_key ,algorithm)
     return jsonify({"token":encode_token})

@@ -55,7 +55,6 @@ def idenify():
         token = request.headers.get('Authorization')
         if token:
             decode_token = token.split('Bearer ')
-            decode_algorithms = ['HS256']
             information = decoding(decode_token[1], token_key, decode_algorithms)
             return information
         else:

@@ -1,7 +1,7 @@
+let currentUrl = window.location.href;
+let modified_url = currentUrl.replace(/\/store.*/, '');
+let id = currentUrl.match(/\/store\/(\d+)/)[1];
 window.addEventListener('load', async()=>{
-    let currentUrl = window.location.href;
-    let modified_url = currentUrl.replace(/\/store.*/, '');
-    let id = currentUrl.match(/\/store\/(\d+)/)[1];
     let url = `${modified_url}/api/store`;
     let method = {
     method: "PUT",
@@ -52,7 +52,7 @@ window.addEventListener('load', async()=>{
                 let itemDetail = document.createElement('div');
 
                 let dishName = document.createElement('div');
-                dishName.className = "itemName";
+                dishName.className = "itemName label";
                 dishName.textContent = `${menuData[dish][2]}`;
                 itemDetail.appendChild(dishName);
 
@@ -73,4 +73,12 @@ window.addEventListener('load', async()=>{
             }
         }
     })
+    document.querySelectorAll('.item').forEach(item=>console.log(item));
+    document.querySelectorAll('.item').forEach(item=>item.addEventListener('click',()=>{
+        let grocery = item.querySelector('.itemName').innerHTML;
+        window.location.href = `/grocery?store=${id}&item=${grocery}`
+        })
+    )
 })
+
+    

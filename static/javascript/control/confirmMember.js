@@ -1,5 +1,6 @@
 let memberEmail;
-window.addEventListener('load', async()=>{
+let memberData = {};
+window.addEventListener('DOMContentLoaded', async()=>{
     let token = localStorage.getItem('token');
     if(token){
         let url = "/api/auth/login";
@@ -8,7 +9,10 @@ window.addEventListener('load', async()=>{
                     "Content-Type":"application/json",
                     "Authorization": `Bearer ${token}`
                 }}
-        let memberData = await authAPI(url,method);
+        memberData = await authAPI(url,method);
+        memberData['email'] = memberData.data.email;
+        memberData['id'] = memberData.data.id;
+        memberData['name'] = memberData.data.name;
         memberEmail = memberData.data.email;
         if(document.querySelector('.sidebar--top')){
             document.querySelector('.sidebar--top').innerHTML=`
