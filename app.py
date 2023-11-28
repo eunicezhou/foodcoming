@@ -1,4 +1,5 @@
 from flask import *
+from flask_socketio import SocketIO, emit
 from module.database import *
 from module.jsonify import *
 from blueprint_file.merchant_file import merchant_file_blueprint
@@ -9,6 +10,8 @@ from blueprint_file.order import order_blueprint
 import urllib.parse
 
 app=Flask(__name__)
+socketio = SocketIO(app,cors_allowed_origins="*")
+# socketio.init_app(app)
 app.secret_key = 'your_secret_key'
 
 #api
@@ -61,4 +64,49 @@ def Delever():
 def order():
 	return render_template("payment.html")
 
-app.run(debug=True, host="0.0.0.0", port=4400)
+@app.route("/paySuccess")
+def paySuccess():
+	order_id = request.args.get('order_id')
+	orderDetail = databaseConnect("SELECT new_order.merchant_id, merchant.shopname, merchant.shopaddress, merchant.lat, merchant.lng, new_order.item, new_order.piece FROM new_order \
+                INNER JOIN merchant ON new_order.merchant_id = merchant.merchant_id WHERE order_id = %s AND status = 'pending'",(order_id,))
+	orderItem = {}
+	for order in orderDetail:
+		orderItem[f"{order[5]}"]=f"{order[6]}"
+	order_info = {
+        'order_id': order_id,
+		'id':request.args.get('member_id'),
+        'name': request.args.get('name'),
+		'phone': request.args.get('phone'),
+		'shopname':orderDetail[0][1],
+		'shopaddress':orderDetail[0][2],
+		'shop_lat':orderDetail[0][3],
+		'shop_lng':orderDetail[0][4],
+		'destination': request.args.get('destination'),
+		'lat': request.args.get('lat'),
+		'lng':request.args.get('lng'),
+		'item':orderItem,
+		'pay':request.args.get('pay'),
+    }
+	return render_template("thankyou.html", data = order_info)
+
+@socketio.on('connect')
+def connect():
+	print("Delever connected!")
+
+@socketio.on('disconnect')
+def disconnect():
+	print("Delever disconnected!")
+
+@socketio.on('acquire_order')
+def accept_order(order_id):
+	print(order_id)
+	databaseConnect("UPDATE new_order SET status = 'accepted' WHERE order_id = %s",(order_id,))
+
+# @socketio.on('order_created')
+# def handle_order_created(order_info):
+# 	print(order_info)
+#     # 在這裡處理訂單建立事件
+# 	print('New order created:', order_info)
+# 	socketio.emit('send_order', results_convert(order_info))
+
+socketio.run(app, debug=True, host="0.0.0.0", port=4400)

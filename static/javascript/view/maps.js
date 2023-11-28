@@ -90,5 +90,25 @@ function searchLocation(selectedRestaurant) {
     });
 }
 
+function getRoad(){
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer();
+    const map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 7,
+      center: { lat: 41.85, lng: -87.65 }  // 起始地點的經緯度
+    });
+    directionsRenderer.setMap(map);
 
+    var request = {
+      origin: '台北市',  // 起始地點
+      destination: '高雄市',  // 目的地
+      travelMode: 'DRIVING'  // 交通方式，可選擇 DRIVING、WALKING、BICYCLING、TRANSIT 等
+    };
+
+    directionsService.route(request, function(response, status) {
+      if (status == 'OK') {
+        directionsRenderer.setDirections(response);
+      }
+    });
+}
 

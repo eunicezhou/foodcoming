@@ -19,7 +19,7 @@
 }
 .bookingNumber, .store, .order, .destination, .accept{
     margin: 0;
-    height: 80px;
+    height: 90px;
     box-sizing: border-box;
     padding: 10px 0;
     border-bottom: 1px solid var(--secondary-color);

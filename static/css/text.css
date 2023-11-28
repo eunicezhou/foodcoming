@@ -36,10 +36,10 @@ h3{
     margin:5px 0;
 }
 .subtitle{
-    color:var(--primary-color);
+    color:var(--secondary-color);
     margin:5px 0px 20px;
-    font-size: 1.2em;
-    font-weight: 500;
+    font-size: 1em;
+    font-weight: 600;
 }
 .textdecoration{
     text-decoration: underline;

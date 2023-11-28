@@ -1,4 +1,22 @@
+function refreshnfo(name, refreshName){
+    document.querySelector(name).style.display = 'none';
+    document.querySelector(refreshName).style.display = 'flex';
+}
+document.querySelector('.name').addEventListener('click',()=>{
+    refreshnfo('.name', '.refreshName');
+});
+document.querySelector('.phone').addEventListener('click',()=>{
+    refreshnfo('.phone', '.refreshPhone')
+});
+let selectPosition;
 window.addEventListener('load',async()=>{
+    document.querySelector('.name').innerHTML = `${memberData['data']['name']}`;
+    document.querySelector('.phone').innerHTML = `${memberData['data']['phone']}`;
+    let currentPosition = await initMap();
+    document.querySelector('#address').addEventListener('click',async()=>{
+        selectPosition = await searchLocation(currentPosition);
+        console.log(selectPosition);
+    })
     let method = {
         method: "PUT",
         headers:{
@@ -9,7 +27,7 @@ window.addEventListener('load',async()=>{
         })
     }
     let cartInfo = await authAPI("/api/order", method);
-    console.log(cartInfo);
+    let total = 0;
     for(let info of cartInfo['data']){
         let itemPict = document.createElement('div');
         itemPict.className = "itemPict label";
@@ -29,6 +47,8 @@ window.addEventListener('load',async()=>{
         price.className = "price subtitle";
         price.textContent = `\$${info[4]}元`;
 
+        total += parseInt(info[4]);
+
         let shopname = document.createElement('div');
         shopname.className = "shopname subtitle";
         shopname.textContent = `${info[1]}`
@@ -39,7 +59,10 @@ window.addEventListener('load',async()=>{
         document.querySelector('.order--content').appendChild(price);
         document.querySelector('.order--content').appendChild(shopname);
     }
+    document.querySelector('#total').textContent = `${total}`;
 })
+
+
 
 //設定銀行輸入資訊欄位
 const iframeFields= {
@@ -67,7 +90,8 @@ TPDirect.card.setup({
 })
 
 //獲取prime
-document.querySelector('#fakeButton').addEventListener('click', () => {
+document.querySelector('#fakeButton').addEventListener('click', ()=>{
+    console.log(selectPosition);
     // 取得 TapPay Fields 的 status
     const tappayStatus = TPDirect.card.getTappayFieldsStatus();
     console.log(tappayStatus);
@@ -81,20 +105,31 @@ document.querySelector('#fakeButton').addEventListener('click', () => {
     TPDirect.card.getPrime(async(result)=> { 
         const prime = result.card.prime;
         let whetherPay = await pay(prime);
-        console.log(whetherPay)
-        // let payment = whetherPay.data.payment.status;
-        // let orderID = whetherPay.data.number;
-        // if(payment===0){
-        //     window.location.href=`/thankyou?number=${orderID}`
-        // }else{
-        //     window.alert("付款未成功，請重新輸入資訊")
-        // }
+        let query = "";
+        for(let key in whetherPay){
+            query += `${key}=${whetherPay[key]}&`;
+            
+        }
+        console.log(query.slice(0,-1));
+
+        window.location.href = `/paySuccess?${query.slice(0,-1)}`
     })
 })
 
 async function pay(prime){
     try{
-        console.log(memberData);
+        let name;
+        if(document.querySelector('.name').style.display !== "none"){
+            name = document.querySelector('.name').textContent;
+        }else{
+            name = document.querySelector('.refreshName').value;
+        }
+        let phone;
+        if(document.querySelector('.phone').style.display !== "none"){
+            phone = document.querySelector('.phone').textContent;
+        }else{
+            phone = document.querySelector('.refreshPhone').value;
+        }
         let method = {
             method: 'POST',
             headers:{
@@ -102,19 +137,19 @@ async function pay(prime){
             },
             body:JSON.stringify({
                 "prime":prime,
-                "order": {
-                    "price": document.querySelector('#total'),
-                    "contact": {
-                    "id":memberData['data']['id'],
-                    "name": memberData['data']['name'], 
-                    "email": memberData['data']['email'], 
-                    }
-                }
+                "id":memberData['data']['id'],
+                "name":name,
+                "email":memberData['data']['email'],
+                "phone":phone,
+                "address":selectPosition.address,
+                "lat":selectPosition.location.lat,
+                "lng":selectPosition.location.lng,
+                'pay':document.querySelector('#total').textContent
             })
         }
-        let order = await authAPI('/api/orders', method)
+        let order = await authAPI('/api/order', method);
         return order;
-    }catch {
-        console.log("error");
+    }catch(error){
+        console.error(error);
     }
 }

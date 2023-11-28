@@ -34,11 +34,12 @@ def login():
             check = check_password_hash(memberInfo[0][1],password)
             print(check)
             if check:
-                baseInfor = databaseConnect("SELECT id,account,email,merchant_id,delever_id,record_id,cart_id FROM member WHERE email = %s",(email,))
+                baseInfor = databaseConnect("SELECT id,account,email,phone,merchant_id,delever_id,record_id,cart_id FROM member WHERE email = %s",(email,))
                 filedict = {
                     "id":baseInfor[0][0],
                     "name":baseInfor[0][1],
                     "email":baseInfor[0][2],
+                    "phone":baseInfor[0][3],
                     "exp":datetime.utcnow()+timedelta(days=7)
                 }
                 token_algorithm = 'HS256'

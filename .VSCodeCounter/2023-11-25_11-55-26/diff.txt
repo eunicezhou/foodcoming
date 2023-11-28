@@ -1,0 +1,38 @@
+Date : 2023-11-25 11:55:26
+Directory : c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming
+Total : 5 files,  60 codes, -6 comments, 7 blanks, all 61 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |          1 |         36 |         -6 |          6 |         36 |
+| Python     |          1 |         24 |          0 |          1 |         25 |
+| CSS        |          1 |          5 |          0 |          0 |          5 |
+| HTML       |          2 |         -5 |          0 |          0 |         -5 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                    | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                       |          5 |         60 |         -6 |          7 |         61 |
+| blueprint_file                                                                          |          1 |         24 |          0 |          1 |         25 |
+| static                                                                                  |          2 |         41 |         -6 |          6 |         41 |
+| static\css                                                                              |          1 |          5 |          0 |          0 |          5 |
+| static\javascript                                                                       |          1 |         36 |         -6 |          6 |         36 |
+| static\javascript\view                                                                  |          1 |         36 |         -6 |          6 |         36 |
+| templates                                                                               |          2 |         -5 |          0 |          0 |         -5 |
++-----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                | language   | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\blueprint_file\order.py          | Python     |         24 |          0 |          1 |         25 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\css\payment.css           | CSS        |          5 |          0 |          0 |          5 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\tappay.js | JavaScript |         36 |         -6 |          6 |         36 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\payment.html           | HTML       |         -7 |          0 |          0 |         -7 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\thankyou.html          | HTML       |          2 |          0 |          0 |          2 |
+| Total                                                                                   |            |         60 |         -6 |          7 |         61 |
++-----------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
