@@ -109,6 +109,37 @@ def joinRoom(data):
 	member = data['name']
 	join_room(room)
 	socketio.emit('message', f'{member} have joined the room: {room}',room=room)
+	
+@socketio.on('complete-order')
+def completeOrder(data):
+	room = data['room']
+	message = data['message']
+	databaseConnect("UPDATE new_order SET status = 'delivered' WHERE order_id = %s",(room,))
+	socketio.emit('message', message, room=room)
+
+@socketio.on('deliver-cancel')
+def deliverCancel(data):
+	room = data['room']
+	message = data['message']
+	databaseConnect("UPDATE new_order SET status = 'pending' WHERE order_id = %s",(room,))
+	socketio.emit('message', message, room=room)
+
+@socketio.on('consumer-cancel')
+def consumerCancel(data):
+	room = data['room']
+	member = data['member']
+	databaseConnect("UPDATE new_order SET status = 'canceled' WHERE order_id = %s",(room,))
+	socketio.emit('message', f'{member} had canceled the order', room=room)
+
+@socketio.on('leaveRoom')
+def leave_room_handler(data):
+	room = data['room']
+	member = data['name']
+	leave_room(room)
+	if data.get('reason'):
+		socketio.emit('order-cancel', f'{member} had left the {room}', room=room)
+	else:
+		socketio.emit('order-arrived', f'{member} had left the {room}', room=room)
 
 @socketio.on('update-order')
 def updateOrder(data):

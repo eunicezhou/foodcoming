@@ -71,6 +71,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
             document.querySelectorAll(`.${itemNum}`).forEach(itemDetail=>{
                 if(itemDetail.classList.contains('bookingNumber')){
                     let order_id = itemDetail.textContent;
+                    localStorage.setItem('orderId', order_id);
                     socket.emit('acquire_order', order_id);
                     socket.emit('joinRoom', {'room':order_id, 'name': memberData['name']});
                     socket.on('message',(reply)=>{
@@ -134,5 +135,47 @@ function countTime(currentPosition) {
 }
 
 document.querySelector('.finishBTN').addEventListener('click',()=>{
-    
+    let finishform = document.querySelector('.finish');
+    finishform.style.display = "block";
+    finishform.querySelector('.shelder').addEventListener('click',()=>{
+        finishform.style.display = "none";
+    })
+    finishform.querySelector('.yes').addEventListener('click',()=>{
+        let room = localStorage.getItem('orderId');
+        let message = '外送員已將餐點送至指定地點';
+        socket.emit('complete-order', {'room':room, 'message':message});
+        socket.emit('leaveRoom',{'room':room, 'name':memberData['name']})
+        localStorage.removeItem('orderId');
+        setTimeout(()=>{
+            location.reload();
+        },500)
+    })
+    finishform.querySelector('.no').addEventListener('click',()=>{
+        finishform.style.display = "none";
+    })
+})
+
+document.querySelector('.cancelBTN').addEventListener('click',()=>{
+    let cancelform = document.querySelector('.cancel');
+    cancelform.style.display = "block";
+    cancelform.querySelector('.shelder').addEventListener('click',()=>{
+        cancelform.style.display = "none";
+    })
+    cancelform.querySelector('.yes').addEventListener('click',()=>{
+        let room = localStorage.getItem('orderId');
+        let message = document.querySelector('.reason').value;
+        if(message === ""){
+            cancelform.querySelector('.alert').textContent = "原因欄位必填"
+        }else{
+            socket.emit('deliver-cancel', {'room':room, 'message':message});
+            socket.emit('leaveRoom',{'room':room, 'name':memberData['name'], 'reason':message})
+            localStorage.removeItem('orderId');
+            setTimeout(()=>{
+                location.reload();
+            },500)
+        }
+    })
+    cancelform.querySelector('.no').addEventListener('click',()=>{
+        cancelform.style.display = "none";
+    })
 })

@@ -56,9 +56,28 @@
             </div>
             <h1>外送員正在取餐 請稍後...</h1>
         </div>
+        <div class="deleveryArrived" style="display: none;">
+            <h1>外送員已將您的訂單送至指定位置</h1>
+            <div class="complete fakeBTN">訂單完成</div>
+        </div>
     </div>
 </div>
 {% endblock content %}
+{% block otherelement %}
+<section class="waiting">
+    <div class="shielder"style="width:100%"></div>
+    <div class="form">
+        <h1>繼續等待?</h1>
+        <div class="formContent">
+            <div class="alert">外送員因個人原因取消訂單，<br>請問是否繼續等待訂單接收?</div>
+            <div class="formbuttons">
+                <div class="yes fakeBTN">繼續等待</div>
+                <div class="no fakeBTN">取消訂單</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock otherelement %}
 {% block script %}
 <script src="../static/javascript/model/fetchInfo.js"></script>
 <script src="../static/javascript/control/confirmMember.js"></script>

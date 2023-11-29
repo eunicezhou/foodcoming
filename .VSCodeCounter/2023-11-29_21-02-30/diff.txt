@@ -1,0 +1,48 @@
+Date : 2023-11-29 21:02:30
+Directory : c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming
+Total : 12 files,  434 codes, -6 comments, 12 blanks, all 440 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| CSS        |          2 |        176 |          0 |          5 |        181 |
+| JavaScript |          4 |        134 |          2 |          5 |        141 |
+| HTML       |          3 |         82 |         -7 |          0 |         75 |
+| Python     |          3 |         42 |         -1 |          2 |         43 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                              | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                 |         12 |        434 |         -6 |         12 |        440 |
+| . (Files)                                                                                         |          1 |         30 |         -1 |          4 |         33 |
+| blueprint_file                                                                                    |          2 |         12 |          0 |         -2 |         10 |
+| static                                                                                            |          6 |        310 |          2 |         10 |        322 |
+| static\css                                                                                        |          2 |        176 |          0 |          5 |        181 |
+| static\javascript                                                                                 |          4 |        134 |          2 |          5 |        141 |
+| static\javascript\control                                                                         |          1 |         17 |          0 |          1 |         18 |
+| static\javascript\model                                                                           |          2 |         64 |          2 |          1 |         67 |
+| static\javascript\view                                                                            |          1 |         53 |          0 |          3 |         56 |
+| templates                                                                                         |          3 |         82 |         -7 |          0 |         75 |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                          | language   | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\app.py                                     | Python     |         30 |         -1 |          4 |         33 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\blueprint_file\member.py                   | Python     |          1 |          0 |          0 |          1 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\blueprint_file\order.py                    | Python     |         11 |          0 |         -2 |          9 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\css\deleverPage.css                 | CSS        |        115 |          0 |          3 |        118 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\css\thankyou.css                    | CSS        |         61 |          0 |          2 |         63 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\control\confirmMember.js | JavaScript |         17 |          0 |          1 |         18 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\model\memberData.js      | JavaScript |          2 |          0 |          0 |          2 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\model\thankyou.js        | JavaScript |         62 |          2 |          1 |         65 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\bookList.js         | JavaScript |         53 |          0 |          3 |         56 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\deleverpage.html                 | HTML       |         35 |          0 |          0 |         35 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\index.html                       | HTML       |          1 |         -7 |          0 |         -6 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\thankyou.html                    | HTML       |         46 |          0 |          0 |         46 |
+| Total                                                                                             |            |        434 |         -6 |         12 |        440 |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

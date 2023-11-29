@@ -98,6 +98,10 @@
     height:100%;
     display:none;
 }
+.shelder{
+    background-color: rgba(0,0,0,0.7);
+    height:100%;
+}
 .form{
     z-index: 20;
     position:absolute;
