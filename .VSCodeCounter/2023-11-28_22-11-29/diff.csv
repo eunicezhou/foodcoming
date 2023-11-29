@@ -1,0 +1,15 @@
+"filename", "language", "HTML", "CSS", "JavaScript", "Python", "comment", "blank", "total"
+"c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\app.py", "Python", 0, 0, 0, 38, 1, 4, 43
+"c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\blueprint_file\delever.py", "Python", 0, 0, 0, 33, 3, 2, 38
+"c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\blueprint_file\member.py", "Python", 0, 0, 0, 1, 0, 0, 1
+"c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\blueprint_file\order.py", "Python", 0, 0, 0, 47, 2, 5, 54
+"c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\css\deleverPage.css", "CSS", 0, 3, 0, 0, 0, 0, 3
+"c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\css\payment.css", "CSS", 0, 28, 0, 0, 0, 0, 28
+"c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\model\thankyou.js", "JavaScript", 0, 0, 0, 0, 0, 1, 1
+"c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\bookList.js", "JavaScript", 0, 0, 110, 0, -4, 9, 115
+"c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\maps.js", "JavaScript", 0, 0, 30, 0, 3, 3, 36
+"c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\tappay.js", "JavaScript", 0, 0, 25, 0, -1, 4, 28
+"c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\deleverpage.html", "HTML", -7, 0, 0, 0, 0, 0, -7
+"c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\payment.html", "HTML", 23, 0, 0, 0, 0, 0, 23
+"c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\thankyou.html", "HTML", 25, 0, 0, 0, 0, 0, 25
+"Total", "-", 41, 31, 165, 119, 4, 28, 388

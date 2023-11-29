@@ -90,25 +90,41 @@ function searchLocation(selectedRestaurant) {
     });
 }
 
-function getRoad(){
-    const directionsService = new google.maps.DirectionsService();
-    const directionsRenderer = new google.maps.DirectionsRenderer();
-    const map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 7,
-      center: { lat: 41.85, lng: -87.65 }  // 起始地點的經緯度
-    });
-    directionsRenderer.setMap(map);
+function getRoad(currentPosition, locationData){
+    return new Promise((resolve, reject) => {
+        const directionsService = new google.maps.DirectionsService();
+        const directionsRenderer = new google.maps.DirectionsRenderer();
+        const map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: { lat: currentPosition.lat, lng: currentPosition.lng }  // 起始地點的經緯度
+        });
+        directionsRenderer.setMap(map);
 
-    var request = {
-      origin: '台北市',  // 起始地點
-      destination: '高雄市',  // 目的地
-      travelMode: 'DRIVING'  // 交通方式，可選擇 DRIVING、WALKING、BICYCLING、TRANSIT 等
-    };
+        const waypoints = [
+            { location: locationData[0], stopover: true },
+            // Add more waypoints as needed
+        ];
+        
+        const request = {
+            origin: {lat:currentPosition.lat, lng:currentPosition.lng},
+            destination: locationData[3],
+            travelMode: 'DRIVING',
+            waypoints: waypoints,
+        };
 
-    directionsService.route(request, function(response, status) {
-      if (status == 'OK') {
-        directionsRenderer.setDirections(response);
-      }
-    });
+        directionsService.route(request, function(response, status) {
+            if (status == 'OK') {
+                directionsRenderer.setDirections(response);
+                // 取得預計到達時間（以秒為單位）
+                const durationInSeconds = response.routes[0].legs.reduce((total, leg) => total + leg.duration.value, 0);  
+                // 轉換成分鐘
+                const durationInMinutes = Math.round(durationInSeconds / 60);
+                resolve(durationInMinutes);
+            } else {
+                reject(new Error('路線規劃失敗'));
+            }
+        })
+    })
 }
+
 

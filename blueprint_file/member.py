@@ -14,9 +14,10 @@ def signUp():
         account = data['account']
         email = data['email']
         password = data['password']
+        phone = data['phone']
         hashed_password = generate_password_hash(password, method='scrypt')
-        databaseConnect("INSERT INTO member (account, email, password) VALUE (%s, %s, %s)",\
-                        (account, email, hashed_password))
+        databaseConnect("INSERT INTO member (account, email, password, phone) VALUE (%s, %s, %s, %s)",\
+                        (account, email, hashed_password, phone))
         return results_convert({'data':'success'})
     except Exception as err:
         return results_convert({'error':True,'message':str(err)})

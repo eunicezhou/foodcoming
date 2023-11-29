@@ -16,7 +16,16 @@
 {% endblock nav %}
 {% block content %}
 <div class="contain">
-    <h1 class="bold">{delever}，您好</h1>
+    <div class="orderDetail">
+        <div class="acceptOrder">
+        
+        </div>
+        <div class="buttons">
+            <div class="finishBTN fakeBTN">完成訂單</div>
+            <div class="cancelBTN fakeBTN">取消訂單</div>
+        </div>
+    </div>
+    <h1 class="bold delever">{delever}，您好</h1>
     <div id="map"></div>
     
     <div class="nearbyBooking">
@@ -31,6 +40,35 @@
     </div>
 </div>
 {% endblock content %}
+{% block otherelement %}
+<section class="finish">
+    <div class="shelder" style="width:100%"></div>
+    <div class="form">
+        <h1>完成訂單</h1>
+        <div class="formContent">
+            <div class="message">確認已將餐點送到指定位置?</div>
+            <div class="formbuttons">
+                <div class="yes fakeBTN">是</div>
+                <div class="no fakeBTN">否</div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="cancel">
+    <div class="shelder"style="width:100%"></div>
+    <div class="form">
+        <h1>取消訂單</h1>
+        <div class="formContent">
+            <input type="text" class="reason" placeholder="請輸入取消原因">
+            <div class="alert">取消訂單可能會影響信用點數，<br>確認取消訂單?</div>
+            <div class="formbuttons">
+                <div class="yes fakeBTN">確定</div>
+                <div class="no fakeBTN">取消</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock otherelement %}  
 {% block script %}
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2sw2FO9nxUBiPPFC0ZDN8kqtdANk7sEQ&libraries=places&callback=initMap&region=TW&language=zh-TW">
     </script>

@@ -22,12 +22,16 @@ def accept():
     data = request.get_json()
     lat = data['lat']
     lng = data['lng']
-    orderShops = databaseConnect("SELECT new_order.order_id, merchant.shopname, merchant.shopaddress, merchant.lat, merchant.lng \
-                    FROM new_order INNER JOIN merchant ON new_order.merchant_id = merchant.merchant_id")
+    orderShops = databaseConnect("SELECT new_order.order_id, new_order.destination, new_order.lat, new_order.lng,\
+                    merchant.shopname, merchant.shopaddress, merchant.lat, merchant.lng \
+                    FROM new_order INNER JOIN merchant ON new_order.merchant_id = merchant.merchant_id WHERE new_order.status = 'pending'")
     reachable = []
     for ordershop in orderShops:
-        store_distance = distance(float(lat), float(lng), float(ordershop[3]), float(ordershop[4]))
+        destination_distance = distance(float(lat), float(lng), float(ordershop[2]), float(ordershop[3]))
+        store_distance = distance(float(lat), float(lng), float(ordershop[6]), float(ordershop[7]))
         if store_distance < 5:
+            # if destination_distance < 25: //這邊之後要打開，以便篩選目的地
+            #     print(destination_distance)
             reachable.append(ordershop[0])
     orderList = []
     for order_id in reachable:
@@ -37,3 +41,15 @@ def accept():
                     WHERE new_order.order_id = %s",(order_id,))
         orderList.append(order_detail)
     return results_convert({'data':orderList})
+
+@delever_blueprint.route("/order", methods=['POST'])
+def orderDetail():
+    data = request.get_json()
+    order_id = data['order_id']
+    itemList = databaseConnect("SELECT new_order.item FROM new_order WHERE order_id = %s",(order_id,))
+    pieceList = databaseConnect("SELECT new_order.piece FROM new_order WHERE order_id = %s",(order_id,))
+    orderContent = {}
+    for item in itemList[0]:
+        orderContent[item] = pieceList.pop(0)[0]
+    print(orderContent)
+    return results_convert(orderContent)

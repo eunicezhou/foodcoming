@@ -87,5 +87,14 @@ def payOrder():
     except Exception as err:
         return results_convert({'error':True, 'message':err})
     
-   
-			
+@order_blueprint.route("/orderDetail",methods=["POST"])
+def getOrderDetail():
+    try: 
+        data = request.get_json()
+        orderItem = databaseConnect("SELECT item, piece FROM new_order WHERE order_id = %s",(data['orderId'],))
+        order = {}
+        for item in orderItem:
+            order[item[0]] = item[1]
+        return results_convert({'data':order})
+    except Exception as err:
+        return results_convert({'error':True, 'message':err})

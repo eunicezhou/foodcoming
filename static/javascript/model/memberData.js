@@ -5,10 +5,12 @@ signupBTN.addEventListener('click',async()=>{
     const signupAccount = signUpForm.querySelector('.SignupAccount').value;
     const signupEmail = signUpForm.querySelector('.SignupEmail').value;
     const signupPassword = signUpForm.querySelector('.SignupPassword').value;
+    const signupPhone = signUpForm.querySelector('.SignupPhone').value;
     let signupData = JSON.stringify({
         'account':signupAccount,
         'email':signupEmail,
-        'password':signupPassword
+        'password':signupPassword,
+        'phone':signupPhone
     })
     let url = "/api/auth/signup";
     let method = {

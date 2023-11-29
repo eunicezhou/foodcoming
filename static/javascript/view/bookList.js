@@ -1,10 +1,6 @@
-// const socket = io({autoConnect:false});
 const socket = io("http://localhost:4400")
 window.addEventListener('DOMContentLoaded',async()=>{
-    // socket.connect();
-    // socket.on('order_created', function(order_data){
-    //     console.log('New order created:'+ order_data); 
-    // })
+    let memberData = await confirmMember();
     let currentPosition = await initMap(); 
     setMapCenterAndMarker(currentPosition);
     
@@ -21,7 +17,6 @@ window.addEventListener('DOMContentLoaded',async()=>{
     let orderList = await authAPI("/api/delever/orderList", method);
     let num = 1;
     for(let list of orderList['data']){
-
         let bookingNumber = document.createElement('div');
         bookingNumber.className = `bookingNumber label item${num}`;
         bookingNumber.textContent = list[0][0];
@@ -32,13 +27,13 @@ window.addEventListener('DOMContentLoaded',async()=>{
         shopname.className = "shopname label"
         shopname.textContent = list[0][3];
         let address = document.createElement('div');
-        address.className = "address subtitle";
+        address.className = `address subtitle`;
         address.textContent = list[0][4];
         store.appendChild(shopname);
         store.appendChild(address);
 
         let order = document.createElement('div');
-        order.className = "order label"
+        order.className = `order label item${num} `
         for(let item of list){
             let itemDiv = document.createElement('div');
             itemDiv.textContent = `${item[1]}`+''+`${item[2]}份`;
@@ -46,7 +41,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
         }
 
         let destination = document.createElement('div');
-        destination.className = "destination label"
+        destination.className = `destination label item${num} `
         destination.textContent = list[0][7].replace(/^\d+/, '');
 
         let accept = document.createElement('div');
@@ -63,16 +58,81 @@ window.addEventListener('DOMContentLoaded',async()=>{
         num += 1;
     }
     document.querySelectorAll('.accept').forEach(acceptBTN=>{
-        acceptBTN.addEventListener('click',()=>{
+        acceptBTN.addEventListener('click',async()=>{
             acceptBTN.querySelector('img').src = "../static/image/icons8-checked-checkbox-50.png";
             let itemNum = acceptBTN.className.split(' ')[2];
+            document.querySelector('.orderDetail').style.display = "flex";
+            let acceptOrder = document.querySelector('.acceptOrder');
+            let status = document.createElement('h1');
+            status.textContent = "接單中...";
+            acceptOrder.appendChild(status);
+            let order = document.createElement('div');
+            order.className = "orderContent";
             document.querySelectorAll(`.${itemNum}`).forEach(itemDetail=>{
                 if(itemDetail.classList.contains('bookingNumber')){
-                    console.log(itemDetail.textContent);
-                    socket.emit('acquire_order', itemDetail.textContent);
+                    let order_id = itemDetail.textContent;
+                    socket.emit('acquire_order', order_id);
+                    socket.emit('joinRoom', {'room':order_id, 'name': memberData['name']});
+                    socket.on('message',(reply)=>{
+                        console.log(reply)
+                    })
+                    
+                    let acceptOrderNum = document.createElement('div');
+                    acceptOrderNum.className = 'acceptOrderNum';
+                    acceptOrderNum.textContent = `訂單編號:${order_id}`;
+                    acceptOrder.appendChild(acceptOrderNum);
+                }else if(itemDetail.classList.contains('order')){
+                    for(let item of itemDetail.childNodes){
+                        let orderContent = document.createElement('div');
+                        orderContent.textContent = item.textContent;
+                        order.appendChild(orderContent);
+                    }
+                    acceptOrder.appendChild(order);
                 }
             })
+
+            document.querySelector('.nearbyBooking').style.display = "none";
+            document.querySelector('.delever').style.display = "none";
+            document.querySelector('.contain').style.display = "flex";
+            map.setOptions({
+                disableDefaultUI: true,  // 禁用預設的地圖界面
+                draggable: false,
+                zoomControl: false,
+                scrollwheel: false,
+                disableDoubleClickZoom: true
+            });
+            document.querySelector('#map').style.height = "70vh";
+            let currentPosition = await initMap(); 
+            let durationInMinutes = await countTime(currentPosition);
+            console.log(durationInMinutes);
+            let arriveTime = document.createElement('div');
+            arriveTime.className = "arriveTime";
+            arriveTime.textContent = `預計完成訂單時間需:${durationInMinutes}分`
+            acceptOrder.appendChild(arriveTime);
+            socket.emit('update-order', {
+                'room':document.querySelector('.acceptOrderNum').textContent.split(':')[1],
+                'delever':memberData['name'],
+                'requireTime': durationInMinutes
+             })
         })
     })
 })
 
+// 獲得外送預計時間
+function countTime(currentPosition) {
+    return new Promise((resolve, reject) => {
+        socket.on('create-road', async function (locationData) {
+            try {
+                console.log(locationData[0]);
+                const durationInMinutes = await getRoad(currentPosition, locationData[0]);
+                resolve(durationInMinutes);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    });
+}
+
+document.querySelector('.finishBTN').addEventListener('click',()=>{
+    
+})

@@ -1,5 +1,5 @@
 from flask import *
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room, leave_room
 from module.database import *
 from module.jsonify import *
 from blueprint_file.merchant_file import merchant_file_blueprint
@@ -11,7 +11,6 @@ import urllib.parse
 
 app=Flask(__name__)
 socketio = SocketIO(app,cors_allowed_origins="*")
-# socketio.init_app(app)
 app.secret_key = 'your_secret_key'
 
 #api
@@ -91,22 +90,37 @@ def paySuccess():
 
 @socketio.on('connect')
 def connect():
-	print("Delever connected!")
+	print("connected!")
 
 @socketio.on('disconnect')
 def disconnect():
-	print("Delever disconnected!")
+	print("disconnected!")
 
 @socketio.on('acquire_order')
 def accept_order(order_id):
-	print(order_id)
 	databaseConnect("UPDATE new_order SET status = 'accepted' WHERE order_id = %s",(order_id,))
+	locationData = databaseConnect("SELECT merchant.shopaddress, merchant.lat, merchant.lng, new_order.destination, new_order.lat, new_order.lng \
+			FROM new_order INNER JOIN merchant ON new_order.merchant_id = merchant.merchant_id WHERE new_order.order_id = %s",(order_id,))
+	socketio.emit('create-road', locationData)
 
-# @socketio.on('order_created')
-# def handle_order_created(order_info):
-# 	print(order_info)
-#     # 在這裡處理訂單建立事件
-# 	print('New order created:', order_info)
-# 	socketio.emit('send_order', results_convert(order_info))
+@socketio.on('joinRoom')
+def joinRoom(data):
+	room = data['room']
+	member = data['name']
+	join_room(room)
+	socketio.emit('message', f'{member} have joined the room: {room}',room=room)
+
+@socketio.on('update-order')
+def updateOrder(data):
+	room = data['room']
+	delever = data['delever']
+	requireTime = data['requireTime']
+	databaseConnect("UPDATE new_order SET delever = %s, requireTime = %s WHERE order_id = %s"\
+				 ,(delever, requireTime, room))
+	socketio.emit('delever-match', {
+		'room':room,
+        'delever':delever,
+        'requireTime': requireTime
+		})
 
 socketio.run(app, debug=True, host="0.0.0.0", port=4400)

@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% block title %}thankyou{% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="../static/css/base.css">
+<link rel="stylesheet" href="../static/css/text.css">
+<link rel="stylesheet" href="../static/css/thankyou.css">
+{% endblock css %}
 {% block nav %}
 <div class="title nav--left">
     <img src="../static/image/logo.png" alt="Logo" class="logo">
@@ -12,10 +17,54 @@
     <img src="../static/image/showMore.png" alt="看更多" id="lines">
 {% endblock nav %}
 {% block content %}
-
+<div class="content">
+    <div class="content_header">
+        <div class="status">
+            <img src="../static/image/create_order.png" alt="">
+        </div>
+        <div class="progress-container">
+            <div class="bar-container">
+                <div class="progress-bar" id="bar1"></div>
+            </div>
+            <div class="bar-container">
+                <div class="progress-bar" id="bar2"></div>
+            </div>
+            <div class="bar-container">
+                <div class="progress-bar" id="bar3"></div>
+            </div>
+            <div class="bar-container">
+                <div class="progress-bar" id="bar4"></div>
+            </div>
+        </div>
+    </div>
+    <div class="content_body">
+        <div class="creating_order">
+            <h1>訂單建立中 請稍後片刻...</h1>
+        </div>
+        <div class="matchingDelever" style="display: none;">
+            <div class="orderDetail">
+                <h1>訂單編號:</h1>
+                <h3 class="orderNum"></h3>
+                <h1 class="orderContent">訂單內容</h1>
+            </div>
+            <h1 class="animate__pulse">正在尋找外送員 請稍後片刻...</h1>
+        </div>
+        <div class="foundDelever" style="display: none;">
+            <div class="deleverDetail">
+                <h1 class="delever"></h1>
+                <h1 class="arriveTime"></h1>
+            </div>
+            <h1>外送員正在取餐 請稍後...</h1>
+        </div>
+    </div>
+</div>
 {% endblock content %}
 {% block script %}
 <script src="../static/javascript/model/fetchInfo.js"></script>
 <script src="../static/javascript/control/confirmMember.js"></script>
+<script src="../static/javascript/model/fetchInfo.js"></script>
+<script src="https://cdn.socket.io/4.6.0/socket.io.min.js" 
+integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" 
+crossorigin="anonymous"></script>
 <script src="../static/javascript/model/thankyou.js"></script>
 {% endblock script %}

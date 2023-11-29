@@ -1,5 +1,23 @@
 let memberEmail;
 let memberData = {};
+async function confirmMember(){
+    let token = localStorage.getItem('token');
+    if(token){
+        let url = "/api/auth/login";
+        let method = {method:"GET",
+                headers:{
+                    "Content-Type":"application/json",
+                    "Authorization": `Bearer ${token}`
+                }}
+        let memberData = await authAPI(url,method);
+        memberData['email'] = memberData.data.email;
+        memberData['id'] = memberData.data.id;
+        memberData['name'] = memberData.data.name;
+        memberEmail = memberData.data.email;
+    }
+    return memberData
+}
+
 window.addEventListener('DOMContentLoaded', async()=>{
     let token = localStorage.getItem('token');
     if(token){
