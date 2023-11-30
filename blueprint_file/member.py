@@ -15,10 +15,14 @@ def signUp():
         email = data['email']
         password = data['password']
         phone = data['phone']
-        hashed_password = generate_password_hash(password, method='scrypt')
-        databaseConnect("INSERT INTO member (account, email, password, phone) VALUE (%s, %s, %s, %s)",\
-                        (account, email, hashed_password, phone))
-        return results_convert({'data':'success'})
+        memberExist = databaseConnect("SELECT * FROM member WHERE email = %s",(email,))
+        if memberExist == []:
+            hashed_password = generate_password_hash(password, method='scrypt')
+            databaseConnect("INSERT INTO member (account, email, password, phone) VALUE (%s, %s, %s, %s)",\
+                            (account, email, hashed_password, phone))
+            return results_convert({'data':'success'})
+        else:
+            return results_convert({'error':True, 'message':'member already exist!'})
     except Exception as err:
         return results_convert({'error':True,'message':str(err)})
     
@@ -49,7 +53,7 @@ def login():
             else:
                 return results_convert({'error':True,'message':"密碼錯誤"}), 403
     except Exception as err:
-        return results_convert({'error':True,'message':str(err)}), 500
+        return results_convert({'error':True,'message':str(err)})
     
 @auth_blueprint.route("/login",methods=['GET'])
 def idenify():

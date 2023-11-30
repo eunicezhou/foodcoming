@@ -41,32 +41,35 @@ def getStoreInfo():
 @store_blueprint.route("/searchstore",methods=['PUT'])
 def search():
     data = request.get_json()
-
     if data.get('country', None) is not None:
         country = data['country']
         lat = float(data['lat'])
         lng = float(data['lng'])
-        nearby = databaseConnect("SELECT merchant_id, lat, lng FROM merchant WHERE country = %s",(country,))
-        nearby_store = []
-        for place in nearby:
-            store_lat = float(place[1])
-            store_lng = float(place[2])
-            store_distance = distance(lat, lng, store_lat, store_lng)
-            if store_distance < 15:
-                store_data = databaseConnect("SELECT * FROM merchant WHERE merchant_id = %s",(place[0],))
-                nearby_store.append(store_data)
+        if data.get('category', None) is not None:
+            category_id = databaseConnect("SELECT category_id FROM shop_category WHERE category_name = %s",(data['category'],))
+            nearby = databaseConnect("SELECT merchant.merchant_id, merchant.lat, merchant.lng, \
+                    FROM merchant WHERE category_id = %s AND category_name = %s", (country,category_id))
+        else:
+            nearby = databaseConnect("SELECT merchant_id, lat, lng FROM merchant WHERE country = %s",(country,))
     else:
         lat = float(data['lat'])
         lng = float(data['lng'])
-        nearby = databaseConnect("SELECT merchant_id, lat, lng FROM merchant")
-        nearby_store = []
-        for place in nearby:
-            store_lat = float(place[1])
-            store_lng = float(place[2])
-            store_distance = distance(lat, lng, store_lat, store_lng)
-            if store_distance < 15:
-                store_data = databaseConnect("SELECT * FROM merchant WHERE merchant_id = %s",(place[0],))
-                nearby_store.append(store_data)
+        if data.get('category', None) is not None:
+            print(data['category'])
+            category_id = databaseConnect("SELECT category_id FROM shop_category WHERE category_name = %s",(data['category'],))
+            print(category_id)
+            nearby = databaseConnect("SELECT merchant.merchant_id, merchant.lat, merchant.lng, \
+                    FROM merchant WHERE category_id = %s", (category_id,))
+        else:
+            nearby = databaseConnect("SELECT merchant_id, lat, lng FROM merchant")
+    nearby_store = []
+    for place in nearby:
+        store_lat = float(place[1])
+        store_lng = float(place[2])
+        store_distance = distance(lat, lng, store_lat, store_lng)
+        if store_distance < 15:
+            store_data = databaseConnect("SELECT * FROM merchant WHERE merchant_id = %s",(place[0],))
+            nearby_store.append(store_data)
     data = {}
     id = 1
     for store in nearby_store:

@@ -14,11 +14,33 @@ async function init(){
     for(let data in nearByStoreResult){
         nearbyStore(nearByStoreResult[`${data}`]);
     }
+    document.querySelectorAll('.category').forEach(choice=>{
+        choice.addEventListener('click',async()=>{
+            let catTitle = choice.querySelector('.catTitle').textContent;
+            console.log(catTitle);
+            let url = "/api/searchstore";
+            let method = {
+                method: "PUT",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    'category':catTitle,
+                    'lat': currentPosition.lat,
+                    'lng': currentPosition.lng
+                })
+            }
+            for(store of document.querySelectorAll('.store')){
+                document.querySelector('.stores').removeChild(store);
+            }
+            nearByStoreResult = await authAPI(url, method);
+            console.log(nearByStoreResult);
+            for(let data in nearByStoreResult){
+                nearbyStore(nearByStoreResult[`${data}`]);
+            }
+        })
+    })
 }
 window.addEventListener('DOMContentLoaded',init);
 document.querySelector('#address').addEventListener('click',async()=>{
-    // document.querySelector('.mapShield').style.display = "block";
-    // document.querySelector('.serachPosition').style.display = "flex";
     let selectPosition = await searchLocation(currentPosition);
     let match = selectPosition.address.match(/\d+(.+)/);
     let country = match[1].slice(0,3);
