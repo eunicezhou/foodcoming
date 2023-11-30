@@ -12,6 +12,14 @@ lines.addEventListener('click', () => {
     sidebar.querySelector('.shelder').addEventListener('click',()=>{
         sidebar.style.display = 'none';
     })
+    // sidebar.querySelectorAll('.sideBar--text').forEach(text=>{
+    //     text.addEventListener('click',()=>{
+    //         if(localStorage.getItem('token') === null){
+    //             console.log(localStorage.getItem('token'))
+    //             showUpForm(logInForm);
+    //         }
+    //     })
+    // })
 })
 
 signup_nav.addEventListener('click', (event) => {

@@ -47,20 +47,19 @@ def search():
         lng = float(data['lng'])
         if data.get('category', None) is not None:
             category_id = databaseConnect("SELECT category_id FROM shop_category WHERE category_name = %s",(data['category'],))
-            nearby = databaseConnect("SELECT merchant.merchant_id, merchant.lat, merchant.lng, \
-                    FROM merchant WHERE category_id = %s AND category_name = %s", (country,category_id))
+            nearby = databaseConnect("SELECT merchant.merchant_id, merchant.lat, merchant.lng \
+                    FROM merchant WHERE category_id = %s AND category_name = %s", (country,category_id[0][0]))
         else:
             nearby = databaseConnect("SELECT merchant_id, lat, lng FROM merchant WHERE country = %s",(country,))
     else:
         lat = float(data['lat'])
         lng = float(data['lng'])
         if data.get('category', None) is not None:
-            print(data['category'])
             category_id = databaseConnect("SELECT category_id FROM shop_category WHERE category_name = %s",(data['category'],))
-            print(category_id)
-            nearby = databaseConnect("SELECT merchant.merchant_id, merchant.lat, merchant.lng, \
-                    FROM merchant WHERE category_id = %s", (category_id,))
+            nearby = databaseConnect("SELECT merchant_id, lat, lng \
+                    FROM merchant WHERE category_id = %s", (int(category_id[0][0]),))
         else:
+            print('no category')
             nearby = databaseConnect("SELECT merchant_id, lat, lng FROM merchant")
     nearby_store = []
     for place in nearby:

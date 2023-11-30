@@ -45,6 +45,8 @@ def login():
                     "name":baseInfor[0][1],
                     "email":baseInfor[0][2],
                     "phone":baseInfor[0][3],
+                    "merchant_id":baseInfor[0][4],
+                    "delever_id":baseInfor[0][5],
                     "exp":datetime.utcnow()+timedelta(days=7)
                 }
                 token_algorithm = 'HS256'

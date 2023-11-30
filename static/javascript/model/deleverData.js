@@ -1,19 +1,44 @@
 document.querySelector('.submitBTN').addEventListener('click',async()=>{
     let formData = new FormData();
-    formData.append('name', document.querySelector('#email').value);
-    formData.append('email', document.querySelector('#name').value);
-    formData.append('phone', document.querySelector('#phone').value);
-    formData.append('shot', file['shot']);
-    formData.append('identity_front', file['identity_front']);
-    formData.append('identity_back', file['identity_back']);
-    formData.append('licence', file['licence']);
-    formData.append('travel_licence', file['travel_licence']);
-    console.log(file);
-    let url = "/api/delever/setup";
-    let method = {
-        method: "POST",
-        body: formData
+    if(document.querySelector('#email').value === ""){
+        document.querySelector('.alert').textContent = `請輸入信箱`;
+    }else if(document.querySelector('#name').value === ""){
+        document.querySelector('.alert').textContent = `請輸入姓名`;
+    }else if(document.querySelector('#phone').value === ""){
+        document.querySelector('.alert').textContent = `請輸入手機`;
+    }else if(file['shot'] === undefined){
+        document.querySelector('.alert').textContent = `請上傳大頭照`;
+    }else if(file['identity_front'] === undefined || file['identity_back'] === undefined){
+        document.querySelector('.alert').textContent = `請上傳身分證`;
+    }else if(file['licence'] === undefined){
+        document.querySelector('.alert').textContent = `請上傳駕照`;
+    }else if(file['travel_licence'] === undefined){
+        document.querySelector('.alert').textContent = `請上傳行照`;
+    }else{
+        formData.append('memberEmail', memberEmail);
+        formData.append('name', document.querySelector('#email').value);
+        formData.append('email', document.querySelector('#name').value);
+        formData.append('phone', document.querySelector('#phone').value);
+        formData.append('shot', file['shot']);
+        formData.append('identity_front', file['identity_front']);
+        formData.append('identity_back', file['identity_back']);
+        formData.append('licence', file['licence']);
+        formData.append('travel_licence', file['travel_licence']);
+    
+        let url = "/api/delever/setup";
+        let method = {
+            method: "POST",
+            body: formData
+        }
+        let result = await authAPI(url, method);
+        if(result['error']){
+            document.querySelector('.alert').textContent = `${result['message']}`;
+        }else{
+            document.querySelector('.alert').style.color = "green";
+            document.querySelector('.alert').textContent = "您已成功成為外送夥伴";
+            setTimeout(()=>{
+                window.location.href = "/";
+            },500)
+        }
     }
-    let result = await authAPI(url, method);
-    console.log(result);
 })

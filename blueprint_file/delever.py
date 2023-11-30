@@ -7,15 +7,28 @@ delever_blueprint = Blueprint('api_delever',__name__,template_folder= '/api/dele
 
 @delever_blueprint.route("/setup",methods=['POST'])
 def deleverSetup():
-    name = request.form['name']
-    email = request.form['email']
-    phone = request.form['phone']
-    shot = request.files['shot']
-    identify_front = request.files['identity_front']
-    identify_back = request.files['identity_back']
-    licence = request.files['licence']
-    travel_licence = request.files['travel_licence']
-    return results_convert({'data':'success'})
+    try:
+        memberEmail = request.form['memberEmail']
+        name = request.form['name']
+        email = request.form['email']
+        phone = request.form['phone']
+        shot = request.files['shot']
+        identify_front = request.files['identity_front']
+        identify_back = request.files['identity_back']
+        licence = request.files['licence']
+        travel_licence = request.files['travel_licence']
+        emailExist = databaseConnect('SELECT * FROM deliver WHERE email = %s',(email,))
+        print(emailExist)
+        if emailExist != []:
+            return results_convert({'error':True,'message':'您已註冊為外送員'})
+        else:
+            databaseConnect('INSERT INTO deliver (name, email, phone) VALUES (%s, %s, %s)',\
+                            (name, email, phone))
+            delever_id = databaseConnect('SELECT deliver_id FROM deliver WHERE email = %s',(email,))
+            databaseConnect('UPDATE member SET delever_id = %s WHERE email = %s',(delever_id[0][0], memberEmail))
+            return results_convert({'data':'success'})
+    except Exception as err:
+        return results_convert({'error':True,'message':err})
 
 @delever_blueprint.route("/orderList",methods=["PUT"])
 def accept():
@@ -25,6 +38,7 @@ def accept():
     orderShops = databaseConnect("SELECT new_order.order_id, new_order.destination, new_order.lat, new_order.lng,\
                     merchant.shopname, merchant.shopaddress, merchant.lat, merchant.lng \
                     FROM new_order INNER JOIN merchant ON new_order.merchant_id = merchant.merchant_id WHERE new_order.status = 'pending'")
+    print(orderShops)
     reachable = []
     for ordershop in orderShops:
         destination_distance = distance(float(lat), float(lng), float(ordershop[2]), float(ordershop[3]))
