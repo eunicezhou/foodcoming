@@ -1,5 +1,6 @@
 from flask import *
 from flask_socketio import SocketIO, emit, join_room, leave_room
+from flask_cors import CORS
 from module.database import *
 from module.jsonify import *
 from blueprint_file.merchant_file import merchant_file_blueprint
@@ -10,6 +11,8 @@ from blueprint_file.order import order_blueprint
 import urllib.parse
 
 app=Flask(__name__)
+CORS(app)
+wsgi_app = app.wsgi_app
 socketio = SocketIO(app,cors_allowed_origins="*")
 app.secret_key = 'your_secret_key'
 
