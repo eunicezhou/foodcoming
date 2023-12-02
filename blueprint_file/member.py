@@ -37,7 +37,6 @@ def login():
             return results_convert({'error':True,'message':"您尚未註冊會員"}), 400
         else:
             check = check_password_hash(memberInfo[0][1],password)
-            print(check)
             if check:
                 baseInfor = databaseConnect("SELECT id,account,email,phone,merchant_id,delever_id,record_id,cart_id FROM member WHERE email = %s",(email,))
                 filedict = {

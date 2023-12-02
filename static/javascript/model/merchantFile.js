@@ -71,8 +71,15 @@ fileBTN.addEventListener('click',async()=>{
         id += 1;
     }
     let sendReply = await merchantSetUp(formData);
-    if(sendReply.data){
-        id = parseInt(sendReply.merchant_id);
+    if(sendReply.token){
+        localStorage.setItem('token',sendReply.token);
+        let method = {method:"GET",
+                headers:{
+                    "Content-Type":"application/json",
+                    "Authorization": `Bearer ${token}`
+                }}
+        memberData = await authAPI("/api/auth/login",method);
+        id = parseInt(memberData['merchant_id']);
         let url = `/store/${id}`;
         window.location.href = url;
     }

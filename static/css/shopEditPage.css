@@ -80,6 +80,7 @@
 }
 .item{
     margin:20px;
+    width:400px;
     box-sizing: border-box;
     padding: 10px;
     border: 1px solid var(--secondary-color);

@@ -3,6 +3,7 @@ from module.jsonify import *
 from module.token import *
 from module.database import *
 from module.saveToS3 import *
+from datetime import datetime, timedelta
 import uuid
 
 merchant_file_blueprint = Blueprint('api_merchant',__name__,template_folder= 'api')
@@ -69,7 +70,18 @@ def setupStore():
                                 dishpicture, price, start, end) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",\
                                 (merchant_id[0][0], dishCat, dish_name, describe, dish_photo, price, start, end))
             index += 1
-        return results_convert({'data':'success','merchant_id':merchant_id})
+            baseInfor = databaseConnect("SELECT id, account, email, phone, merchant_id, delever_id, record_id,cart_id FROM member WHERE email = %s",(memberEmail,))
+            filedict = {
+                    "id":baseInfor[0][0],
+                    "name":baseInfor[0][1],
+                    "email":baseInfor[0][2],
+                    "phone":baseInfor[0][3],
+                    "merchant_id":baseInfor[0][4],
+                    "delever_id":baseInfor[0][5],
+                    "exp":datetime.utcnow()+timedelta(days=7)
+                }
+            encoding_token = encoding(filedict, token_key ,'HS256')
+        return encoding_token
     except Exception as err:
         return results_convert({'error':True,'message':str(err)})
     

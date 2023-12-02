@@ -34,6 +34,7 @@ document.querySelector('.submitBTN').addEventListener('click',async()=>{
         if(result['error']){
             document.querySelector('.alert').textContent = `${result['message']}`;
         }else{
+            localStorage.setItem('token',result.token)
             document.querySelector('.alert').style.color = "green";
             document.querySelector('.alert').textContent = "您已成功成為外送夥伴";
             setTimeout(()=>{
