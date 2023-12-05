@@ -1,11 +1,29 @@
-{% extends "groceryBase.html" %}
+{% extends "base.html" %}
 {% block title %}shopPage{% endblock title %}
 {% block css %}
+<link rel="stylesheet" href="../static/css/base.css">
 <link rel="stylesheet" href="../static/css/shopEditPage.css">
 {% endblock css %}
 
+{% block nav %}
+<div class="nav--logo">
+    <img src="../static/image/logo.png" alt="Logo" class="logo">
+    <a href="/" class="title  nav--title textDeUnderline">
+        <h1>FOOD COMING</h1>
+        <h3>Mouth Open And Food Come</h3>
+    </a>
+</div>
+<div class="title purchase">購物車</div>
+{% endblock nav %}
 {% block content %}
 <section class="header">
+    <div class="cart">
+        <img src="../static/image/cross.png" alt="close" class="close">
+        <div class="cart--contain">
+            <img src="../static/image/shopping cart.png" alt="購物車">
+            <div class="label">目前購物車是空的</div>
+        </div>
+    </div>
     <img alt="" class="shopPhoto">
     <img src="../static/image/pencil_bg.png" alt="" class="header--pencil edit" id="editShopPhoto">
 </section>
@@ -44,6 +62,35 @@
     </div>
 </section>     
 {% endblock content %}
+{% block otherelement %}
+<section class="signUpForm">
+    <div class="shelder" style="width:100%"></div>
+    <div class="form">
+        <h1>註冊會員</h1>
+        <div class="formContent">
+            <input type="text" class="SignupAccount" placeholder="請輸入帳號">
+            <input type="password" class="SignupPassword" placeholder="請輸入密碼">
+            <input type="email" class="SignupEmail" placeholder="請輸入信箱">
+            <input type="tel" class="SignupPhone" placeholder="請輸入手機號碼">
+            <div class="alert"></div>
+            <div class="fakeBTN" id="SignUp">註冊會員</div>
+        </div>
+    </div>
+</section>
+<section class="signInForm">
+    <div class="shelder"style="width:100%"></div>
+    <div class="form">
+        <h1>請先登入會員</h1>
+        <div class="formContent">
+            <input type="email" class="LoginEmail" placeholder="請輸入會員信箱">
+            <input type="password" class="LoginPassword" placeholder="請輸入密碼">
+            <div class="alert"></div>
+            <div class="fakeBTN" id="SignIn">登入會員</div>
+        </div>
+    </div>
+</section>
+{% endblock otherelement %}
 {% block script %}
+<script src="../static/javascript/view/base_nav.js"></script>
 <script src="../static/javascript/view/store.js"></script> 
 {% endblock script %}   

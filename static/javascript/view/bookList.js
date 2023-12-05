@@ -1,4 +1,7 @@
-const socket = io("http://localhost:4400")
+const socket = io("http://localhost:4400");
+// const socket = io("formal.foodcoming.store",{
+//     path:"/mysocket"
+//     });
 window.addEventListener('DOMContentLoaded',async()=>{
     let memberData = await confirmMember();
     let currentPosition = await initMap(); 

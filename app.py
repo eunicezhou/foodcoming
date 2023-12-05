@@ -13,7 +13,8 @@ import urllib.parse
 app=Flask(__name__)
 CORS(app)
 wsgi_app = app.wsgi_app
-socketio = SocketIO(app,cors_allowed_origins="*")
+# socketio = SocketIO(app,cors_allowed_origins="*")
+socketio = SocketIO(app,path='/mysocket',cors_allowed_origins="*")
 app.secret_key = 'your_secret_key'
 
 #api

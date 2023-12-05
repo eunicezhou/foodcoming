@@ -111,3 +111,13 @@ def purchase():
         id = data['id']
         cartList = databaseConnect("SELECT * FROM cart WHERE member_id = %s",(id,))
         return results_convert({'data':cartList})
+    elif request.method == "DELETE":
+        data = request.get_json()
+        id = data['member_id']
+        print(id)
+        item = data['item']
+        print(item)
+        piece = data['piece']
+        print(piece)
+        databaseConnect("DELETE FROM cart WHERE member_id = %s AND item = %s AND piece = %s LIMIT 1",(id, item, piece))
+        return results_convert({'data':'success'})

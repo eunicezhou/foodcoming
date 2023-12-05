@@ -73,6 +73,7 @@ fileBTN.addEventListener('click',async()=>{
     let sendReply = await merchantSetUp(formData);
     if(sendReply.token){
         localStorage.setItem('token',sendReply.token);
+        let token = localStorage.getItem('token');
         let method = {method:"GET",
                 headers:{
                     "Content-Type":"application/json",

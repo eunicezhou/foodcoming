@@ -1,6 +1,7 @@
 let nearByStoreResult;
 async function init(){
     let currentPosition = await initMap();
+    console.log(currentPosition)
     let url = "/api/searchstore";
     let method = {
         method: "PUT",
@@ -16,28 +17,9 @@ async function init(){
     }
     document.querySelectorAll('.category').forEach(choice=>{
         choice.addEventListener('click',async()=>{
-            let catTitle = choice.querySelector('.catTitle').textContent;
-            console.log(catTitle);
-            let url = "/api/searchstore";
-            let method = {
-                method: "PUT",
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    'category':catTitle,
-                    'lat': currentPosition.lat,
-                    'lng': currentPosition.lng
-                })
-            }
-            for(store of document.querySelectorAll('.store')){
-                document.querySelector('.stores').removeChild(store);
-            }
-            nearByStoreResult = await authAPI(url, method);
-            console.log(nearByStoreResult);
-            for(let data in nearByStoreResult){
-                nearbyStore(nearByStoreResult[`${data}`]);
-            }
+            storeCategory(choice,currentPosition.lat,currentPosition.lng);
         })
-    })
+    })   
 }
 window.addEventListener('DOMContentLoaded',init);
 document.querySelector('#address').addEventListener('click',async()=>{
@@ -61,7 +43,36 @@ document.querySelector('#address').addEventListener('click',async()=>{
     for(let data in nearByStoreResult){
         nearbyStore(nearByStoreResult[`${data}`]);
     }
+    document.querySelectorAll('.category').forEach(choice=>{
+        choice.addEventListener('click',async()=>{
+            storeCategory(choice,selectPosition.location.lat,selectPosition.location.lng);
+        })
+    }) 
 })
+
+async function storeCategory(choice,lat,lng){
+    let catTitle = choice.querySelector('.catTitle').textContent;
+    console.log(catTitle);
+    let url = "/api/searchstore";
+    let method = {
+        method: "PUT",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            'category':catTitle,
+            'lat': lat,
+            'lng': lng
+        })
+    }
+    for(store of document.querySelectorAll('.store')){
+        document.querySelector('.stores').removeChild(store);
+    }
+    nearByStoreResult = await authAPI(url, method);
+    console.log(nearByStoreResult);
+    for(let data in nearByStoreResult){
+        nearbyStore(nearByStoreResult[`${data}`]);
+    }
+}
+
 
 function nearbyStore(nearByStoreResult){
     let store = document.createElement('div');

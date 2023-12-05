@@ -14,11 +14,6 @@ def deleverSetup():
         name = request.form['name']
         email = request.form['email']
         phone = request.form['phone']
-        shot = request.files['shot']
-        identify_front = request.files['identity_front']
-        identify_back = request.files['identity_back']
-        licence = request.files['licence']
-        travel_licence = request.files['travel_licence']
         emailExist = databaseConnect('SELECT * FROM deliver WHERE email = %s',(email,))
         if emailExist != []:
             return results_convert({'error':True,'message':'您已註冊為外送員'})
