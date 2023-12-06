@@ -91,6 +91,7 @@ TPDirect.card.setup({
 
 //獲取prime
 document.querySelector('#fakeButton').addEventListener('click', ()=>{
+    document.querySelector('.waiting').style.display = "flex";
     console.log(selectPosition);
     // 取得 TapPay Fields 的 status
     const tappayStatus = TPDirect.card.getTappayFieldsStatus();

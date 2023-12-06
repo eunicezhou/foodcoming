@@ -68,6 +68,15 @@
     </div>
 </section>
 {% endblock content %}
+
+{% block otherelement %}
+<section class="waiting">
+    <h1 class="title">正在傳送訂單資訊，請稍後...</h1>
+    <img src="../static/image/Spinner-1s-200px.gif">
+    <div class="shelder"></div>
+</section>
+{% endblock otherelement %}
+
 {% block script %}
 <script src="../static/javascript/model/fetchInfo.js"></script>
 <script src="../static/javascript/control/confirmMember.js"></script>
