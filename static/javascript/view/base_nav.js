@@ -95,5 +95,8 @@ document.querySelector('.purchase').addEventListener('click',async()=>{
                 document.querySelector('.cart').style.display = "none"
             }
         })
+        document.querySelector('.totalMoney').addEventListener('click',()=>{
+            window.location.href = "/order";
+        })
     }
 })

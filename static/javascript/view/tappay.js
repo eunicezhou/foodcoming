@@ -16,6 +16,7 @@ window.addEventListener('load',async()=>{
     document.querySelector('#address').addEventListener('click',async()=>{
         selectPosition = await searchLocation(currentPosition);
         console.log(selectPosition);
+
     })
     let method = {
         method: "PUT",
@@ -93,6 +94,7 @@ TPDirect.card.setup({
 document.querySelector('#fakeButton').addEventListener('click', ()=>{
     document.querySelector('.waiting').style.display = "flex";
     console.log(selectPosition);
+
     // 取得 TapPay Fields 的 status
     const tappayStatus = TPDirect.card.getTappayFieldsStatus();
     console.log(tappayStatus);
@@ -131,22 +133,43 @@ async function pay(prime){
         }else{
             phone = document.querySelector('.refreshPhone').value;
         }
-        let method = {
-            method: 'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
-                "prime":prime,
-                "id":memberData['data']['id'],
-                "name":name,
-                "email":memberData['data']['email'],
-                "phone":phone,
-                "address":selectPosition.address,
-                "lat":selectPosition.location.lat,
-                "lng":selectPosition.location.lng,
-                'pay':document.querySelector('#total').textContent
-            })
+        let method
+        if(selectPosition.location){
+            method = {
+                method: 'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    "prime":prime,
+                    "id":memberData['data']['id'],
+                    "name":name,
+                    "email":memberData['data']['email'],
+                    "phone":phone,
+                    "address":selectPosition.address,
+                    "lat":selectPosition.location.lat,
+                    "lng":selectPosition.location.lng,
+                    'pay':document.querySelector('#total').textContent
+                })
+            }
+        }else{
+            method = {
+                method: 'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    "prime":prime,
+                    "id":memberData['data']['id'],
+                    "name":name,
+                    "email":memberData['data']['email'],
+                    "phone":phone,
+                    "address":document.querySelector('#address').value,
+                    "lat":selectPosition.latitude,
+                    "lng":selectPosition.longitude,
+                    'pay':document.querySelector('#total').textContent
+                })
+            } 
         }
         let order = await authAPI('/api/order', method);
         return order;

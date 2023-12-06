@@ -66,6 +66,7 @@ function setMapCenterAndMarker(location) {
 async function searchLocation(selectedRestaurant) {
     return new Promise((resolve) => {
         const autocomplete = createAutocomplete();
+        console.log(autocomplete);
 
         autocomplete.addListener('place_changed', async() => {
             const place = autocomplete.getPlace();
