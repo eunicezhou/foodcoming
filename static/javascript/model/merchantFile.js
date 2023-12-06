@@ -1,3 +1,14 @@
+//登入人頭點擊
+document.querySelector('.member').addEventListener('click',()=>{
+    if(Object.keys(memberData).length === 0){
+        showUpForm(document.querySelector('.signInForm'));
+        document.querySelector('.notMember').addEventListener('click',()=>{
+            document.querySelector('.signInForm').style.display = "none";
+            showUpForm(document.querySelector('.signUpForm'));
+        })
+    }
+})
+
 const fileBTN = document.querySelector('.submitBTN');
 const shopCategory = document.querySelector('#shopcategory');
 
@@ -103,3 +114,12 @@ async function merchantSetUp(formData){
     let result = await store.json();
     return result;
 }
+document.querySelector('#bossname').addEventListener('click',()=>{
+    if(Object.keys(memberData).length === 0){
+        showUpForm(document.querySelector('.signInForm'));
+        document.querySelector('.notMember').addEventListener('click',()=>{
+            document.querySelector('.signInForm').style.display = "none";
+            showUpForm(document.querySelector('.signUpForm'));
+        })
+    }
+})

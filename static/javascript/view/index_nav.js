@@ -1,6 +1,4 @@
 const lines = document.getElementById('lines');
-const signUpForm = document.querySelector('.signUpForm');
-const logInForm = document.querySelector('.signInForm');
 const sidebar = document.querySelector('.sidebar');
 const signUp = sidebar.querySelector('.signup');
 const signup_nav = document.querySelector('.signup');

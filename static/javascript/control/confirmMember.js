@@ -80,3 +80,10 @@ function signout(){
     localStorage.removeItem("token");
     window.location.reload();
 }
+
+function showUpForm(form){
+    form.style.display = 'flex';
+    form.querySelector('.shelder').addEventListener('click',()=>{
+        form.style.display = 'none';
+    })
+}

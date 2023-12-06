@@ -1,12 +1,3 @@
-const signInForm = document.querySelector('.signUpForm');
-const logInForm = document.querySelector('.signInForm')
-function showUpForm(form){
-    form.style.display = 'flex';
-    form.querySelector('.shelder').addEventListener('click',()=>{
-        form.style.display = 'none';
-    })
-}
-
 //購物車
 document.querySelector('.purchase').addEventListener('click',async()=>{
     console.log(memberData);

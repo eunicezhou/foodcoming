@@ -1,3 +1,24 @@
+document.querySelector('#name').addEventListener('click',()=>{
+    if(Object.keys(memberData).length === 0){
+        showUpForm(document.querySelector('.signInForm'));
+        document.querySelector('.notMember').addEventListener('click',()=>{
+            document.querySelector('.signInForm').style.display = "none";
+            showUpForm(document.querySelector('.signUpForm'));
+        })
+    }
+})
+
+//登入人頭點擊
+document.querySelector('.member').addEventListener('click',()=>{
+    if(Object.keys(memberData).length === 0){
+        showUpForm(document.querySelector('.signInForm'));
+        document.querySelector('.notMember').addEventListener('click',()=>{
+            document.querySelector('.signInForm').style.display = "none";
+            showUpForm(document.querySelector('.signUpForm'));
+        })
+    }
+})
+
 document.querySelector('.submitBTN').addEventListener('click',async()=>{
     let formData = new FormData();
     if(document.querySelector('#email').value === ""){

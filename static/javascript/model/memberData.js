@@ -1,3 +1,5 @@
+const signUpForm = document.querySelector('.signUpForm');
+const logInForm = document.querySelector('.signInForm');
 const signupBTN = signUpForm.querySelector('#SignUp');
 const loginBTN = logInForm.querySelector('#SignIn');
 

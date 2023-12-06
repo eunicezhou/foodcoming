@@ -26,6 +26,14 @@ document.querySelector('.purchaseNum').addEventListener('click',()=>{
 })
 
 document.querySelector('.purchaseBTN').addEventListener('click',async()=>{
+    console.log(memberData);
+    if(Object.keys(memberData).length === 0){
+        showUpForm(document.querySelector('.signInForm'));
+        document.querySelector('.notMember').addEventListener('click',()=>{
+            document.querySelector('.signInForm').style.display = "none";
+            showUpForm(document.querySelector('.signUpForm'));
+        })
+    }
     let groceryName = document.querySelector('.groceryName').textContent;
     let groceryCount = document.querySelector('.count').textContent;
     let groceryMoney = document.querySelector('.price').textContent;

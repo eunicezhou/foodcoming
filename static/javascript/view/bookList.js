@@ -4,6 +4,7 @@ const socket = io("http://localhost:4400");
 //     });
 window.addEventListener('DOMContentLoaded',async()=>{
     let memberData = await confirmMember();
+    document.querySelector('.delever').textContent = `${memberData['data']['name']}，您好!`;
     let currentPosition = await initMap(); 
     setMapCenterAndMarker(currentPosition);
     
