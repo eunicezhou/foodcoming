@@ -26,25 +26,31 @@ document.querySelector('#address').addEventListener('click',async()=>{
     let selectPosition = await searchLocation(currentPosition);
     console.log(selectPosition);
     let method;
+    let lat;
+    let lng;
     if(selectPosition.address){
         let match = selectPosition.address.match(/\d+(.+)/);
         let country = match[1].slice(0,3);
+        lat = selectPosition.location.lat;
+        lng = selectPosition.location.lng;
         method = {
             method: "PUT",
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 'country': country,
-                'lat': selectPosition.location.lat,
-                'lng': selectPosition.location.lng
+                'lat': lat,
+                'lng': lng
             })
         }
     }else{
+        lat = selectPosition.latitude;
+        lng = selectPosition.longitude;
         method = {
             method: "PUT",
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                'lat': selectPosition.latitude,
-                'lng': selectPosition.longitude
+                'lat': lat,
+                'lng': lng
             })
         }
     }
@@ -57,7 +63,7 @@ document.querySelector('#address').addEventListener('click',async()=>{
     }
     document.querySelectorAll('.category').forEach(choice=>{
         choice.addEventListener('click',async()=>{
-            storeCategory(choice,selectPosition.location.lat,selectPosition.location.lng);
+            storeCategory(choice,lat,lng);
         })
     }) 
 })
