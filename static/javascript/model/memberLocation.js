@@ -24,22 +24,34 @@ async function init(){
 window.addEventListener('DOMContentLoaded',init);
 document.querySelector('#address').addEventListener('click',async()=>{
     let selectPosition = await searchLocation(currentPosition);
-    let match = selectPosition.address.match(/\d+(.+)/);
-    let country = match[1].slice(0,3);
-    let url = "/api/searchstore";
-    let method = {
-        method: "PUT",
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            'country': country,
-            'lat': selectPosition.location.lat,
-            'lng': selectPosition.location.lng
-        })
+    console.log(selectPosition);
+    let method;
+    if(selectPosition.address){
+        let match = selectPosition.address.match(/\d+(.+)/);
+        let country = match[1].slice(0,3);
+        method = {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                'country': country,
+                'lat': selectPosition.location.lat,
+                'lng': selectPosition.location.lng
+            })
+        }
+    }else{
+        method = {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                'lat': selectPosition.latitude,
+                'lng': selectPosition.longitude
+            })
+        }
     }
     for(store of document.querySelectorAll('.store')){
         document.querySelector('.stores').removeChild(store);
     }
-    nearByStoreResult = await authAPI(url, method);
+    nearByStoreResult = await authAPI("/api/searchstore", method);
     for(let data in nearByStoreResult){
         nearbyStore(nearByStoreResult[`${data}`]);
     }

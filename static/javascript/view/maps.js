@@ -1,4 +1,5 @@
 //建立merchant地圖
+const googleApiKey = "AIzaSyA2sw2FO9nxUBiPPFC0ZDN8kqtdANk7sEQ";
 let map;
 let currentPosition;
 let selectedRestaurant;
@@ -34,18 +35,17 @@ async function initMap(){
 }
 
 function createAutocomplete() {
+    let bounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(currentPosition.lat - 0.001, currentPosition.lng - 0.001),
+        new google.maps.LatLng(currentPosition.lat + 0.001, currentPosition.lng + 0.001)
+    );
     return new google.maps.places.Autocomplete(
         document.getElementById('address'),
         {
-            types: ['geocode','establishment'],
-            bounds: {
-                east: currentPosition.lng + 0.001,
-                west: currentPosition.lng - 0.001,
-                south: currentPosition.lat - 0.001,
-                north: currentPosition.lat + 0.001,
-            },
+            types: ['geocode', 'establishment'],
+            bounds: bounds,
             strictBounds: false,
-            disableKeyboardInput: true,
+            disableKeyboardInput: false,
         }
     );
 }
@@ -63,11 +63,11 @@ function setMapCenterAndMarker(location) {
     marker.setPosition(location);
 }
 
-function searchLocation(selectedRestaurant) {
+async function searchLocation(selectedRestaurant) {
     return new Promise((resolve) => {
         const autocomplete = createAutocomplete();
 
-        autocomplete.addListener('place_changed', () => {
+        autocomplete.addListener('place_changed', async() => {
             const place = autocomplete.getPlace();
 
             if (place.geometry) {
@@ -83,7 +83,10 @@ function searchLocation(selectedRestaurant) {
                     setMapCenterAndMarker(selectedRestaurant.location);
                 }
                 resolve(selectedRestaurant);
-            } else {
+            }else if(place.name){
+                let siteLatAndLng = await geocodeAddress(place.name, googleApiKey);
+                resolve(siteLatAndLng);
+            }else{
                 resolve(null); // 或者你可以根據實際需求拒絕 Promise
             }
         });
@@ -100,9 +103,9 @@ function getRoad(currentPosition, locationData){
         });
         directionsRenderer.setMap(map);
 
+        // 這邊設置路線中間目的地
         const waypoints = [
             { location: locationData[0], stopover: true },
-            // Add more waypoints as needed
         ];
         
         const request = {
@@ -127,4 +130,21 @@ function getRoad(currentPosition, locationData){
     })
 }
 
+// 當使用者輸入地址而未點選自動生成的地址時，將地址轉換為經緯度
+async function geocodeAddress(address, apiKey){
+    const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+
+    return fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'OK') {
+                const location = data.results[0].geometry.location;
+                const latitude = location.lat;
+                const longitude = location.lng;
+                return { latitude, longitude };
+            } else {
+                throw new Error('Geocoding failed');
+            }
+        });
+}
 

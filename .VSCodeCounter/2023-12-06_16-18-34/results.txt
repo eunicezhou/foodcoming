@@ -1,0 +1,94 @@
+Date : 2023-12-06 16:18:34
+Directory : c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming
+Total : 52 files,  14602 codes, 380 comments, 247 blanks, all 15229 lines
+
+Languages
++------------------+------------+------------+------------+------------+------------+
+| language         | files      | code       | comment    | blank      | total      |
++------------------+------------+------------+------------+------------+------------+
+| JSON             |          1 |     10,075 |          0 |          0 |     10,075 |
+| JavaScript       |         17 |      1,532 |        176 |         99 |      1,807 |
+| CSS              |         10 |      1,325 |          0 |         16 |      1,341 |
+| HTML             |          9 |        749 |          3 |         24 |        776 |
+| Python           |         12 |        680 |        153 |         72 |        905 |
+| SQL              |          1 |        162 |         48 |         32 |        242 |
+| pip requirements |          1 |         69 |          0 |          0 |         69 |
+| Markdown         |          1 |         10 |          0 |          4 |         14 |
++------------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                              | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                 |         52 |     14,602 |        380 |        247 |     15,229 |
+| . (Files)                                                                                         |          4 |        245 |        131 |         36 |        412 |
+| blueprint_file                                                                                    |          5 |        451 |          7 |         24 |        482 |
+| data                                                                                              |          2 |     10,237 |         48 |         32 |     10,317 |
+| module                                                                                            |          5 |         63 |         15 |         16 |         94 |
+| static                                                                                            |         27 |      2,857 |        176 |        115 |      3,148 |
+| static\css                                                                                        |         10 |      1,325 |          0 |         16 |      1,341 |
+| static\javascript                                                                                 |         17 |      1,532 |        176 |         99 |      1,807 |
+| static\javascript\control                                                                         |          2 |         94 |          0 |          3 |         97 |
+| static\javascript\model                                                                           |          6 |        457 |          9 |         21 |        487 |
+| static\javascript\view                                                                            |          9 |        981 |        167 |         75 |      1,223 |
+| templates                                                                                         |          9 |        749 |          3 |         24 |        776 |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| filename                                                                                          | language         | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\README.md                                  | Markdown         |         10 |          0 |          4 |         14 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\app.py                                     | Python           |        138 |          3 |         20 |        161 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\blueprint_file\delever.py                  | Python           |         70 |          3 |          4 |         77 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\blueprint_file\member.py                   | Python           |         68 |          0 |          4 |         72 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\blueprint_file\merchant_file.py            | Python           |        106 |          0 |          3 |        109 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\blueprint_file\order.py                    | Python           |         92 |          2 |          6 |        100 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\blueprint_file\store.py                    | Python           |        115 |          2 |          7 |        124 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\data\data.sql                              | SQL              |        162 |         48 |         32 |        242 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\data\restaurant.json                       | JSON             |     10,075 |          0 |          0 |     10,075 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\module\countDistance.py                    | Python           |         13 |          5 |          7 |         25 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\module\database.py                         | Python           |         25 |         10 |          3 |         38 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\module\jsonify.py                          | Python           |          5 |          0 |          1 |          6 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\module\saveToS3.py                         | Python           |          9 |          0 |          3 |         12 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\module\token.py                            | Python           |         11 |          0 |          2 |         13 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\requirements.txt                           | pip requirements |         69 |          0 |          0 |         69 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\restaurant.py                              | Python           |         28 |        128 |         12 |        168 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\css\base.css                        | CSS              |        172 |          0 |          0 |        172 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\css\deleverPage.css                 | CSS              |        154 |          0 |          3 |        157 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\css\deleverfile.css                 | CSS              |         81 |          0 |          3 |         84 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\css\index.css                       | CSS              |        182 |          0 |          1 |        183 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\css\item.css                        | CSS              |         67 |          0 |          0 |         67 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\css\merchantfile.css                | CSS              |        248 |          0 |          7 |        255 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\css\payment.css                     | CSS              |        102 |          0 |          0 |        102 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\css\shopEditPage.css                | CSS              |        122 |          0 |          0 |        122 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\css\text.css                        | CSS              |         61 |          0 |          0 |         61 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\css\thankyou.css                    | CSS              |        136 |          0 |          2 |        138 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\control\confirmMember.js | JavaScript       |         86 |          0 |          3 |         89 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\control\previewPhoto.js  | JavaScript       |          8 |          0 |          0 |          8 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\model\deleverData.js     | JavaScript       |         57 |          1 |          3 |         61 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\model\fetchInfo.js       | JavaScript       |          5 |          0 |          0 |          5 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\model\memberData.js      | JavaScript       |         76 |          0 |          5 |         81 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\model\memberLocation.js  | JavaScript       |        107 |          0 |          9 |        116 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\model\merchantFile.js    | JavaScript       |        124 |          3 |          3 |        130 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\model\thankyou.js        | JavaScript       |         88 |          5 |          1 |         94 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\base_nav.js         | JavaScript       |         93 |          6 |          1 |        100 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\bookList.js         | JavaScript       |        170 |          4 |         11 |        185 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\deleverPhoto.js     | JavaScript       |         46 |          0 |          7 |         53 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\index_nav.js        | JavaScript       |        136 |          8 |          7 |        151 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\item.js             | JavaScript       |        139 |          0 |          5 |        144 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\maps.js             | JavaScript       |        129 |          7 |         15 |        151 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\menu.js             | JavaScript       |         57 |        137 |          3 |        197 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\store.js            | JavaScript       |         75 |          0 |         10 |         85 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\tappay.js           | JavaScript       |        136 |          5 |         16 |        157 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\base.html                        | HTML             |         61 |          0 |          5 |         66 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\deleverfile.html                 | HTML             |         56 |          0 |          5 |         61 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\deleverpage.html                 | HTML             |         78 |          0 |          2 |         80 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\index.html                       | HTML             |        137 |          2 |          3 |        142 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\itemPage.html                    | HTML             |         51 |          0 |          1 |         52 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\merchantfile.html                | HTML             |        130 |          0 |          0 |        130 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\merchantpage.html                | HTML             |         63 |          0 |          6 |         69 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\payment.html                     | HTML             |         87 |          1 |          2 |         90 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\templates\thankyou.html                    | HTML             |         86 |          0 |          0 |         86 |
+| Total                                                                                             |                  |     14,602 |        380 |        247 |     15,229 |
++---------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+

@@ -100,8 +100,13 @@ fileBTN.addEventListener('click',async()=>{
 initMap();
 document.getElementById('address').addEventListener('click',async()=>{
     let locateStore = await searchLocation();
-    storeLat = locateStore.location.lat;
-    storeLng = locateStore.location.lng;
+    if(locateStore.location){
+        storeLat = locateStore.location.lat;
+        storeLng = locateStore.location.lng;
+    }else{
+        storeLat = locateStore.latitude;
+        storeLat = locateStore.longitude;
+    }
 })
 
 // 將資料送到後端
