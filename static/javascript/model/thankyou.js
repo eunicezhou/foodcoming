@@ -1,9 +1,12 @@
+// import Peer from 'peerjs';
 const queryString = window.location.search;
 let orderId = queryString.split('&')[0].split('=')[1];
 const socket = io("http://localhost:4400");
 // const socket = io("formal.foodcoming.store",{
 //     path:"/mysocket"
 //     });
+// const peer = new Peer();
+
 window.addEventListener('load', async()=>{
     console.log(document.querySelector('#bar1'));
     document.querySelector('#bar1').style.animation = "progressBarAnimation 1s ease-out infinite";

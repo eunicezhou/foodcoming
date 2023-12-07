@@ -1,22 +1,22 @@
-function refreshnfo(name, refreshName){
+function refreshinfo(name, refreshName){
     document.querySelector(name).style.display = 'none';
     document.querySelector(refreshName).style.display = 'flex';
 }
 document.querySelector('.name').addEventListener('click',()=>{
-    refreshnfo('.name', '.refreshName');
+    refreshinfo('.name', '.refreshName');
 });
 document.querySelector('.phone').addEventListener('click',()=>{
-    refreshnfo('.phone', '.refreshPhone')
+    refreshinfo('.phone', '.refreshPhone')
 });
+
 let selectPosition;
 window.addEventListener('load',async()=>{
     document.querySelector('.name').innerHTML = `${memberData['data']['name']}`;
     document.querySelector('.phone').innerHTML = `${memberData['data']['phone']}`;
     let currentPosition = await initMap();
     document.querySelector('#address').addEventListener('click',async()=>{
-        selectPosition = await searchLocation(currentPosition);
+        selectPosition = await searchLocation();
         console.log(selectPosition);
-
     })
     let method = {
         method: "PUT",

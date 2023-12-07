@@ -1,7 +1,9 @@
+// import Peer from 'peerjs';
 const socket = io("http://localhost:4400");
 // const socket = io("formal.foodcoming.store",{
 //     path:"/mysocket"
 //     });
+// const peer = new Peer();
 window.addEventListener('DOMContentLoaded',async()=>{
     let memberData = await confirmMember();
     document.querySelector('.delever').textContent = `${memberData['data']['name']}，您好!`;
@@ -114,11 +116,13 @@ window.addEventListener('DOMContentLoaded',async()=>{
             arriveTime.className = "arriveTime";
             arriveTime.textContent = `預計完成訂單時間需:${durationInMinutes}分`
             acceptOrder.appendChild(arriveTime);
+            const roomId = document.querySelector('.acceptOrderNum').textContent.split(':')[1]
             socket.emit('update-order', {
-                'room':document.querySelector('.acceptOrderNum').textContent.split(':')[1],
+                'room':roomId,
                 'delever':memberData['name'],
                 'requireTime': durationInMinutes
-             })
+            })
+               
         })
     })
 })

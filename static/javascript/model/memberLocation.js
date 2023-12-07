@@ -23,7 +23,7 @@ async function init(){
 }
 window.addEventListener('DOMContentLoaded',init);
 document.querySelector('#address').addEventListener('click',async()=>{
-    let selectPosition = await searchLocation(currentPosition);
+    let selectPosition = await searchLocation();
     console.log(selectPosition);
     let method;
     let lat;
