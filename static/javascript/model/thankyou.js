@@ -1,11 +1,9 @@
-// import Peer from 'peerjs';
 const queryString = window.location.search;
 let orderId = queryString.split('&')[0].split('=')[1];
 const socket = io("http://localhost:4400");
 // const socket = io("formal.foodcoming.store",{
 //     path:"/mysocket"
 //     });
-// const peer = new Peer();
 
 window.addEventListener('load', async()=>{
     console.log(document.querySelector('#bar1'));
@@ -37,7 +35,7 @@ window.addEventListener('load', async()=>{
         document.querySelector('.creating_order').style.display = "none";
         document.querySelector('.matchingDelever').style.display = "block";
     },2000)
-    socket.emit('joinRoom', {'room':orderId,'name':memberData['name']})
+    socket.emit('joinRoom', {'room':orderId, 'name':memberData['name']})
     socket.on('message',(data)=>{
         console.log(data);
     })
@@ -59,7 +57,8 @@ socket.on('delever-match',(data)=>{
     document.querySelector('.arriveTime').textContent = `預計會在${timeString.split(' ')[1]}送達外送指定位置`;
     document.querySelector('.matchingDelever').style.display = 'none';
     document.querySelector('.foundDelever').style.display = 'block';
-});
+})
+
 socket.on('order-arrived',(data)=>{
     console.log(data);
     document.querySelector('#bar3').style.animation = "none";
@@ -69,6 +68,7 @@ socket.on('order-arrived',(data)=>{
     document.querySelector('.foundDelever').style.display = 'none';
     document.querySelector('.deleveryArrived').style.display = 'block';
 })
+
 socket.on('order-cancel',()=>{
     let waiting = document.querySelector('.waiting');
     waiting.style.display = "block";
@@ -89,6 +89,7 @@ socket.on('order-cancel',()=>{
         },500)
     })
 })
+
 document.querySelector('.complete').addEventListener('click',()=>{
     socket.emit('leaveRoom',{'room':orderId, 'name':memberData['name']})
         setTimeout(()=>{

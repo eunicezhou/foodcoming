@@ -61,6 +61,10 @@
 .deleverDetail{
   margin:0 0 30px;
 }
+.deliverLocation{
+  width:600px;
+  height: 400px;
+}
 .finish,.cancel{
   z-index: 15;
   position:absolute;

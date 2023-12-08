@@ -66,7 +66,6 @@ function setMapCenterAndMarker(location) {
 async function searchLocation() {
     return new Promise((resolve) => {
         const autocomplete = createAutocomplete();
-        console.log(autocomplete);
 
         autocomplete.addListener('place_changed', async() => {
             const place = autocomplete.getPlace();
@@ -149,3 +148,24 @@ async function geocodeAddress(address, apiKey){
         });
 }
 
+function getInstancePosition(){
+    if (navigator.geolocation) {
+        const watchId = navigator.geolocation.watchPosition(
+            function(position) {
+                const userLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                return userLocation;
+            },
+            function(error) {
+                return {'error': error};
+            }
+        );
+
+        // 如果需要停止監聽位置變化，可以使用以下代碼：
+        // navigator.geolocation.clearWatch(watchId);
+    } else {
+        console.error('Geolocation is not supported by this browser.');
+    }
+};

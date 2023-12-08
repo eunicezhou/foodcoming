@@ -112,7 +112,8 @@ def joinRoom(data):
 	room = data['room']
 	member = data['name']
 	join_room(room)
-	socketio.emit('message', f'{member} have joined the room: {room}',room=room)
+	message = f'{member} have joined the room: {room}'
+	socketio.emit('message',message ,room=room)
 	
 @socketio.on('complete-order')
 def completeOrder(data):

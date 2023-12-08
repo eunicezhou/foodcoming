@@ -22,10 +22,17 @@ window.addEventListener('load',async()=>{
     document.querySelector('.count').textContent = document.querySelector('.purchaseNum').value;
 })
 document.querySelector('.purchaseNum').addEventListener('click',()=>{
-    document.querySelector('.count').textContent = document.querySelector('.purchaseNum').value;
+    if(document.querySelector('.purchaseNum').value < 1){
+        document.querySelector('.alert').textContent = "請勿選取1以下的數量";
+    }else{
+        document.querySelector('.count').textContent = document.querySelector('.purchaseNum').value;
+    }
 })
 
 document.querySelector('.purchaseBTN').addEventListener('click',async()=>{
+    if(document.querySelector('.purchaseNum').value < 1){
+        return;
+    }
     console.log(memberData);
     if(Object.keys(memberData).length === 0){
         showUpForm(document.querySelector('.signInForm'));
