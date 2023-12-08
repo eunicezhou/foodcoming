@@ -24,6 +24,7 @@
 }
 .logo{
     height:80px;
+    cursor: pointer;
 }
 #lines{
     width:70px;

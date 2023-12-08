@@ -8,7 +8,7 @@ config = {
     'database':'foodcoming',
 	'port':3306,
 }
-connection_pool = pooling.MySQLConnectionPool(pool_name='postgram',pool_size=5,**config)
+connection_pool = pooling.MySQLConnectionPool(pool_name='postgram',pool_size=25,**config)
 
 def databaseConnect(execute_str,execute_argument=None):
 	connection = connection_pool.get_connection()

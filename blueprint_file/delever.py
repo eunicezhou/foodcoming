@@ -51,7 +51,7 @@ def accept():
     for ordershop in orderShops:
         destination_distance = distance(float(lat), float(lng), float(ordershop[2]), float(ordershop[3]))
         store_distance = distance(float(lat), float(lng), float(ordershop[6]), float(ordershop[7]))
-        if store_distance < 5:
+        if store_distance < 25:
             # if destination_distance < 25: //這邊之後要打開，以便篩選目的地
             #     print(destination_distance)
             reachable.append(ordershop[0])
