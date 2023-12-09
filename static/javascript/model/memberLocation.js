@@ -6,11 +6,16 @@ async function init(){
 window.addEventListener('DOMContentLoaded',init);
 
 document.querySelector('#address').addEventListener('click', async () => {
-    let currentPosition = await searchLocation();
-    let LatLng = await updateCoordinates(currentPosition.address ? currentPosition.location : currentPosition);
-    console.log(LatLng);
-    clearStores();
-    await fetchAndDisplayStores(LatLng.lat, LatLng.lng);
+    const autocomplete = createAutocomplete();
+    if(autocomplete){
+        let currentPosition = await searchLocation(autocomplete);
+        let LatLng = await updateCoordinates(currentPosition.address ? currentPosition.location : currentPosition);
+        console.log(LatLng);
+        clearStores();
+        await fetchAndDisplayStores(LatLng.lat, LatLng.lng);
+    }else{
+        location.reload();
+    }
 });
 
 document.querySelectorAll('.category').forEach(choice => {
@@ -37,9 +42,14 @@ async function fetchAndDisplayStores(lat, lng) {
     };
     const nearByStoreResult = await authAPI('/api/searchstore', method);
     console.log(nearByStoreResult);
-    for(let data of Object.values(nearByStoreResult)){
-        nearbyStore(data);
-    };
+    if(nearByStoreResult){
+        document.querySelectorAll('.fakeStore').forEach(store=>{
+            store.style.display = "none";
+        })
+        for(let data of Object.values(nearByStoreResult)){
+            nearbyStore(data);
+        };
+    }
 }
 
 function nearbyStore(nearByStoreResult) {

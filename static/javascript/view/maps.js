@@ -25,8 +25,11 @@ async function initMap(){
             map = new google.maps.Map(document.getElementById('map'),
             {center:{lat:23.553118,lng:121.0211024},
             zoom:11,});
-            map.setCenter(currentPosition);
-            map.setZoom(16); //當獲取到當前位置後，希望將地圖放大顯示
+            google.maps.event.addListenerOnce(map, 'idle', function() {
+                console.log('地圖已載入到頁面');
+                map.setCenter(currentPosition);
+                map.setZoom(16); //當獲取到當前位置後，希望將地圖放大顯示
+            });
         }
         return currentPosition;
     }catch(error){
@@ -63,9 +66,9 @@ function setMapCenterAndMarker(location) {
     marker.setPosition(location);
 }
 
-async function searchLocation() {
+async function searchLocation(autocomplete) {
     return new Promise((resolve) => {
-        const autocomplete = createAutocomplete();
+        // const autocomplete = createAutocomplete();
 
         autocomplete.addListener('place_changed', async() => {
             const place = autocomplete.getPlace();

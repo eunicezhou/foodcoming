@@ -35,6 +35,50 @@
     display: grid;
     grid-template-columns: 2fr 2fr 1fr 1fr 2fr;
 }
+.fakeItem{
+    background: #ececec;
+    background-size: 250px;
+    background-image: -webkit-linear-gradient(left, #ececec 0px, #ddd 40px, #ececec 80px);
+    -webkit-animation: shine-loading-container-items 2s infinite ease-out;
+            animation: shine-loading-container-items 2s infinite ease-out;
+}
+@keyframes shine-loading-container-items {
+    0% {
+        background-position: -100px;
+    }
+    40%, 100% {
+        background-position: 300px;
+    }
+}
+.fakeItem.itemPict{
+    width:300px;
+    height:200px;
+    margin-top: 10px;
+}
+.fakeItem.itemname{
+    height:30px;
+    width:300px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+.fakeItem.count{
+    height:30px;
+    width:100px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+.fakeItem.price{
+    height:30px;
+    width:100px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+.fakeItem.shopname{
+    height:30px;
+    width:200px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
 .itemPict, .itemname, .count, .price, .shopname{
     margin: 0;
     box-sizing: border-box;

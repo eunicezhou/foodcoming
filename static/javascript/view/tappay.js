@@ -11,12 +11,17 @@ document.querySelector('.phone').addEventListener('click',()=>{
 
 let selectPosition;
 window.addEventListener('load',async()=>{
+    let currentPosition = await initMap();
+    console.log(currentPosition);
     document.querySelector('.name').innerHTML = `${memberData['data']['name']}`;
     document.querySelector('.phone').innerHTML = `${memberData['data']['phone']}`;
-    let currentPosition = await initMap();
     document.querySelector('#address').addEventListener('click',async()=>{
-        selectPosition = await searchLocation();
-        console.log(selectPosition);
+        const autocomplete = createAutocomplete();
+        if(autocomplete){
+            selectPosition = await searchLocation(autocomplete);
+        }else{
+            location.reload();
+        }
     })
     let method = {
         method: "PUT",
@@ -28,7 +33,11 @@ window.addEventListener('load',async()=>{
         })
     }
     let cartInfo = await authAPI("/api/order", method);
-    let total = 0;
+    if(cartInfo){
+        document.querySelectorAll('.fakeItem').forEach(item=>{
+            item.style.display = "none";
+        })
+        let total = 0;
     for(let info of cartInfo['data']){
         let itemPict = document.createElement('div');
         itemPict.className = "itemPict label";
@@ -61,6 +70,7 @@ window.addEventListener('load',async()=>{
         document.querySelector('.order--content').appendChild(shopname);
     }
     document.querySelector('#total').textContent = `${total}`;
+    }
 })
 
 
