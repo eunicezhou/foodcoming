@@ -11,6 +11,20 @@ lines.addEventListener('click', () => {
     sidebar.querySelector('.shelder').addEventListener('click',()=>{
         sidebar.style.display = 'none';
     })
+    document.querySelectorAll('.purchase').forEach(purchaseBtn=>{
+        purchaseBtn.addEventListener('click',async()=>{
+            sidebar.style.display = 'none';
+            await checkCart();
+            document.querySelector('.close').addEventListener('click',()=>{
+                if(document.querySelector('.cart').style.display === "block"){
+                    document.querySelector('.cart').style.display = "none"
+                }
+            })
+            document.querySelector('.totalMoney').addEventListener('click',()=>{
+                window.location.href = "/order";
+            })
+        })
+    })
 })
 
 //登入登出設定
@@ -63,84 +77,7 @@ document.querySelector('.purchase').addEventListener('click',async()=>{
     if(Object.keys(memberData).length === 0){
         showUpForm(logInForm);
     }else{
-        let url = `/api/cart`;
-        let method = {
-            method: "PUT",
-            headers:{
-                'Content-Type':'application/json',
-            },
-            body: JSON.stringify({
-                'id':memberData['data']['id']
-            })
-        }
-        let cartItem = await authAPI(url, method);
-        console.log(cartItem);
-        if(Object.values(cartItem.data).length === 0){
-            document.querySelector('.cart').style.display = "block";
-        }else{
-            document.querySelector('.cart--contain').innerHTML = "";
-            for(let item of cartItem['data']){
-                let itemInCart = document.createElement('div');
-                itemInCart.className = "itemsInCart"
-                itemInCart.innerHTML = `
-                <div class="itemInCart" style="margin:0;">
-                    <span class="itemName label">${item[2]}</span>
-                    <span class="itemNumInCart label">${item[3]}份</span>
-                </div>
-                <div class="itemPrice label" style="margin:0;">\$ ${item[4]}元
-                    <img src="../static/image/trash.png" style="width:30px" class="deleteItemInCart">
-                </div>
-            `
-                document.querySelector('.cart--contain').appendChild(itemInCart);
-            }
-            let total = 0;
-            for(let money of document.querySelectorAll('.itemPrice')){
-                total += parseInt(money.innerHTML.match(/\d+/)[0]);
-            }
-            let cartTotalMoney = document.createElement('div');
-            cartTotalMoney.textContent = `總共\$${total}元，點擊結帳`;
-            cartTotalMoney.className = "totalMoney";
-            document.querySelector('.cart--contain').appendChild(cartTotalMoney);
-            document.querySelector('.cart').style.display = "block";
-            document.querySelectorAll('.deleteItemInCart').forEach(deleteItem=>{
-                deleteItem.addEventListener('click',async()=>{
-                    deleteItem.parentElement.parentElement.style.display="none";
-                    let itemName = deleteItem.parentElement.parentElement.querySelector('.itemName').innerHTML;
-                    let piece = deleteItem.parentElement.parentElement.querySelector('.itemNumInCart').innerHTML;
-                    let itemPrice = deleteItem.parentElement.parentElement.querySelector('.itemPrice').innerHTML;
-                    let price = itemPrice.match(/\d+/)[0];
-                    console.log(price);
-                    let method = {
-                        method: "DELETE",
-                        headers:{
-                            'Content-Type': 'application/json',
-                        },
-                        body:JSON.stringify({
-                            'member_id':memberData['data']['id'],
-                            'item':itemName,
-                            'piece':piece.replace(/\D/g, '')
-                        })
-                    }
-                    let deleteResult = await authAPI("/api/cart", method);
-                    let totalMoney = document.querySelector('.totalMoney').innerHTML;
-                    let total = totalMoney.match(/\d+/)[0];
-                    console.log(total);
-                    new_total = parseInt(total) - parseInt(price);
-                    if(new_total === 0){
-                        let cartImg = document.createElement('img');
-                        cartImg.src = "../static/image/shopping cart.png";
-                        let label = document.createElement("div");
-                        label.className = "label";
-                        label.textContent = "目前購物車是空的";
-                        document.querySelector('.cart--contain').innerHTML = "";
-                        document.querySelector('.cart--contain').appendChild(cartImg);
-                        document.querySelector('.cart--contain').appendChild(label);
-                    }else{
-                        document.querySelector('.totalMoney').textContent = `總共\$${new_total}元，點擊結帳`;
-                    }
-                })
-            })
-        }
+        await checkCart();
         document.querySelector('.close').addEventListener('click',()=>{
             if(document.querySelector('.cart').style.display === "block"){
                 document.querySelector('.cart').style.display = "none"
@@ -151,3 +88,87 @@ document.querySelector('.purchase').addEventListener('click',async()=>{
         })
     }
 })
+
+async function checkCart(){
+    let url = `/api/cart`;
+    let method = {
+        method: "PUT",
+        headers:{
+            'Content-Type':'application/json',
+        },
+        body: JSON.stringify({
+            'id':memberData['data']['id']
+        })
+    }
+    let cartItem = await authAPI(url, method);
+    console.log(cartItem);
+    if(Object.values(cartItem.data).length === 0){
+        document.querySelector('.cart').style.display = "block";
+    }else{
+        document.querySelector('.cart--contain').innerHTML = "";
+        for(let item of cartItem['data']){
+            let itemInCart = document.createElement('div');
+            itemInCart.className = "itemsInCart"
+            itemInCart.innerHTML = `
+            <div class="itemInCart" style="margin:0;">
+                <span class="itemName label">${item[2]}</span>
+                <span class="itemNumInCart label">${item[3]}份</span>
+            </div>
+            <div class="itemPrice label" style="margin:0;">\$ ${item[4]}元
+                <img src="../static/image/trash.png" style="width:30px" class="deleteItemInCart">
+            </div>
+            `
+            document.querySelector('.cart--contain').appendChild(itemInCart);
+        }
+        let total = 0;
+        for(let money of document.querySelectorAll('.itemPrice')){
+            total += parseInt(money.innerHTML.match(/\d+/)[0]);
+            }
+        let cartTotalMoney = document.createElement('div');
+        cartTotalMoney.textContent = `總共\$${total}元，點擊結帳`;
+        cartTotalMoney.className = "totalMoney";
+        document.querySelector('.cart--contain').appendChild(cartTotalMoney);
+        document.querySelector('.cart').style.display = "block";
+        document.querySelectorAll('.deleteItemInCart').forEach(deleteItem=>{
+            deleteItem.addEventListener('click', deleteCart)  
+        })
+    }
+}
+
+async function deleteCart(){
+    deleteItem.parentElement.parentElement.style.display="none";
+    let itemName = deleteItem.parentElement.parentElement.querySelector('.itemName').innerHTML;
+    let piece = deleteItem.parentElement.parentElement.querySelector('.itemNumInCart').innerHTML;
+    let itemPrice = deleteItem.parentElement.parentElement.querySelector('.itemPrice').innerHTML;
+    let price = itemPrice.match(/\d+/)[0];
+    console.log(price);
+    let method = {
+        method: "DELETE",
+        headers:{
+            'Content-Type': 'application/json',
+        },
+        body:JSON.stringify({
+            'member_id':memberData['data']['id'],
+            'item':itemName,
+            'piece':piece.replace(/\D/g, '')
+        })
+    }
+    let deleteResult = await authAPI("/api/cart", method);
+    let totalMoney = document.querySelector('.totalMoney').innerHTML;
+    let total = totalMoney.match(/\d+/)[0];
+    console.log(total);
+    new_total = parseInt(total) - parseInt(price);
+    if(new_total === 0){
+        let cartImg = document.createElement('img');
+        cartImg.src = "../static/image/shopping cart.png";
+        let label = document.createElement("div");
+        label.className = "label";
+        label.textContent = "目前購物車是空的";
+        document.querySelector('.cart--contain').innerHTML = "";
+        document.querySelector('.cart--contain').appendChild(cartImg);
+        document.querySelector('.cart--contain').appendChild(label);
+    }else{
+        document.querySelector('.totalMoney').textContent = `總共\$${new_total}元，點擊結帳`;
+    }
+}
+

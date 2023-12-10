@@ -147,7 +147,7 @@
 {% endblock otherelement %}   
 {% block script %}
     <script>
-        window.addEventListener('load',()=>{
+        window.addEventListener('DOMContentLoaded',()=>{
             let windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
             if (windowWidth < 900) {
                 document.querySelector('.logo').style.display = "none";
@@ -156,7 +156,7 @@
                 purchase.className = "purchase sidebar--text";
                 purchase.textContent = "購物車";
                 document.querySelector('.sidebar--button').appendChild(purchase);
-                document.querySelector('.member').innerHTML = "";
+                document.querySelector('.member').style.display = "none";
             }
         })
     </script>

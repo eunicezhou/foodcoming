@@ -105,7 +105,14 @@ window.addEventListener('DOMContentLoaded',async()=>{
                 scrollwheel: false,
                 disableDoubleClickZoom: true
             });
-            document.querySelector('#map').style.height = "70vh";
+            let windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            if (windowWidth < 900) {
+                document.querySelector('#map').style.height = "50vh";
+                document.querySelector('#map').style.margin = "20px 0";
+                document.querySelector('.contain').style = "flex-direction: column;";
+            }else{
+                document.querySelector('#map').style.height = "70vh";
+            }
             let currentPosition = await initMap(); 
             let durationInMinutes = await countTime(currentPosition);
             console.log(durationInMinutes);

@@ -155,3 +155,11 @@
     display: flex;
     gap:30px;
 }
+@media(max-width: 1800px) {
+    .contain{
+        margin: 30px;
+    }
+    .bookingNumber, .store, .order, .destination, .accept{
+        height:100px;
+    }
+}

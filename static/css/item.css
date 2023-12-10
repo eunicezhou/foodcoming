@@ -66,3 +66,21 @@
     bottom:0;
     cursor: pointer;
 }
+@media(max-width:1500px) {
+    .content{
+        padding:30px;
+    }
+    .purchaseBTN{
+        width:auto;
+        white-space: nowrap;
+    }
+}
+@media(max-width:1130px) {
+    .content--contain{
+        flex-direction: column;
+    }
+    .purchaseBTN{
+        position:relative;
+        width:400px;
+    }
+}
