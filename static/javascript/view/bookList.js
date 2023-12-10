@@ -124,6 +124,11 @@ window.addEventListener('DOMContentLoaded',async()=>{
     })
 })
 
+socket.on('getDeliverPosition',async()=>{
+    let deliverProgressingPosition = await getCurrentLocation();
+    socket.emit('deliverPositionReply', deliverProgressingPosition);
+})
+
 // 獲得外送預計時間
 function countTime(currentPosition) {
     return new Promise((resolve, reject) => {
@@ -131,6 +136,7 @@ function countTime(currentPosition) {
             try {
                 console.log(locationData[0]);
                 const durationInMinutes = await getRoad(currentPosition, locationData[0]);
+                socket.emit('deliver-road',{'currentPosition':currentPosition, 'locationInfo':locationData[0]})
                 resolve(durationInMinutes);
             } catch (error) {
                 reject(error);

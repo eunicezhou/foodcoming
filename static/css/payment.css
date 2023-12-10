@@ -54,10 +54,11 @@
     width:300px;
     height:200px;
     margin-top: 10px;
+    margin-right: 10px;
 }
 .fakeItem.itemname{
     height:30px;
-    width:300px;
+    width:200px;
     border-radius: 10px;
     margin-top: 10px;
 }
@@ -82,7 +83,7 @@
 .itemPict, .itemname, .count, .price, .shopname{
     margin: 0;
     box-sizing: border-box;
-    padding: 10px 0;
+    padding: 10px;
     border-bottom: 1px solid var(--secondary-color);
 }
 .itemPict img{
@@ -143,4 +144,18 @@
     padding: 5px 0;
     margin-top: 20px;
     cursor: pointer;
+}
+@media(max-width:1400px) {
+    .fakeItem.itemPict{
+        width:auto;
+    }
+    .itemPict{
+        width:auto;
+    }
+    .itemPict img{
+        width:100%;
+    }
+    .content{
+        margin: 0 30px;
+    }
 }

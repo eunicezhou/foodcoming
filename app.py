@@ -158,5 +158,33 @@ def updateOrder(data):
         'delever':delever,
         'requireTime': requireTime
 		})
+@socketio.on('deliver-road')
+def getDeliverRoadData(data):
+	print(data)
+	deliverPosition = data['currentPosition']
+	restaurant = {
+		'address': data['locationInfo'][0],
+		'latitude': data['locationInfo'][1],
+		'longitude':data['locationInfo'][2]
+	}
+	destination = {
+		'address':data['locationInfo'][3],
+		'latitude':data['locationInfo'][4],
+		'longitude':data['locationInfo'][5]
+	}
+	socketio.emit('getDeliverRoad', {
+		'deliverPosition':deliverPosition,
+		'restaurant':restaurant,
+		'destination':destination
+	})
+
+@socketio.on('requestDeliverPosition')
+def requestDeliverPosition():
+	socketio.emit('getDeliverPosition')
+
+@socketio.on('deliverPositionReply')
+def deliverPositionReply(data):
+	print(data)
+	socketio.emit('replyDeliverPositionToConsumer', data)
 
 socketio.run(app, debug=True, host="0.0.0.0", port=4400)

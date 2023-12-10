@@ -19,10 +19,30 @@
     height:300px;
     position:relative;
 }
+.fakeItem{
+    background: #ececec;
+    background-size: 250px;
+    background-image: -webkit-linear-gradient(left, #ececec 0px, #ddd 40px, #ececec 80px);
+    -webkit-animation: shine-loading-container-items 2s infinite ease-out;
+            animation: shine-loading-container-items 2s infinite ease-out;
+}
+@keyframes shine-loading-container-items {
+    0% {
+        background-position: -100px;
+    }
+    40%, 100% {
+        background-position: 300px;
+    }
+}
 .shopPhoto{
     width:100%;
     height:100%;
     object-fit: cover;
+    display: none;
+}
+.loadingShopPhoto{
+    width:100%;
+    height:100%;
 }
 #editShopPhoto{
     z-index: 2;
@@ -33,12 +53,24 @@
 .edit{
     width:30px;
 }
+.loadingShopCategory{
+    width:50px;
+    height: 50px;
+    margin-right: 10px;
+}
 .shopCat{
     width:50px;
     height: 50px;
+    display: none;
 }
 .description{
     display:flex;
+    box-sizing: border-box;
+    padding:10px;
+}
+.loadingShopName{
+    width:250px;
+    height:40px;
 }
 .shopname{
     display:flex;
@@ -53,6 +85,10 @@
     display: flex;
     align-items: center;
 }
+.loadingCategoryName{
+    width:100px;
+    height: 30px;
+}
 .contain--content{
     display:flex;
     gap:30px;
@@ -62,7 +98,11 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    padding:50px 0;
+    padding:50px 0 50px 10px;
+}
+.loadingDishClass{
+    width:250px;
+    height:40px;
 }
 .dishClass{
     font-size: 1.2em;
@@ -78,16 +118,23 @@
     box-sizing: border-box;
     padding-right: 200px;
 }
-.item{
+.loadingItem{
     margin:20px;
     width:400px;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid var(--secondary-color); 
+}
+.item{
+    margin:20px;
+    width:auto;
     box-sizing: border-box;
     padding: 10px;
     border: 1px solid var(--secondary-color);
 }
 .className{
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 .classDiv{
     width:100%;
@@ -98,11 +145,15 @@
     font-size: 1.3em;
     color:var(--text-color);
     font-weight: 700;
-    margin:10px 20px;
+    margin:10px;
     box-sizing: border-box;
     padding: 10px 0;
     width:100%;
     border-bottom: 1px solid var(--secondary-color);
+}
+.loadingItemPict{
+    width:100%;
+    height:300px;
 }
 .itemPhoto{
     width:100%;
@@ -113,10 +164,35 @@
     height:100%;
     object-fit: cover;
 }
+.loadingItemDetail{
+    width:200px;
+    height:20px;
+}
 .itemDetail{
     display:flex;
     flex-direction: column;
 }
+.loadingItemName{
+    width:100px;
+    height:30px;
+    margin:5px 0;
+}
 .itemName{
     margin: 0;
+}
+@media(max-width:1450px) {
+    .className{
+        grid-template-columns: 1fr 1fr;
+    }
+    .content--right{
+        padding-right: 30px;
+    }
+}
+@media(max-width:900px) {
+    .content--left{
+        display: none;
+    }
+    .className{
+        grid-template-columns: 1fr;
+    }
 }

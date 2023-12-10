@@ -146,6 +146,20 @@
     </section>  
 {% endblock otherelement %}   
 {% block script %}
+    <script>
+        window.addEventListener('load',()=>{
+            let windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            if (windowWidth < 900) {
+                document.querySelector('.logo').style.display = "none";
+                document.querySelector('.purchase.title').style.display = "none";
+                let purchase = document.createElement('div');
+                purchase.className = "purchase sidebar--text";
+                purchase.textContent = "購物車";
+                document.querySelector('.sidebar--button').appendChild(purchase);
+                document.querySelector('.member').innerHTML = "";
+            }
+        })
+    </script>
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2sw2FO9nxUBiPPFC0ZDN8kqtdANk7sEQ&libraries=places&callback=initMap&region=TW&language=zh-TW">
     </script>
     <script src="../static/javascript/view/maps.js"></script>

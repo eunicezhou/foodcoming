@@ -55,7 +55,7 @@
                 <h1 class="arriveTime"></h1>
             </div>
             <h1>外送員正在取餐 請稍後...</h1>
-            <div class="deliverLocation"></div>
+            <div id="map"></div>
         </div>
         <div class="deleveryArrived" style="display: none;">
             <h1>外送員已將您的訂單送至指定位置</h1>
@@ -80,6 +80,8 @@
 </section>
 {% endblock otherelement %}
 {% block script %}
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2sw2FO9nxUBiPPFC0ZDN8kqtdANk7sEQ&libraries=places&callback=initMap&region=TW&language=zh-TW">
+</script>
 <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" 
 integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" 
 crossorigin="anonymous"></script>

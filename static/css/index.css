@@ -220,3 +220,25 @@ color:var(--forth-color);
     display:flex;
     flex-direction: column;
 }
+@media(max-width: 1200px) {
+    .content--buttom{
+        margin:0 30px;
+    }
+    .stores{
+        grid-template-columns: 1fr 1fr;
+    }
+    .storePhoto{
+        width:100%;
+    }
+    .loadingImg{
+        width: 100%;
+    }
+    .header{
+        flex-wrap: wrap;
+    }
+}
+@media(max-width: 650px) {
+    .stores{
+        grid-template-columns: 1fr;
+    }
+}
