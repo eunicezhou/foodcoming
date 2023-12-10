@@ -1,7 +1,13 @@
 async function init(){
     let currentPosition = await initMap();
     let LatLng = await updateCoordinates(currentPosition);
-    fetchAndDisplayStores(LatLng.lat, LatLng.lng)
+    fetchAndDisplayStores(LatLng.lat, LatLng.lng);
+    document.querySelectorAll('.category').forEach(choice => {
+        choice.addEventListener('click', async () => {
+            clearStores();
+            storeCategory(choice, LatLng.lat, LatLng.lng);
+        });
+    });
 }
 window.addEventListener('DOMContentLoaded',init);
 
@@ -13,16 +19,15 @@ document.querySelector('#address').addEventListener('click', async () => {
         console.log(LatLng);
         clearStores();
         await fetchAndDisplayStores(LatLng.lat, LatLng.lng);
+        document.querySelectorAll('.category').forEach(choice => {
+            choice.addEventListener('click', async () => {
+                clearStores();
+                storeCategory(choice, LatLng.lat, LatLng.lng);
+            });
+        });
     }else{
         location.reload();
     }
-});
-
-document.querySelectorAll('.category').forEach(choice => {
-    choice.addEventListener('click', async () => {
-        clearStores();
-        storeCategory(choice);
-    });
 });
 
 async function updateCoordinates(location) {
