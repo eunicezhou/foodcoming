@@ -99,6 +99,7 @@ fileBTN.addEventListener('click',async()=>{
 //建立地圖資訊
 initMap();
 document.getElementById('address').addEventListener('click',async()=>{
+    const autocomplete = createAutocomplete();
     let locateStore = await searchLocation();
     if(locateStore.location){
         storeLat = locateStore.location.lat;
