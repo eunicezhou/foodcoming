@@ -3,6 +3,7 @@
 }
 .member>img{
     width:60px;
+    cursor: pointer;
 }
 .contain{
     margin: 0;

@@ -3,8 +3,9 @@ const socket = io("http://localhost:4400");
 //     path:"/mysocket"
 //     });
 window.addEventListener('DOMContentLoaded',async()=>{
-    let memberData = await confirmMember();
-    document.querySelector('.delever').textContent = `${memberData['data']['name']}，您好!`;
+    const userStatement = new UserStatement();
+    const memberData = await userStatement.confirmUserStatement();
+    document.querySelector('.delever').textContent = `${memberData['name']}，您好!`;
     let currentPosition = await initMap(); 
     setMapCenterAndMarker(currentPosition);
     

@@ -69,11 +69,6 @@ function showUpForm(form){
 
 //購物車
 document.querySelector('.purchase').addEventListener('click',async()=>{
-    // 不能直接使用 === 來比較一個物件和一個空物件 {} 是否相等，
-    // 因為這將比較它們的引用而不是它們的內容。即使兩個物件具有相同的內容，
-    // 它們也被認為是不相等的，因為它們是不同的實例。
-    // 如果你想檢查 memberData 是否為空物件，你可以使用 Object.keys() 
-    // 來檢查物件是否有任何屬性
     if(Object.keys(memberData).length === 0){
         showUpForm(logInForm);
     }else{
