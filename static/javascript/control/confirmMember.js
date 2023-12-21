@@ -1,6 +1,7 @@
 // Model: 取得使用者資訊
 async function confirmUserStatement(){
     let token = localStorage.getItem('token');
+    let fetchInfo = new FetchInfo();
     this.memberData = {};
     try{
         if(token){
@@ -10,7 +11,7 @@ async function confirmUserStatement(){
                         "Content-Type":"application/json",
                         "Authorization": `Bearer ${token}`
                     }}
-            let response = await authAPI(url,method);
+            let response = await fetchInfo.authAPI(url,method);
             console.log(response);
             this.memberData['email'] = response.data.email;
             this.memberData['id'] = response.data.id;

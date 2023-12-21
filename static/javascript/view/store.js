@@ -2,13 +2,14 @@ let currentUrl = window.location.href;
 let modified_url = currentUrl.replace(/\/store.*/, '');
 let id = currentUrl.match(/\/store\/(\d+)/)[1];
 window.addEventListener('load', async()=>{
+    let fetchInfo = new FetchInfo();
     let url = `${modified_url}/api/store`;
     let method = {
     method: "PUT",
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({'id': id}),
     }
-    let storeData = await authAPI(url, method);
+    let storeData = await fetchInfo.authAPI(url, method);
     if(storeData){
         document.querySelector('.loadingItem').style.display = "none";
         document.querySelectorAll('.fakeItem').forEach(item=>{
@@ -88,5 +89,3 @@ window.addEventListener('load', async()=>{
         )
     }
 })
-
-    

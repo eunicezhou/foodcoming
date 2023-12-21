@@ -1,9 +1,14 @@
-//登入人頭點擊
-document.querySelector('.member').addEventListener('click', confirmLogIn)
-
 const fileBTN = document.querySelector('.submitBTN');
 const shopCategory = document.querySelector('#shopcategory');
 
+// View: 跳出登入表單
+document.querySelector('.member').addEventListener('click', confirmLogIn)
+document.querySelector('#bossname').addEventListener('click',confirmLogIn)
+
+// View: 地圖將顯示位置換到輸入地點
+document.getElementById('address').addEventListener('click',inputAddress)
+
+// View: 點擊種類，跳出種類選項
 shopCategory.addEventListener('click',()=>{
     const categories = document.querySelector('.categoryChoose');
     categories.style = `
@@ -17,11 +22,11 @@ shopCategory.addEventListener('click',()=>{
         categories.style = `display:none;`
     })
 })
-let storeLat;
-let storeLng;
+    
 fileBTN.addEventListener('click',async()=>{
     let dishmenu = new Map();
     let formData = new FormData();
+    let fetchInfo = new FetchInfo();
     let dishCat;
     formData.append('memberEmail', memberEmail);
     formData.append('bossName', document.querySelector('#bossname').value);
@@ -31,8 +36,10 @@ fileBTN.addEventListener('click',async()=>{
     formData.append('shopPhoto', Object.values(shopImg_file)[0]);
     formData.append('shopCategoryValue', shopCategory.innerHTML);
     formData.append('address', document.querySelector('#address').value);
-    formData.append('lat', storeLat);
-    formData.append('lng', storeLng);
+    let inputAddress = await searchLocation(document.querySelector('#address').value)
+    let LatLng = transformToLatLng(inputAddress);
+    formData.append('lat', LatLng['lat']);
+    formData.append('lng', LatLng['lng']);
     formData.append('startTime', document.querySelector('#startTime').value);
     formData.append('endTime', document.querySelector('#endTime').value);
     let holiday = document.getElementsByName('holiday');
@@ -70,10 +77,11 @@ fileBTN.addEventListener('click',async()=>{
     let id = 0;
     for(let photo of Object.values(photoFiles)){ 
         console.log(photo);
-        formData.append(`photo${id}`,photo);
+        formData.append(`photo${id}`, photo);
         id += 1;
     }
-    let sendReply = await merchantSetUp(formData);
+    let method = {method: "POST", body: formData,}
+    let sendReply = await fetchInfo.merchantSetUp('/api/merchant', method);
     if(sendReply.token){
         localStorage.setItem('token',sendReply.token);
         let token = localStorage.getItem('token');
@@ -82,42 +90,9 @@ fileBTN.addEventListener('click',async()=>{
                     "Content-Type":"application/json",
                     "Authorization": `Bearer ${token}`
                 }}
-        memberData = await authAPI("/api/auth/login",method);
+        memberData = await fetchInfo.authAPI("/api/auth/login",method);
         id = parseInt(memberData['merchant_id']);
         let url = `/store/${id}`;
         window.location.href = url;
-    }
-})
-//建立地圖資訊
-initMap();
-document.getElementById('address').addEventListener('click',async()=>{
-    const autocomplete = createAutocomplete();
-    let locateStore = await searchLocation();
-    if(locateStore.location){
-        storeLat = locateStore.location.lat;
-        storeLng = locateStore.location.lng;
-    }else{
-        storeLat = locateStore.latitude;
-        storeLat = locateStore.longitude;
-    }
-})
-
-// 將資料送到後端
-async function merchantSetUp(formData){
-    let store = await fetch("/api/merchant",
-        {method: "POST",
-        body: formData,
-        }
-    )
-    let result = await store.json();
-    return result;
-}
-document.querySelector('#bossname').addEventListener('click',()=>{
-    if(Object.keys(memberData).length === 0){
-        showUpForm(document.querySelector('.signInForm'));
-        document.querySelector('.notMember').addEventListener('click',()=>{
-            document.querySelector('.signInForm').style.display = "none";
-            showUpForm(document.querySelector('.signUpForm'));
-        })
     }
 })

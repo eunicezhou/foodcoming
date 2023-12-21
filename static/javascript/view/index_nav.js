@@ -85,6 +85,7 @@ document.querySelector('.purchase').addEventListener('click',async()=>{
 })
 
 async function checkCart(){
+    let fetchInfo = new FetchInfo();
     let url = `/api/cart`;
     let method = {
         method: "PUT",
@@ -95,7 +96,7 @@ async function checkCart(){
             'id':memberData['data']['id']
         })
     }
-    let cartItem = await authAPI(url, method);
+    let cartItem = await fetchInfo.authAPI(url, method);
     console.log(cartItem);
     if(Object.values(cartItem.data).length === 0){
         document.querySelector('.cart').style.display = "block";
@@ -131,6 +132,7 @@ async function checkCart(){
 }
 
 async function deleteCart(){
+    let fetchInfo = new FetchInfo();
     deleteItem.parentElement.parentElement.style.display="none";
     let itemName = deleteItem.parentElement.parentElement.querySelector('.itemName').innerHTML;
     let piece = deleteItem.parentElement.parentElement.querySelector('.itemNumInCart').innerHTML;
@@ -148,7 +150,7 @@ async function deleteCart(){
             'piece':piece.replace(/\D/g, '')
         })
     }
-    let deleteResult = await authAPI("/api/cart", method);
+    let deleteResult = await fetchInfo.authAPI("/api/cart", method);
     let totalMoney = document.querySelector('.totalMoney').innerHTML;
     let total = totalMoney.match(/\d+/)[0];
     console.log(total);

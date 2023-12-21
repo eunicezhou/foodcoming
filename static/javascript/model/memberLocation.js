@@ -1,7 +1,8 @@
+// Model: 初始化，獲取使用者當前位置附近的商家
 async function init(){
-    let currentPosition = await initMap();
-    let LatLng = await updateCoordinates(currentPosition);
-    fetchAndDisplayStores(LatLng.lat, LatLng.lng);
+    let currentPosition = await getCurrentLocation();
+    console.log(currentPosition);
+    fetchAndDisplayStores(currentPosition.lat, currentPosition.lng);
     document.querySelectorAll('.category').forEach(choice => {
         choice.addEventListener('click', async () => {
             clearStores();
@@ -11,32 +12,44 @@ async function init(){
 }
 window.addEventListener('DOMContentLoaded',init);
 
+// Model: 獲取使用者輸入地址之後的商家
 document.querySelector('#address').addEventListener('click', async () => {
-    const autocomplete = createAutocomplete();
-    if(autocomplete){
-        let currentPosition = await searchLocation(autocomplete);
-        let LatLng = await updateCoordinates(currentPosition.address ? currentPosition.location : currentPosition);
-        console.log(LatLng);
-        clearStores();
-        await fetchAndDisplayStores(LatLng.lat, LatLng.lng);
-        document.querySelectorAll('.category').forEach(choice => {
-            choice.addEventListener('click', async () => {
-                clearStores();
-                storeCategory(choice, LatLng.lat, LatLng.lng);
-            });
+    let currentPosition = await inputAddress();
+    let LatLng = transformToLatLng(currentPosition);
+    clearStores();
+    await fetchAndDisplayStores(LatLng.lat, LatLng.lng);
+    document.querySelectorAll('.category').forEach(choice => {
+        choice.addEventListener('click', async () => {
+            clearStores();
+            storeCategory(choice, LatLng.lat, LatLng.lng);
         });
-    }else{
-        location.reload();
-    }
+    });
 });
 
-async function updateCoordinates(location) {
-    const lat = location.lat || location.latitude;
-    const lng = location.lng || location.longitude;
-    return { lat, lng };
+// Model: 點擊種類，獲取該種類的附近商家
+async function storeCategory(choice,lat,lng){
+    let fetchInfo = new FetchInfo();
+    let catTitle = choice.querySelector('.catTitle').textContent;
+    console.log(catTitle);
+    let url = "/api/searchstore";
+    let method = {
+        method: "PUT",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            'category':catTitle,
+            'lat': lat,
+            'lng': lng
+        })
+    }
+    let nearByStoreResult = await fetchInfo.authAPI(url, method);
+    for(let data in nearByStoreResult){
+        nearbyStore(nearByStoreResult[`${data}`]);
+    }
 }
 
+//Model: 獲取附近店家資訊
 async function fetchAndDisplayStores(lat, lng) {
+    let fetchInfo = new FetchInfo();
     const method = {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
@@ -45,7 +58,7 @@ async function fetchAndDisplayStores(lat, lng) {
             'lng': lng
         })
     };
-    const nearByStoreResult = await authAPI('/api/searchstore', method);
+    const nearByStoreResult = await fetchInfo.authAPI('/api/searchstore', method);
     console.log(nearByStoreResult);
     if(nearByStoreResult){
         document.querySelectorAll('.fakeStore').forEach(store=>{
@@ -57,6 +70,7 @@ async function fetchAndDisplayStores(lat, lng) {
     }
 }
 
+// View: 將商家放到頁面上
 function nearbyStore(nearByStoreResult) {
     const store = document.createElement('div');
     store.className = 'store';
@@ -87,26 +101,8 @@ function nearbyStore(nearByStoreResult) {
     document.querySelector('.stores').appendChild(store);
 }
 
+// View: 清除頁面上的商家
 function clearStores() {
     const storesContainer = document.querySelector('.stores');
     storesContainer.innerHTML = '';
-}
-
-async function storeCategory(choice,lat,lng){
-    let catTitle = choice.querySelector('.catTitle').textContent;
-    console.log(catTitle);
-    let url = "/api/searchstore";
-    let method = {
-        method: "PUT",
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            'category':catTitle,
-            'lat': lat,
-            'lng': lng
-        })
-    }
-    let nearByStoreResult = await authAPI(url, method);
-    for(let data in nearByStoreResult){
-        nearbyStore(nearByStoreResult[`${data}`]);
-    }
 }
