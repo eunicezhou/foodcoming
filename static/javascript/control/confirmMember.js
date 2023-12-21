@@ -1,70 +1,99 @@
-let memberEmail;
-let memberData = {};
-async function confirmMember(){
+// Model: 取得使用者資訊
+async function confirmUserStatement(){
     let token = localStorage.getItem('token');
-    if(token){
-        let url = "/api/auth/login";
-        let method = {method:"GET",
-                headers:{
-                    "Content-Type":"application/json",
-                    "Authorization": `Bearer ${token}`
-                }}
-        let memberData = await authAPI(url,method);
-        memberData['email'] = memberData.data.email;
-        memberData['id'] = memberData.data.id;
-        memberData['name'] = memberData.data.name;
-        memberEmail = memberData.data.email;
-    }
-    return memberData
+    this.memberData = {};
+    try{
+        if(token){
+            let url = "/api/auth/login";
+            let method = {method:"GET",
+                    headers:{
+                        "Content-Type":"application/json",
+                        "Authorization": `Bearer ${token}`
+                    }}
+            let response = await authAPI(url,method);
+            console.log(response);
+            this.memberData['email'] = response.data.email;
+            this.memberData['id'] = response.data.id;
+            this.memberData['name'] = response.data.name;
+            this.memberData['phone'] = response.data.phone;
+            this.memberData['merchant_id'] = response.data.id;
+            this.memberData['delever_id'] = response.data.id;
+            console.log(this.memberData);
+            return this.memberData;
+        }else{
+            this.memberData['message'] = "user haven't login"
+            return this.memberData;
+        }   
+    }catch(error){
+        console.error("Error message:", error);
+    }  
 }
 
+// View: 登出系統
+function signout(){
+    localStorage.removeItem("token");
+    window.location.reload();
+}
+
+// View: 顯示表單
+function showUpForm(form){
+    form.style.display = 'flex';
+    form.querySelector('.shelder').addEventListener('click',()=>{
+        form.style.display = 'none';
+    })
+}
+
+// View: 關閉表單
+function closeForm(form){
+    form.style.display = 'none';
+}
+
+// View: 跳出sidebar
+function showUpSidebar(memberData){
+    if(memberData['email']){
+        document.querySelector('.sidebar--top').innerHTML=`<div class="fakeBTN signout">登出系統</div>`
+    }
+    if(memberData['merchant_id'] !== null){
+        document.querySelector('.shopsfellow').textContent = "您的店家頁面";
+        document.querySelector('.shopsfellow').href = `/store/${parseInt(memberData['merchant_id'])}`;
+    }else{
+        document.querySelector('.shopsfellow').href="/merchantSetup"
+    }
+    if(memberData['delever_id'] !== null){
+        document.querySelector('.deliverfellow').textContent = "外送員專區 : 您的鄰近訂單";
+        document.querySelector('.deliverfellow').href = `/delever`;
+    }else{
+        document.querySelector('.deliverfellow').href="/deleverSetup"
+    }
+}
+
+// View: 警告未登入，跳出登入表單
+async function confirmLogIn(){
+    const memberData = await confirmUserStatement();
+    if(!memberData.email){
+        showUpForm(document.querySelector('.signInForm'));
+        document.querySelector('.notMember').addEventListener('click',()=>{
+            closeForm(document.querySelector('.signInForm'))
+            showUpForm(document.querySelector('.signUpForm'));
+        })
+    }
+}
+
+// Controller: 畫面載入時的身分驗證及頁面顯示
 window.addEventListener('DOMContentLoaded', async()=>{
-    let token = localStorage.getItem('token');
-    if(token){
-        let url = "/api/auth/login";
-        let method = {method:"GET",
-                headers:{
-                    "Content-Type":"application/json",
-                    "Authorization": `Bearer ${token}`
-                }}
-        memberData = await authAPI(url,method);
-        console.log(memberData);
-        memberData['email'] = memberData.data.email;
-        memberData['id'] = memberData.data.id;
-        memberData['name'] = memberData.data.name;
-        memberData['merchant_id'] = memberData.data.merchant_id;
-        memberData['delever_id'] = memberData.data.delever_id;
-        memberEmail = memberData.data.email;
-        if(document.querySelector('.sidebar--top')){
-            document.querySelector('.sidebar--top').innerHTML=`
-            <div class="fakeBTN signout">登出系統</div>
-            `
-            if(memberData['merchant_id'] !== null){
-                document.querySelector('.shopsfellow').textContent = "您的店家頁面";
-                document.querySelector('.shopsfellow').href = `/store/${parseInt(memberData['merchant_id'])}`;
-            }else{
-                document.querySelector('.shopsfellow').href="/merchantSetup"
-            }
-            if(memberData['delever_id'] !== null){
-                document.querySelector('.deliverfellow').textContent = "外送員專區 : 您的鄰近訂單";
-                document.querySelector('.deliverfellow').href = `/delever`;
-            }else{
-                document.querySelector('.deliverfellow').href="/deleverSetup"
-            }
-        }
-        if(document.querySelector('.member')){
-            document.querySelector('.member').innerHTML=`
-            <span class="signout title">登出系統</span>
-            `
-        }
+    const memberData = await confirmUserStatement();
+    console.log(memberData);
+    if(memberData.email){
+        if(document.querySelector('.sidebar--top')){showUpSidebar(memberData);}
+        if(document.querySelector('.member')){document.querySelector('.member').innerHTML=`<span class="signout title">登出系統</span>`}
         if(document.querySelector('.storeNearby')){
             document.querySelector('.storeNearby').innerHTML = `
-            <h3 class=".memberName">${memberData.data.name} 您好，</h3>
+            <h3 class=".memberName">${memberData.name} 您好，</h3>
             <h3>推薦您附近的熱門餐廳</h3>`;
         }
         if(document.querySelector('.startStore')){
             document.querySelector('.startStore').innerHTML = `
-            <h3 class=".memberName">${memberData.data.name} 您好，</h3>
+            <h3 class=".memberName">${memberData.name} 您好，</h3>
             <h3>開始建立您的餐廳</h3>`;
         }
         if(document.querySelector('.signout')){
@@ -75,15 +104,3 @@ window.addEventListener('DOMContentLoaded', async()=>{
         }
     }
 })
-
-function signout(){
-    localStorage.removeItem("token");
-    window.location.reload();
-}
-
-function showUpForm(form){
-    form.style.display = 'flex';
-    form.querySelector('.shelder').addEventListener('click',()=>{
-        form.style.display = 'none';
-    })
-}

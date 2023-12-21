@@ -1,13 +1,5 @@
 //登入人頭點擊
-document.querySelector('.member').addEventListener('click',()=>{
-    if(Object.keys(memberData).length === 0){
-        showUpForm(document.querySelector('.signInForm'));
-        document.querySelector('.notMember').addEventListener('click',()=>{
-            document.querySelector('.signInForm').style.display = "none";
-            showUpForm(document.querySelector('.signUpForm'));
-        })
-    }
-})
+document.querySelector('.member').addEventListener('click', confirmLogIn)
 
 const fileBTN = document.querySelector('.submitBTN');
 const shopCategory = document.querySelector('#shopcategory');
