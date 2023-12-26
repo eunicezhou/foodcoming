@@ -109,7 +109,7 @@ async function initMap(currentPosition){
         if(document.getElementById('map')){
             map = new google.maps.Map(document.getElementById('map'),
             {center:{lat:23.553118,lng:121.0211024},
-            zoom:11,});
+            zoom:13,});
             google.maps.event.addListenerOnce(map, 'idle', function() {
                 console.log('地圖已載入到頁面');
                 map.setCenter(currentPosition);
@@ -125,6 +125,7 @@ async function initMap(currentPosition){
 // View: 設定位置標籤
 function setMapCenterAndMarker(location) {
     map.setCenter(location);
+    map.setZoom(16);
     let marker;
     // 將搜尋結果顯示到地圖上
     if (!marker) {

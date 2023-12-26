@@ -2,7 +2,7 @@
 async function confirmUserStatement(){
     let token = localStorage.getItem('token');
     let fetchInfo = new FetchInfo();
-    this.memberData = {};
+    let memberData = {};
     try{
         if(token){
             let url = "/api/auth/login";
@@ -12,18 +12,16 @@ async function confirmUserStatement(){
                         "Authorization": `Bearer ${token}`
                     }}
             let response = await fetchInfo.authAPI(url,method);
-            console.log(response);
-            this.memberData['email'] = response.data.email;
-            this.memberData['id'] = response.data.id;
-            this.memberData['name'] = response.data.name;
-            this.memberData['phone'] = response.data.phone;
-            this.memberData['merchant_id'] = response.data.id;
-            this.memberData['delever_id'] = response.data.id;
-            console.log(this.memberData);
-            return this.memberData;
+            memberData['email'] = response.data.email;
+            memberData['id'] = response.data.id;
+            memberData['name'] = response.data.name;
+            memberData['phone'] = response.data.phone;
+            memberData['merchant_id'] = response.data.id;
+            memberData['delever_id'] = response.data.id;
+            return memberData;
         }else{
-            this.memberData['message'] = "user haven't login"
-            return this.memberData;
+            memberData['message'] = "user haven't login"
+            return memberData;
         }   
     }catch(error){
         console.error("Error message:", error);

@@ -1,14 +1,8 @@
 // Model: 初始化，獲取使用者當前位置附近的商家
 async function init(){
     let currentPosition = await getCurrentLocation();
-    console.log(currentPosition);
-    fetchAndDisplayStores(currentPosition.lat, currentPosition.lng);
-    document.querySelectorAll('.category').forEach(choice => {
-        choice.addEventListener('click', async () => {
-            clearStores();
-            storeCategory(choice, LatLng.lat, LatLng.lng);
-        });
-    });
+    await fetchAndDisplayStores(currentPosition.lat, currentPosition.lng);
+    return {'lat': currentPosition.lat, 'lng': currentPosition.lng};
 }
 window.addEventListener('DOMContentLoaded',init);
 
@@ -18,12 +12,6 @@ document.querySelector('#address').addEventListener('click', async () => {
     let LatLng = transformToLatLng(currentPosition);
     clearStores();
     await fetchAndDisplayStores(LatLng.lat, LatLng.lng);
-    document.querySelectorAll('.category').forEach(choice => {
-        choice.addEventListener('click', async () => {
-            clearStores();
-            storeCategory(choice, LatLng.lat, LatLng.lng);
-        });
-    });
 });
 
 // Model: 點擊種類，獲取該種類的附近商家
@@ -106,3 +94,19 @@ function clearStores() {
     const storesContainer = document.querySelector('.stores');
     storesContainer.innerHTML = '';
 }
+
+// View: 獲取附近選取種類的商家
+document.querySelectorAll('.category').forEach(choice => {
+    choice.addEventListener('click', async () => {
+        let inputAddress = document.querySelector('#address').value;
+        let LatLng;
+        if(inputAddress){
+            result = await geocodeAddress(inputAddress, googleApiKey);
+            LatLng = {'lat': result.latitude, 'lng': result.longitude}
+        }else{
+            LatLng = await init();
+        }
+        clearStores();
+        storeCategory(choice, LatLng.lat, LatLng.lng);
+    });
+});
