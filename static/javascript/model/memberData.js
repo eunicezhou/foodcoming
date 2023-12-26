@@ -4,6 +4,7 @@ const signupBTN = signUpForm.querySelector('#SignUp');
 const loginBTN = logInForm.querySelector('#SignIn');
 
 signupBTN.addEventListener('click',async()=>{
+    let fetchInfo = new FetchInfo();
     const signupAccount = signUpForm.querySelector('.SignupAccount').value;
     const signupEmail = signUpForm.querySelector('.SignupEmail').value;
     const signupPassword = signUpForm.querySelector('.SignupPassword').value;
@@ -30,7 +31,7 @@ signupBTN.addEventListener('click',async()=>{
             headers: {'Content-Type': 'application/json'
             }
         }
-        let store = await authAPI(url,method);
+        let store = await fetchInfo.authAPI(url,method);
         if(store['error']){
             signUpForm.querySelector('.alert').textContent = `${store['message']}`
         }else{
@@ -45,6 +46,7 @@ signupBTN.addEventListener('click',async()=>{
 })
 
 loginBTN.addEventListener('click',async()=>{
+    let fetchInfo = new FetchInfo();
     const loginEmail = logInForm.querySelector('.LoginEmail').value;
     const loginPassword = logInForm.querySelector('.LoginPassword').value;
     if(loginEmail === ""){
@@ -62,7 +64,7 @@ loginBTN.addEventListener('click',async()=>{
                     body:loginData,
                     headers:{"Content-Type":"application/json"}
             }
-        let store = await authAPI(url,method);
+        let store = await fetchInfo.authAPI(url,method);
         if(store['error']){
             logInForm.querySelector('.alert').textContent = store['message'];
         }else{

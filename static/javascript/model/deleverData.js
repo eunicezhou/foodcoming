@@ -2,6 +2,7 @@ document.querySelector('#name').addEventListener('click',confirmLogIn)
 document.querySelector('.member').addEventListener('click', confirmLogIn)
 
 document.querySelector('.submitBTN').addEventListener('click',async()=>{
+    let fetchInfo = new FetchInfo();
     let formData = new FormData();
     if(document.querySelector('#email').value === ""){
         document.querySelector('.alert').textContent = `請輸入信箱`;
@@ -28,7 +29,7 @@ document.querySelector('.submitBTN').addEventListener('click',async()=>{
             method: "POST",
             body: formData
         }
-        let result = await authAPI(url, method);
+        let result = await fetchInfo.authAPI(url, method);
         if(result['error']){
             document.querySelector('.alert').textContent = `${result['message']}`;
         }else{

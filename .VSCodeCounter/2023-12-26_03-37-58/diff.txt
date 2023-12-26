@@ -1,0 +1,41 @@
+Date : 2023-12-26 03:37:58
+Directory : c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming
+Total : 10 files,  -332 codes, 7 comments, 3 blanks, all -322 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |          8 |       -142 |          7 |          5 |       -130 |
+| JSON       |          2 |       -190 |          0 |         -2 |       -192 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                              | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                 |         10 |       -332 |          7 |          3 |       -322 |
+| . (Files)                                                                                         |          2 |       -190 |          0 |         -2 |       -192 |
+| static                                                                                            |          8 |       -142 |          7 |          5 |       -130 |
+| static\javascript                                                                                 |          8 |       -142 |          7 |          5 |       -130 |
+| static\javascript\control                                                                         |          1 |         -2 |          0 |          0 |         -2 |
+| static\javascript\model                                                                           |          2 |        142 |          7 |          2 |        151 |
+| static\javascript\view                                                                            |          5 |       -282 |          0 |          3 |       -279 |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                          | language   | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\package-lock.json                          | JSON       |       -185 |          0 |         -1 |       -186 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\package.json                               | JSON       |         -5 |          0 |         -1 |         -6 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\control\confirmMember.js | JavaScript |         -2 |          0 |          0 |         -2 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\model\fetchInfo.js       | JavaScript |        140 |          6 |          2 |        148 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\model\memberLocation.js  | JavaScript |          2 |          1 |          0 |          3 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\base_nav.js         | JavaScript |        -81 |         -5 |          0 |        -86 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\bookList.js         | JavaScript |          3 |          2 |          2 |          7 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\index_nav.js        | JavaScript |        -94 |          0 |         -3 |        -97 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\item.js             | JavaScript |       -111 |          3 |          4 |       -104 |
+| c:\Users\user\Desktop\project\Wehelp\Stage3\Foodcoming\static\javascript\view\maps.js             | JavaScript |          1 |          0 |          0 |          1 |
+| Total                                                                                             |            |       -332 |          7 |          3 |       -322 |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
