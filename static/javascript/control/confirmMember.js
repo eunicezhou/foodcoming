@@ -1,7 +1,8 @@
 // Model: 取得使用者資訊
 async function confirmUserStatement(){
     let token = localStorage.getItem('token');
-    this.memberData = {};
+    let fetchInfo = new FetchInfo();
+    let memberData = {};
     try{
         if(token){
             let url = "/api/auth/login";
@@ -10,19 +11,17 @@ async function confirmUserStatement(){
                         "Content-Type":"application/json",
                         "Authorization": `Bearer ${token}`
                     }}
-            let response = await authAPI(url,method);
-            console.log(response);
-            this.memberData['email'] = response.data.email;
-            this.memberData['id'] = response.data.id;
-            this.memberData['name'] = response.data.name;
-            this.memberData['phone'] = response.data.phone;
-            this.memberData['merchant_id'] = response.data.id;
-            this.memberData['delever_id'] = response.data.id;
-            console.log(this.memberData);
-            return this.memberData;
+            let response = await fetchInfo.authAPI(url,method);
+            memberData['email'] = response.data.email;
+            memberData['id'] = response.data.id;
+            memberData['name'] = response.data.name;
+            memberData['phone'] = response.data.phone;
+            memberData['merchant_id'] = response.data.id;
+            memberData['delever_id'] = response.data.id;
+            return memberData;
         }else{
-            this.memberData['message'] = "user haven't login"
-            return this.memberData;
+            memberData['message'] = "user haven't login"
+            return memberData;
         }   
     }catch(error){
         console.error("Error message:", error);
