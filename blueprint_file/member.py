@@ -7,14 +7,13 @@ from datetime import datetime, timedelta
 
 auth_blueprint = Blueprint('api_auth',__name__,template_folder= '/api/auth')
 
-@auth_blueprint.route("/signup",methods=['POST'])
-def signUp():
-    try:
-        data = request.get_json()
-        account = data['account']
-        email = data['email']
-        password = data['password']
-        phone = data['phone']
+class Member:
+    def __init__(self, account, email, password, phone):
+        self.account = account
+        self.email = email
+        self.password = password
+        self.phone = phone
+    def signup(self, account, email, password, phone):
         memberExist = databaseConnect("SELECT * FROM member WHERE email = %s",(email,))
         if memberExist == []:
             hashed_password = generate_password_hash(password, method='scrypt')
@@ -23,15 +22,7 @@ def signUp():
             return results_convert({'data':'success'})
         else:
             return results_convert({'error':True, 'message':'member already exist!'})
-    except Exception as err:
-        return results_convert({'error':True,'message':str(err)})
-    
-@auth_blueprint.route("/login",methods=['PUT'])
-def login():
-    try:
-        data = request.get_json()
-        email = data['email']
-        password = data['password']
+    def login(self, email, password):
         memberInfo = databaseConnect("SELECT email,password From member WHERE email = %s",(email,))
         if memberInfo == []:
             return results_convert({'error':True,'message':"您尚未註冊會員"}), 400
@@ -53,6 +44,32 @@ def login():
                 return encode_token
             else:
                 return results_convert({'error':True,'message':"密碼錯誤"}), 403
+
+@auth_blueprint.route("/signup",methods=['POST'])
+def signUp():
+    try:
+        data = request.get_json()
+        member_instance = Member(account="", email="", password="", phone="")
+        result = member_instance.signup(
+            account = data['account'],
+            email = data['email'],
+            password = data['password'],
+            phone = data['phone']
+        )
+        return result
+    except Exception as err:
+        return results_convert({'error':True,'message':str(err)})
+    
+@auth_blueprint.route("/login",methods=['PUT'])
+def login():
+    try:
+        data = request.get_json()
+        member_instance = Member(account="", email="", password="", phone="")
+        result = member_instance.login(
+            email = data['email'],  
+            password = data['password']
+        )
+        return result
     except Exception as err:
         return results_convert({'error':True,'message':str(err)})
     
