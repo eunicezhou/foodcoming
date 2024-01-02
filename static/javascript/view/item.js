@@ -1,6 +1,7 @@
 // View: 生成產品頁面
 window.addEventListener('load',async()=>{
-    let itemData = await getItemData();
+    const cart = new Cart();
+    let itemData = await cart.getItemData();
     document.querySelector('.content_header--shop').textContent = `${itemData['shop'][0]}`;
     document.querySelector('.groceryName').textContent = `${itemData['data'][2]}`;
     document.querySelector('.groceryPrice').textContent = `\$${itemData['data'][5]}`;
@@ -21,24 +22,23 @@ document.querySelector('.purchaseNum').addEventListener('click',()=>{
 
 // Controller: 點擊購買
 document.querySelector('.purchaseBTN').addEventListener('click',async()=>{
+    const memberData = await confirmUserStatement();
     const cart = new Cart();
     if(document.querySelector('.purchaseNum').value < 1){
         return;
     }
 
-    const memberData = await confirmUserStatement();
-    let itemData = await cart.getItemData(memberData);
+    let itemData = await cart.getItemData();
     confirmLogIn();
 
     let cartItem = await cart.addCartItem(memberData, itemData);
-
     if(cartItem['data'] === "success"){
-        let itemInCart = await cart.getCartItem();
-        await cart.createCartList(itemInCart);
-        document.querySelector('.close').addEventListener('click', cart.closeCart)
-        document.querySelector('.totalMoney').addEventListener('click', cart.order)
+        let itemInCart = await cart.getCartItem(memberData);
+        cart.createCartList(itemInCart);
+        document.querySelector('.close').addEventListener('click', ()=>cart.closeCart());
+        document.querySelector('.totalMoney').addEventListener('click', ()=>cart.order());
         document.querySelectorAll('.deleteItemInCart').forEach(deleteItem=>{
-            deleteItem.addEventListener('click', cart.deleteItemFromCart(memberData, deleteItem))
+            deleteItem.addEventListener('click', ()=>cart.deleteItemFromCart(memberData, deleteItem));
         })
     }
 })

@@ -3,7 +3,7 @@ const googleApiKey = "AIzaSyA2sw2FO9nxUBiPPFC0ZDN8kqtdANk7sEQ";
 
 // Model: 獲取使用者當前位置
 function getCurrentLocation(){
-    return new Promise((resolve)=>{
+    return new Promise((resolve, reject)=>{
         navigator.geolocation.getCurrentPosition(
             (position)=>{
                 let currentPosition = {
@@ -18,7 +18,7 @@ function getCurrentLocation(){
 
 // Model:獲取使用者輸入地址之位置
 async function searchLocation(autocomplete) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         autocomplete.addListener('place_changed', async() => {
             const place = autocomplete.getPlace();
             let lat;
@@ -42,7 +42,7 @@ async function searchLocation(autocomplete) {
             }
             resolve(selectedRestaurant);
         });
-        },(error) => console.error({'message':error})
+        },(error) => {reject(console.error({'message':error}));}
     );
 }
 

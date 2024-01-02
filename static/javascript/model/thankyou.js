@@ -1,16 +1,15 @@
 const queryString = window.location.search;
-let orderId = queryString.split('&')[0].split('=')[1];
+let orderId = queryString.split('&')[0].split('=')[1];  
 const socket = io("http://localhost:4400");
 // const socket = io("formal.foodcoming.store",{
 //     path:"/mysocket"
 //     });
 
 window.addEventListener('load', async()=>{
-    console.log(document.querySelector('#bar1'));
     document.querySelector('#bar1').style.animation = "progressBarAnimation 1s ease-out infinite";
     let orderNum = document.querySelector('.orderNum');
     orderNum.textContent = `${orderId}`
-    let memberData = await confirmMember();
+    const memberData = await confirmUserStatement();
     let method = {
         method: "POST",
         headers:{
@@ -18,10 +17,10 @@ window.addEventListener('load', async()=>{
         },
         body:JSON.stringify({'orderId':orderId})
     }
-    let orderDetail = await authAPI("/api/orderDetail", method);
+    const fetchInfo = new FetchInfo();
+    let orderDetail = await fetchInfo.authAPI("/api/orderDetail", method);
     let orderContent = document.querySelector('.orderDetail')
 
-    // 使用Object.entries()将对象转换为可迭代的键值对数组
     for(let [key, value] of Object.entries(orderDetail.data)){
         let item = document.createElement('h3');
         item.textContent = `${key} ${value}份`;
@@ -126,7 +125,6 @@ socket.on('getDeliverRoad',(data)=>{
 })
 
 socket.on('order-arrived',(data)=>{
-    console.log(data);
     document.querySelector('#bar3').style.animation = "none";
     document.querySelector('#bar3').style.width = "100%";
     document.querySelector('#bar4').style.animation = "progressBarAnimation 1s ease-out infinite";
@@ -147,7 +145,8 @@ socket.on('order-cancel',()=>{
         document.querySelector('.matchingDelever').style.display = 'block';
         document.querySelector('.foundDelever').style.display = 'none';
     })
-    waiting.querySelector('.no').addEventListener('click',()=>{
+    waiting.querySelector('.no').addEventListener('click',async()=>{
+        const memberData = await confirmUserStatement();
         socket.emit('consumer-cancel', {'room':orderId,'member':memberData['name']})
         socket.emit('leaveRoom',{'room':orderId, 'name':memberData['name']})
         setTimeout(()=>{
@@ -156,7 +155,8 @@ socket.on('order-cancel',()=>{
     })
 })
 
-document.querySelector('.complete').addEventListener('click',()=>{
+document.querySelector('.complete').addEventListener('click',async()=>{
+    const memberData = await confirmUserStatement();
     socket.emit('leaveRoom',{'room':orderId, 'name':memberData['name']})
         setTimeout(()=>{
             window.location.href = "/";

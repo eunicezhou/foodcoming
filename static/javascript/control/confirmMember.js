@@ -81,7 +81,6 @@ async function confirmLogIn(){
 // Controller: 畫面載入時的身分驗證及頁面顯示
 window.addEventListener('DOMContentLoaded', async()=>{
     const memberData = await confirmUserStatement();
-    console.log(memberData);
     if(memberData.email){
         if(document.querySelector('.sidebar--top')){showUpSidebar(memberData);}
         if(document.querySelector('.member')){document.querySelector('.member').innerHTML=`<span class="signout title">登出系統</span>`}
