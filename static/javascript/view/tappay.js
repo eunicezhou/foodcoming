@@ -2,23 +2,20 @@ function refreshinfo(name, refreshName){
     document.querySelector(name).style.display = 'none';
     document.querySelector(refreshName).style.display = 'flex';
 }
-document.querySelector('.name').addEventListener('click',()=>{
-    refreshinfo('.name', '.refreshName');
-});
-document.querySelector('.phone').addEventListener('click',()=>{
-    refreshinfo('.phone', '.refreshPhone')
-});
+document.querySelector('.name').addEventListener('click',()=>refreshinfo('.name', '.refreshName'));
+document.querySelector('.phone').addEventListener('click',()=>refreshinfo('.phone', '.refreshPhone'));
 
 let selectPosition;
 window.addEventListener('load',async()=>{
-    let currentPosition = await initMap();
-    console.log(currentPosition);
-    document.querySelector('.name').innerHTML = `${memberData['data']['name']}`;
-    document.querySelector('.phone').innerHTML = `${memberData['data']['phone']}`;
+    const memberData = await confirmUserStatement();
+    let currentPosition = await getCurrentLocation();
+    document.querySelector('.name').innerHTML = `${memberData['name']}`;
+    document.querySelector('.phone').innerHTML = `${memberData['phone']}`;
     document.querySelector('#address').addEventListener('click',async()=>{
-        const autocomplete = createAutocomplete();
+        const autocomplete = createAutocomplete(currentPosition);
         if(autocomplete){
             selectPosition = await searchLocation(autocomplete);
+            console.log(selectPosition);
         }else{
             location.reload();
         }
@@ -29,10 +26,11 @@ window.addEventListener('load',async()=>{
             'Content-Type':'application/json'
         },
         body: JSON.stringify({
-            'id':memberData.data.id
+            'id':memberData.id
         })
     }
-    let cartInfo = await authAPI("/api/order", method);
+    const fetchInfo = new FetchInfo();
+    let cartInfo = await fetchInfo.authAPI("/api/order", method);
     if(cartInfo){
         document.querySelectorAll('.fakeItem').forEach(item=>{
             item.style.display = "none";
@@ -72,8 +70,6 @@ window.addEventListener('load',async()=>{
     document.querySelector('#total').textContent = `${total}`;
     }
 })
-
-
 
 //設定銀行輸入資訊欄位
 const iframeFields= {
@@ -131,6 +127,8 @@ document.querySelector('#fakeButton').addEventListener('click', ()=>{
 
 async function pay(prime){
     try{
+        const memberData = await confirmUserStatement();
+        const fetchInfo = new FetchInfo();
         let name;
         if(document.querySelector('.name').style.display !== "none"){
             name = document.querySelector('.name').textContent;
@@ -152,9 +150,9 @@ async function pay(prime){
                 },
                 body:JSON.stringify({
                     "prime":prime,
-                    "id":memberData['data']['id'],
+                    "id":memberData['id'],
                     "name":name,
-                    "email":memberData['data']['email'],
+                    "email":memberData['email'],
                     "phone":phone,
                     "address":selectPosition.address,
                     "lat":selectPosition.location.lat,
@@ -170,9 +168,9 @@ async function pay(prime){
                 },
                 body:JSON.stringify({
                     "prime":prime,
-                    "id":memberData['data']['id'],
+                    "id":memberData['id'],
                     "name":name,
-                    "email":memberData['data']['email'],
+                    "email":memberData['email'],
                     "phone":phone,
                     "address":document.querySelector('#address').value,
                     "lat":selectPosition.latitude,
@@ -181,9 +179,9 @@ async function pay(prime){
                 })
             } 
         }
-        let order = await authAPI('/api/order', method);
+        let order = await fetchInfo.authAPI("/api/order", method);
         return order;
     }catch(error){
-        console.error(error);
+        console.log(error);
     }
 }

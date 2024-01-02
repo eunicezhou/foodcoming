@@ -23,8 +23,8 @@ class Cart{
     }
     // Model: 獲取使用者購物車資訊
     async getCartItem(memberData){
-        url = "/api/cart"
-        method = {
+        let url = "/api/cart";
+        let method = {
             method: "PUT",
             headers:{
                 'Content-Type':'application/json',
@@ -32,13 +32,13 @@ class Cart{
             body:JSON.stringify({
                 'id':memberData['id']
             })
-        }
+        };
         const fetchInfo = new FetchInfo();
         let cartItem = await fetchInfo.authAPI(url, method);
         return cartItem;
     } 
     // View: 生成購物車名單
-    async createCartList(itemInCart){
+    createCartList(itemInCart){
         for(let item of itemInCart['data']){
             let itemsInCart = document.createElement('div');
             itemsInCart.className = "itemsInCart"
@@ -70,7 +70,6 @@ class Cart{
         let piece = deleteItem.parentElement.parentElement.querySelector('.itemNumInCart').innerHTML;
         let itemPrice = deleteItem.parentElement.parentElement.querySelector('.itemPrice').innerHTML;
         let price = itemPrice.match(/\d+/)[0];
-        console.log(price);
         let method = {
             method: "DELETE",
             headers:{
@@ -86,8 +85,7 @@ class Cart{
         let deleteResult = await fetchInfo.authAPI("/api/cart", method);
         let totalMoney = document.querySelector('.totalMoney').innerHTML;
         let total = totalMoney.match(/\d+/)[0];
-        console.log(total);
-        new_total = parseInt(total) - parseInt(price);
+        let new_total = parseInt(total) - parseInt(price);
         if(new_total === 0){
             let cartImg = document.createElement('img');
             cartImg.src = "../static/image/shopping cart.png";

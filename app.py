@@ -11,7 +11,8 @@ from blueprint_file.order import order_blueprint
 import urllib.parse
 
 app=Flask(__name__)
-CORS(app)
+
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 wsgi_app = app.wsgi_app
 socketio = SocketIO(app,cors_allowed_origins="*")
 # socketio = SocketIO(app,path='/mysocket',cors_allowed_origins="*")
