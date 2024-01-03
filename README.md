@@ -13,7 +13,7 @@ As users access the website, the system will automatically retrieve their curren
 __Member signup and login__\
 ![Alt text](member.gif)
 
-__Setting up merchant__\
+__Setting up merchant__
 1. When on the index page, you'll notice a lines icon. Clicking on this icon will reveal a button that allows you to set up store information.\
 ![Alt text](merchantSetting1_1.gif)
 
