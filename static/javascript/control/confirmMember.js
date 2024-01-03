@@ -16,8 +16,9 @@ async function confirmUserStatement(){
             memberData['id'] = response.data.id;
             memberData['name'] = response.data.name;
             memberData['phone'] = response.data.phone;
-            memberData['merchant_id'] = response.data.id;
-            memberData['delever_id'] = response.data.id;
+            memberData['merchant_id'] = response.data.merchant_id;
+            memberData['delever_id'] = response.data.delever_id;
+            console.log(memberData);
             return memberData;
         }else{
             memberData['message'] = "user haven't login"
