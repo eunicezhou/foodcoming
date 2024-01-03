@@ -124,7 +124,7 @@ async function acceptOrder(acceptBTN){
 
 socket.on('getDeliverPosition',async()=>{
     let deliverProgressingPosition = await getCurrentLocation();
-    socket.emit('deliverPositionReply', deliverProgressingPosition);
+    socket.emit('deliverPositionReply', deliverProgressingPosition,);
 })
 
 // Model: 獲得外送預計時間
@@ -132,7 +132,6 @@ function countTime(currentPosition) {
     return new Promise((resolve, reject) => {
         socket.on('create-road', async function (locationData) {
             try {
-                console.log(currentPosition, locationData);
                 const durationInMinutes = await getRoad(currentPosition, locationData[0]);
                 socket.emit('deliver-road',{'currentPosition':currentPosition, 'locationInfo':locationData[0]})
                 resolve(durationInMinutes);
