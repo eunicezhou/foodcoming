@@ -37,7 +37,8 @@ fileBTN.addEventListener('click',async()=>{
     formData.append('shopPhoto', Object.values(shopImg_file)[0]);
     formData.append('shopCategoryValue', shopCategory.innerHTML);
     formData.append('address', document.querySelector('#address').value);
-    let inputAddress = await searchLocation(document.querySelector('#address').value)
+    const autocomplete = new google.maps.places.Autocomplete(document.querySelector('#address').value);
+    let inputAddress = await searchLocation(autocomplete)
     let LatLng = transformToLatLng(inputAddress);
     formData.append('lat', LatLng['lat']);
     formData.append('lng', LatLng['lng']);
