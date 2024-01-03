@@ -2,7 +2,7 @@ let currentUrl = window.location.href;
 let modified_url = currentUrl.replace(/\/store.*/, '');
 let id = currentUrl.match(/\/store\/(\d+)/)[1];
 window.addEventListener('load', async()=>{
-    let fetchInfo = new FetchInfo();
+    const fetchInfo = new FetchInfo();
     let url = `${modified_url}/api/store`;
     let method = {
     method: "PUT",

@@ -18,7 +18,6 @@ document.querySelector('#address').addEventListener('click', async () => {
 async function storeCategory(choice,lat,lng){
     let fetchInfo = new FetchInfo();
     let catTitle = choice.querySelector('.catTitle').textContent;
-    console.log(catTitle);
     let url = "/api/searchstore";
     let method = {
         method: "PUT",
@@ -47,7 +46,6 @@ async function fetchAndDisplayStores(lat, lng) {
         })
     };
     const nearByStoreResult = await fetchInfo.authAPI('/api/searchstore', method);
-    console.log(nearByStoreResult);
     if(nearByStoreResult){
         document.querySelectorAll('.fakeStore').forEach(store=>{
             store.style.display = "none";

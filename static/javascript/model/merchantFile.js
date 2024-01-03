@@ -24,11 +24,12 @@ shopCategory.addEventListener('click',()=>{
 })
     
 fileBTN.addEventListener('click',async()=>{
+    const memberData = await confirmUserStatement();
     let dishmenu = new Map();
     let formData = new FormData();
     let fetchInfo = new FetchInfo();
     let dishCat;
-    formData.append('memberEmail', memberEmail);
+    formData.append('memberEmail', memberData['email']);
     formData.append('bossName', document.querySelector('#bossname').value);
     formData.append('bossEmail', document.querySelector('#bossemail').value);
     formData.append('bossPhone', document.querySelector('#bossphone').value);
