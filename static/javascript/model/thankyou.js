@@ -60,11 +60,8 @@ socket.on('delever-match',(data)=>{
 
 socket.on('getDeliverRoad',(data)=>{
     let deliverPosition = data['deliverPosition'];
-    console.log(deliverPosition);
     let restaursntPosition = data['restaurant'];
-    console.log(restaursntPosition);
     let destination = data['destination'];
-    console.log(destination);
     const directionsService = new google.maps.DirectionsService();
     const directionsRenderer = new google.maps.DirectionsRenderer({
         suppressMarkers: true, // 設定為 true，不顯示標記

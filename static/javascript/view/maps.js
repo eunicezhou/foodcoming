@@ -104,7 +104,7 @@ function createAutocomplete(currentPosition){
 }
 
 // View:初始化地圖
-async function initMap(currentPosition){
+async function showMap(currentPosition){
     try{
         if(document.getElementById('map')){
             map = new google.maps.Map(document.getElementById('map'),
@@ -181,7 +181,7 @@ function getRoad(currentPosition, locationData){
 // Controller: 將輸入的地址轉為經緯度
 async function inputAddress(){
     const currentPosition = await getCurrentLocation();
-    initMap(currentPosition);
+    showMap(currentPosition);
     const autocomplete = createAutocomplete(currentPosition);
     let inputPosition = await searchLocation(autocomplete);
     return inputPosition;
