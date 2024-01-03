@@ -25,6 +25,7 @@ shopCategory.addEventListener('click',()=>{
     
 fileBTN.addEventListener('click',async()=>{
     const memberData = await confirmUserStatement();
+    console.log(memberData);
     let dishmenu = new Map();
     let formData = new FormData();
     let fetchInfo = new FetchInfo();
