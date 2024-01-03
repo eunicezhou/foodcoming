@@ -124,6 +124,9 @@ async function initMap(currentPosition){
 
 // View: 設定位置標籤
 function setMapCenterAndMarker(location) {
+    map = new google.maps.Map(document.getElementById('map'),
+            {center:{lat:23.553118,lng:121.0211024},
+            zoom:13,});
     map.setCenter(location);
     map.setZoom(16);
     let marker;

@@ -109,9 +109,7 @@ async function acceptOrder(acceptBTN){
         document.querySelector('#map').style.height = "70vh";
     }
     let currentPosition = await getCurrentLocation(); 
-    console.log(currentPosition);
     let durationInMinutes = await countTime(currentPosition);
-    console.log(durationInMinutes);
     let arriveTime = document.createElement('div');
     arriveTime.className = "arriveTime";
     arriveTime.textContent = `預計完成訂單時間需:${durationInMinutes}分`
