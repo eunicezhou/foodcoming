@@ -73,18 +73,18 @@ class Order:
                     'lng':cardholder_lng,
                     'pay':amount
                 }
-                return results_convert(payment)
+                return results_convert(payment), 200
             else:
-                return results_convert({'支付失敗，原因：': result.get('msg')})
+                return results_convert({'支付失敗，原因：': result.get('msg')}), 403
         else:
-            return results_convert({'error':True, 'msg':response.status_code})
+            return results_convert({'error':True, 'message':response.status_code}), 500
 
 @order_blueprint.route("/order",methods=["PUT"])
 def getCartList():
     data = request.get_json()
     order_instance = Order()
     result = order_instance.memberOrder(member_id = data['id'])
-    return results_convert({'data':result})
+    return results_convert({'data':result}), 200
 
 @order_blueprint.route("/order",methods=["POST"])
 def payOrder():
@@ -105,7 +105,7 @@ def payOrder():
         print(result)
         return result
     except Exception as err:
-        return results_convert({'error':True, 'message':err})
+        return results_convert({'error':True, 'message':err}), 500
     
 @order_blueprint.route("/orderDetail",methods=["POST"])
 def getOrderDetail():
@@ -115,6 +115,6 @@ def getOrderDetail():
         order = {}
         for item in orderItem:
             order[item[0]] = item[1]
-        return results_convert({'data':order})
+        return results_convert({'data':order}), 200
     except Exception as err:
-        return results_convert({'error':True, 'message':err})
+        return results_convert({'error':True, 'message':err}), 500

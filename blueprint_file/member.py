@@ -21,11 +21,11 @@ class Member:
                             (account, email, hashed_password, phone))
             return results_convert({'data':'success'})
         else:
-            return results_convert({'error':True, 'message':'member already exist!'})
+            return results_convert({'error':True, 'message':'member already exist!'}), 403
     def login(self, email, password):
         memberInfo = databaseConnect("SELECT email,password From member WHERE email = %s",(email,))
         if memberInfo == []:
-            return results_convert({'error':True,'message':"您尚未註冊會員"}), 400
+            return results_convert({'error':True,'message':"您尚未註冊會員"}), 401
         else:
             check = check_password_hash(memberInfo[0][1],password)
             if check:
@@ -43,7 +43,7 @@ class Member:
                 encode_token = encoding(filedict, token_key, algorithm= token_algorithm)
                 return encode_token
             else:
-                return results_convert({'error':True,'message':"密碼錯誤"}), 403
+                return results_convert({'error':True,'message':"密碼錯誤"}), 400
 
 @auth_blueprint.route("/signup",methods=['POST'])
 def signUp():
@@ -58,7 +58,7 @@ def signUp():
         )
         return result
     except Exception as err:
-        return results_convert({'error':True,'message':str(err)})
+        return results_convert({'error':True,'message':str(err)}), 500
     
 @auth_blueprint.route("/login",methods=['PUT'])
 def login():
@@ -71,7 +71,7 @@ def login():
         )
         return result
     except Exception as err:
-        return results_convert({'error':True,'message':str(err)})
+        return results_convert({'error':True,'message':str(err)}), 500
     
 @auth_blueprint.route("/login",methods=['GET'])
 def idenify():
@@ -80,10 +80,8 @@ def idenify():
         if token:
             decode_token = token.split('Bearer ')
             information = decoding(decode_token[1], token_key, decode_algorithms)
-            return information
+            return information, 200
         else:
             return redirect("/")
     except Exception as err:
-        result = {"error": True,"message": str(err)}
-        finalresult = results_convert(result)
-        return finalresult,500
+        return results_convert({"error": True,"message": str(err)}),500

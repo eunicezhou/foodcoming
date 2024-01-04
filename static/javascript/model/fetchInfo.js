@@ -4,12 +4,6 @@ class FetchInfo{
         let response = await authData.json();
         return response;
     }
-
-    async merchantSetUp(url, method){
-        let store = await fetch(url, method)
-        let result = await store.json();
-        return result;
-    }
 }
 
 class Cart{
@@ -153,7 +147,7 @@ class Cart{
             document.querySelector('.cart--contain').innerHTML = "";
             await cart.createCartList(cartItem);
             document.querySelectorAll('.deleteItemInCart').forEach(deleteItem=>{
-                deleteItem.addEventListener('click', deleteCart)  
+                deleteItem.addEventListener('click', ()=>cart.deleteItemFromCart(memberData, deleteItem))  
             })
         }
     }

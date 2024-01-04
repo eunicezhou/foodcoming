@@ -1,0 +1,431 @@
+openapi: 3.0.3
+info:
+  title: FoodComing API Structure
+  version: 1.0.0
+servers:
+  - url: https://formal.foodcoming.store
+paths:
+  /api/merchant:
+    post:
+      tags:
+        - merchant
+      summary: Setting up merchant's information
+      responses:
+        '200':
+          description: Successfully set up
+          content:
+            application/json:
+              schema:
+                type: string
+                properties:
+                  token:
+                    type: string
+        '500':
+          description: service error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: boolean
+                    example: true
+                  message: 
+                    type: string
+                    example: error message
+            
+  /api/delever/setup:
+    post:
+      tags:
+        - deliver
+      summary: Setting up deliver person's information
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '500':
+          description: Service error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: boolean
+                    example: true
+                  message: 
+                    type: string
+                    example: error message
+  /api/delever/orderList:
+    put:
+      tags:
+        - deliver
+      summary: list orders nearby
+      responses:
+        '200':
+          description: get orders nearby
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: 
+                    type: object
+                    example: [(order_id, item, piece, shopname, shopaddress, lat, lng, 
+                        destination, destination_lat, destination_lng),(第二筆訂單資料)]
+        '500':
+          description: Service error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: boolean
+                    example: true
+                  message: 
+                    type: string
+                    example: error message
+  /api/auth/signup:
+    post:
+      tags:
+        - member
+      summary: member signup
+      responses:
+        '200':
+          description: successful signup
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    example: success
+        '403':
+          description: Already signup
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: boolean
+                    example: true
+                  message: 
+                    type: string
+                    example: member already exist!
+        '500':
+          description: other error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: boolean
+                    example: true
+                  message: 
+                    type: string
+                    example: 伺服器回傳錯誤
+  /api/auth/login:
+    put:
+      tags:
+        - member
+      summary: member login
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: 
+                    type: string
+        '400':
+          description: input value error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: boolean
+                    example: true
+                  message: 
+                    type: string
+                    example: 密碼錯誤
+        '401':
+          description: not member
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: boolean
+                    example: true
+                  message: 
+                    type: string
+                    example: 您尚未註冊會員
+        '500':
+          description: other error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: boolean
+                    example: true
+                  message: 
+                    type: string
+                    example: 伺服器回傳錯誤
+    get:
+      tags:
+        - member
+      summary: member login
+      responses:
+        '200':
+          description: get member information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1
+                  name:
+                    type: string
+                    example: example
+                  email:
+                    type: string
+                    example: example@gmail.com
+                  phone:
+                    type: string
+                    example: 0988777666
+                  merchant_id:
+                    type: string
+                    example: 1
+                  delever_id:
+                    type: string
+                    example: 1
+                  exp:
+                    type: string
+        '500':
+          description: service error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: boolean
+                    example: true
+                  message: 
+                    type: string
+                    example: 伺服器回傳錯誤
+  /api/order:
+    put:
+      tags:
+        - order
+      summary: get member order information
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    example: [shopname, item-picture]
+    post:
+      tags:
+        - order
+      summary: get member order information
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  order_id: 
+                    type: string
+                  member_id:
+                    type: string
+                    example: 1,
+                  name:
+                    type: string
+                    example: example
+                  phone:
+                    type: string
+                    example: 0988777666
+                  destination:
+                    type: string
+                  lat:
+                    type: string
+                  lng:
+                    type: string
+                  pay:
+                    type: string
+                    example: 100
+        '403':
+          description: other error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  支付失敗, 原因:
+                    type: string
+        '500':
+          description: other error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: boolean
+                    example: true
+                  message: 
+                    type: string
+                    example: error message
+  /api/orderDetail:
+    post:
+      tags:
+        - order
+      summary: get member order information
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    example: {原味蛋餅: 1,...}
+        '500':
+          description: other error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: boolean
+                    example: true
+                  message: 
+                    type: string
+                    example: error message
+  /api/store:
+    put:
+      tags:
+        - store
+      summary: get store information
+      responses:
+        '200':
+          description: successful get datas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    example: {'id': 1,'bossemail': example@gmail.com,'phone':0977888999,'shopname': store,'shopPhoto': store-img, 'shopAddress': store-address, 'lat': 20.366,'lng': 120.45, 'start': 08:30, 'end': 20:30, 'holiday': 星期一, 'category_photo': icon, 'category': 10, 'menu': {menudata}}
+  /api/searchstore:
+    put:
+      tags:
+        - store
+      summary: get nearby stores' information
+      responses:
+        '200':
+          description: successful get datas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    example: {'data1':['id': 1,'bossemail': example@gmail.com,'phone':0977888999,'shopname': store,'shopPhoto': store-img, 'shopAddress': store-address, 'lat': 20.366,'lng': 120.45, 'start': 08:30, 'end': 20:30, 'holiday': 星期一, 'category_photo': icon, 'category': 10], ...}
+  /api/item:
+    put:
+      tags:
+        - store
+      summary: get store's item 
+      responses:
+        '200':
+          description: successful get data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  shop:
+                    type: string
+                    example: shopname
+                  data:
+                    type: object
+                    example: [原味蛋餅, 泡菜蛋餅, ...]
+  /api/cart:
+    post:
+      tags:
+        - store
+      summary: user insert item to cart's database
+      responses:
+        '200':
+          description: successful insert data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    example: success
+    put:
+      tags:
+        - store
+      summary: get user's cart information
+      responses:
+        '200':
+          description: successful get data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    example: [member_id, merchant_id, item, piece, price]
+    delete:
+      tags:
+        - store
+      summary: delete item in cart
+      responses:
+        '200':
+          description: successful delete data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    example: success
