@@ -1,4 +1,3 @@
-const fileBTN = document.querySelector('.submitBTN');
 const shopCategory = document.querySelector('#shopcategory');
 
 // View: 跳出登入表單
@@ -22,14 +21,9 @@ shopCategory.addEventListener('click',()=>{
         categories.style = `display:none;`
     })
 })
-    
-fileBTN.addEventListener('click',async()=>{
-    const memberData = await confirmUserStatement();
-    console.log(memberData);
-    let dishmenu = new Map();
-    let formData = new FormData();
-    let fetchInfo = new FetchInfo();
-    let dishCat;
+// Model: 提交表單的資料
+async function storeSettingUpInfo(memberData){
+    const formData = new FormData();
     formData.append('memberEmail', memberData['email']);
     formData.append('bossName', document.querySelector('#bossname').value);
     formData.append('bossEmail', document.querySelector('#bossemail').value);
@@ -54,6 +48,8 @@ fileBTN.addEventListener('click',async()=>{
     }
     formData.append('holiday', selectedDays);
     const allElements = document.querySelectorAll('.newCat, .newDish');
+    let dishmenu = new Map();
+    let dishCat;
     for(element of allElements){
         if(element.className === 'newCat'){
             dishCat = element.querySelector('.realInput').value;
@@ -71,7 +67,7 @@ fileBTN.addEventListener('click',async()=>{
                 dishmenu.set(dishCat , [dish]);
             }
         }
-    }    
+    }
     let index = 0;
     for (let [key, value] of dishmenu) {
         formData.append(`dishDetail${index}`,JSON.stringify({ [key]: value }));
@@ -83,19 +79,36 @@ fileBTN.addEventListener('click',async()=>{
         formData.append(`photo${id}`, photo);
         id += 1;
     }
-    let method = {method: "POST", body: formData,}
-    let sendReply = await fetchInfo.merchantSetUp('/api/merchant', method);
+    return formData;
+}
+
+// Controller: 提交表單
+document.querySelector('.submitBTN').addEventListener('click',async()=>{
+    let memberData = await confirmUserStatement();
+    console.log(memberData);
+    let formData = await storeSettingUpInfo(memberData);
+    console.log(formData);
+    const fetchInfo = new FetchInfo();
+    let method = {
+        method: "POST",
+        body: formData
+    }
+    try {
+        let sendReply = await fetchInfo.authAPI('/api/merchant', method);
+        console.log(sendReply);
+    } catch (error) {
+        console.error(error);
+    }
     if(sendReply.token){
         localStorage.setItem('token',sendReply.token);
         let token = localStorage.getItem('token');
-        let method = {method:"GET",
+        method = {method:"GET",
                 headers:{
                     "Content-Type":"application/json",
                     "Authorization": `Bearer ${token}`
                 }}
         memberData = await fetchInfo.authAPI("/api/auth/login",method);
         id = parseInt(memberData['merchant_id']);
-        let url = `/store/${id}`;
-        window.location.href = url;
+        window.location.href = `/store/${id}`;
     }
 })

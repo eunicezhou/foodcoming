@@ -41,14 +41,14 @@ class Order:
         self.order_id = order_id
         self.lat = lat
         self.lng = lng
-    def listOrder(self, order_id):
+    def acceptOrder(self, order_id):
         itemList = databaseConnect("SELECT new_order.item FROM new_order WHERE order_id = %s",(order_id,))
         pieceList = databaseConnect("SELECT new_order.piece FROM new_order WHERE order_id = %s",(order_id,))
         orderContent = {}
         for item in itemList[0]:
             orderContent[item] = pieceList.pop(0)[0]
         return orderContent
-    def acceptOrder(self, lat, lng):
+    def listOrder(self, lat, lng):
         orderShops = databaseConnect("SELECT new_order.order_id, new_order.destination, new_order.lat, new_order.lng,\
                     merchant.shopname, merchant.shopaddress, merchant.lat, merchant.lng \
                     FROM new_order INNER JOIN merchant ON new_order.merchant_id = merchant.merchant_id WHERE new_order.status = 'pending'")
@@ -84,7 +84,7 @@ def deleverSetup():
         )
         return result
     except Exception as err:
-        return results_convert({'error':True,'message':err})
+        return results_convert({'error':True,'message':err}), 500
 
 @delever_blueprint.route("/orderList",methods=["PUT"])
 def accept():
@@ -93,21 +93,21 @@ def accept():
         lat = data['lat']
         lng = data['lng']
         order_instance = Order(order_id = "", lat = "", lng = "")
-        result = order_instance.acceptOrder(
+        result = order_instance.listOrder(
             lat = lat,
             lng = lng
         )
         return results_convert({'data':result})
     except Exception as err:
-        return results_convert({'error':True,'message':err})
+        return results_convert({'error':True,'message':err}), 500
 
-@delever_blueprint.route("/order", methods=['POST'])
-def orderDetail():
-    try:
-        data = request.get_json()
-        order_id = data['order_id']
-        order_instance = Order(order_id = "", lat = "", lng = "")
-        result = order_instance.listOrder(order_id = order_id)
-        return results_convert(result)
-    except Exception as err:
-        return results_convert({'error':True,'message':err})
+# @delever_blueprint.route("/order", methods=['POST'])
+# def orderDetail():
+#     try:
+#         data = request.get_json()
+#         order_id = data['order_id']
+#         order_instance = Order(order_id = "", lat = "", lng = "")
+#         result = order_instance.acceptOrder(order_id = order_id)
+#         return results_convert(result)
+#     except Exception as err:
+#         return results_convert({'error':True,'message':err}),500

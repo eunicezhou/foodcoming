@@ -10,7 +10,10 @@ document.querySelector('.purchase').addEventListener('click',async()=>{
         })
     }else{
         let cartItem = await cart.checkCart(memberData);
-        document.querySelector('.close').addEventListener('click', cart.closeCart)
-        document.querySelector('.totalMoney').addEventListener('click', cart.order)
+        document.querySelector('.close').addEventListener('click', ()=>cart.closeCart)
+        document.querySelector('.totalMoney').addEventListener('click', ()=>cart.order())
+        document.querySelectorAll('.deleteItemInCart').forEach(deleteItem=>{
+            deleteItem.addEventListener('click', ()=>cart.deleteItemFromCart(memberData, deleteItem));
+        })
     }
 })
