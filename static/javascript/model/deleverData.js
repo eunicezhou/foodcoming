@@ -2,8 +2,8 @@ document.querySelector('#name').addEventListener('click',confirmLogIn)
 document.querySelector('.member').addEventListener('click', confirmLogIn)
 
 document.querySelector('.submitBTN').addEventListener('click',async()=>{
-    let fetchInfo = new FetchInfo();
-    let formData = new FormData();
+    const fetchInfo = new FetchInfo();
+    const formData = new FormData();
     if(document.querySelector('#email').value === ""){
         document.querySelector('.alert').textContent = `請輸入信箱`;
     }else if(document.querySelector('#name').value === ""){
@@ -19,7 +19,8 @@ document.querySelector('.submitBTN').addEventListener('click',async()=>{
     }else if(file['travel_licence'] === undefined){
         document.querySelector('.alert').textContent = `請上傳行照`;
     }else{
-        formData.append('memberEmail', memberEmail);
+        let memberData = await confirmUserStatement();
+        formData.append('memberEmail', memberData['email']);
         formData.append('name', document.querySelector('#email').value);
         formData.append('email', document.querySelector('#name').value);
         formData.append('phone', document.querySelector('#phone').value);

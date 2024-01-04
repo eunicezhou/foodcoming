@@ -83,7 +83,7 @@ def setupStore():
             encoding_token = encoding(filedict, token_key ,'HS256')
         return encoding_token
     except Exception as err:
-        return results_convert({'error':True,'message':str(err)})
+        return results_convert({'error':True,'message':str(err)}),500
     
 def shopCategoryDecide(category_value):
     if category_value == "主食":

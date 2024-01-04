@@ -75,7 +75,7 @@ def search():
         store_data_str = [str(info) for info in store[0]]
         data[f"data{id}"] = store_data_str
         id += 1
-    return results_convert(data)
+    return results_convert(data), 200
 
 @store_blueprint.route("/item",methods=['PUT'])
 def showItem():
@@ -92,7 +92,7 @@ def showItem():
     itemData = databaseConnect("SELECT * FROM menu WHERE merchant_id = %s AND dishname = %s",(store, decoded_item))
     for item in itemData:
         item_data_str = [str(data) for data in item]
-    return results_convert({'shop':shopname, 'data':item_data_str})
+    return results_convert({'shop':shopname, 'data':item_data_str}), 200
 
 @store_blueprint.route("/cart",methods=['PUT','DELETE','POST'])
 def purchase():
@@ -105,12 +105,12 @@ def purchase():
         merchant_id = data['shopID']
         member_id = databaseConnect("SELECT id FROM member WHERE email = %s",(email,))
         databaseConnect("INSERT INTO cart VALUES (%s, %s, %s, %s, %s)",(member_id[0][0], int(merchant_id), item, piece, price))
-        return results_convert({'data':'success'})
+        return results_convert({'data':'success'}), 200
     elif request.method == "PUT":
         data = request.get_json()
         id = data['id']
         cartList = databaseConnect("SELECT * FROM cart WHERE member_id = %s",(id,))
-        return results_convert({'data':cartList})
+        return results_convert({'data':cartList}), 200
     elif request.method == "DELETE":
         data = request.get_json()
         id = data['member_id']
@@ -120,4 +120,4 @@ def purchase():
         piece = data['piece']
         print(piece)
         databaseConnect("DELETE FROM cart WHERE member_id = %s AND item = %s AND piece = %s LIMIT 1",(id, item, piece))
-        return results_convert({'data':'success'})
+        return results_convert({'data':'success'}), 200
