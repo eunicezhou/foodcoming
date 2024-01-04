@@ -386,7 +386,7 @@ paths:
   /api/cart:
     post:
       tags:
-        - store
+        - cart
       summary: user insert item to cart's database
       responses:
         '200':
@@ -401,7 +401,7 @@ paths:
                     example: success
     put:
       tags:
-        - store
+        - cart
       summary: get user's cart information
       responses:
         '200':
@@ -416,7 +416,7 @@ paths:
                     example: [member_id, merchant_id, item, piece, price]
     delete:
       tags:
-        - store
+        - cart
       summary: delete item in cart
       responses:
         '200':
