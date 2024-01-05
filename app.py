@@ -58,11 +58,11 @@ def setup_Store():
 
 @app.route("/deleverSetup")
 def setup_Delever():
-	return render_template("deleverfile.html")
+	return render_template("deliverfile.html")
 
 @app.route("/delever")
 def Delever():
-	return render_template("deleverpage.html")
+	return render_template("deliverpage.html")
 
 @app.route("/order")
 def order():
