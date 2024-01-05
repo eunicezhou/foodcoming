@@ -8,7 +8,7 @@ dynamically presents nearby restaurants to consumers based on their geolocation 
 
 On the delivery driver page, the platform utilizes geolocation to display available orders. When a delivery driver accepts an order, the system initiates the delivery service for that specific order.
 # Project Struct:
-![Alt text](image.png)
+![Alt text](readme_picture/image.png)
 __Front-End Development :__\
 Using HTML, CSS, and JavaScript, ensure an enjoyable ordering experience for customers.\
 Follow MVC structure to build up JavaScript program, prioritizing readability and maintainability.
@@ -30,11 +30,11 @@ __Version Control Tools  :__\
 Implemented Git for version control, follw on git flow
 
 # Database design :
-![Alt text](image-1.png)
+![Alt text](readme_picture/image-1.png)
 # Details of the project :
 This delivery project is structured into three main components: merchants, consumers, and delivery personnel. 
 
-![Alt text](readme_picture/image.png)
+![Alt text](readme_picture/pages.png)
 
 In the following sections, we will dive into each part to understand how they contribute to the overall functionality of the project.
 
