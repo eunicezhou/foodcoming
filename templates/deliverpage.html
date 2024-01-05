@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}deleverPage{% endblock title %}
+{% block css %}
+    <link rel="stylesheet" href="../static/css/text.css">
+    <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" href="../static/css/deleverPage.css">
+{% endblock css %}
+{% block nav %}
+    <a href="/" class="title textDeUnderline">
+        <h1 class="title">FOOD COMING</h1>
+        <h3 class="title">for Delevers</h3>
+    </a>
+    <div class="member">
+        <img src="../static/image/memberHead.png" alt="登入會員">
+    </div>
+{% endblock nav %}
+{% block content %}
+<div class="contain">
+    <div class="orderDetail">
+        <div class="acceptOrder">
+        
+        </div>
+        <div class="buttons">
+            <div class="finishBTN fakeBTN">完成訂單</div>
+            <div class="cancelBTN fakeBTN">取消訂單</div>
+        </div>
+    </div>
+    <h1 class="bold delever">{delever}，您好</h1>
+    <div id="map"></div>
+    
+    <div class="nearbyBooking">
+        <h2 class="bold">附近訂單</h2>
+        <div class="bookingList">
+            <div class="bookingNumber label">訂單編號</div>
+            <div class="store label">取貨店家</div>
+            <div class="order label">訂單內容</div>
+            <div class="destination label">外送目的地</div>
+            <div class="accept label">是否接單</div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block otherelement %}
+<section class="finish">
+    <div class="shelder" style="width:100%"></div>
+    <div class="form">
+        <h1>完成訂單</h1>
+        <div class="formContent">
+            <h3 class="message">確認已將餐點送到指定位置?</h3>
+            <div class="formbuttons">
+                <div class="yes fakeBTN">是</div>
+                <div class="no fakeBTN">否</div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="cancel">
+    <div class="shelder"style="width:100%"></div>
+    <div class="form">
+        <h1>取消訂單</h1>
+        <div class="formContent">
+            <input type="text" class="reason" placeholder="請輸入取消原因">
+            <div class="alert">取消訂單可能會影響信用點數，<br>確認取消訂單?</div>
+            <div class="formbuttons">
+                <div class="yes fakeBTN">確定</div>
+                <div class="no fakeBTN">取消</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock otherelement %}  
+{% block script %}
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2sw2FO9nxUBiPPFC0ZDN8kqtdANk7sEQ&libraries=places&callback=initMap&region=TW&language=zh-TW">
+    </script>
+    <script src="../static/javascript/location/maps.js"></script>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" 
+    integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" 
+    crossorigin="anonymous"></script>
+    <script src = 'https://unpkg.com/peerjs@1.5.1/dist/peerjs.min.js'></script>
+    <script src="../static/javascript/deliver/bookList.js"></script>
+{% endblock script %}
