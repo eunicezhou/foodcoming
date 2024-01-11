@@ -120,12 +120,28 @@ async function acceptOrder(acceptBTN){
         'delever':memberData['name'],
         'requireTime': durationInMinutes
     })
+    // 創建外送員位置服務
+    const geolocationService = navigator.geolocation;
+    console.log(geolocationService);
+    chaseDeliverPosition(geolocationService)
 }
 
-socket.on('getDeliverPosition',async()=>{
-    let deliverProgressingPosition = await getCurrentLocation();
-    socket.emit('deliverPositionReply', deliverProgressingPosition,);
-})
+// Model: 監聽外送員位置變化
+function chaseDeliverPosition(geolocationService){
+    if (geolocationService) {
+        const watchId = geolocationService.watchPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                console.log({ latitude, longitude });
+                socket.emit('deliverPositionReply', { latitude, longitude },);
+            },
+            (error) => {
+                console.error('位置監聽錯誤：', error);
+            })
+    } else {
+        console.error('瀏覽器不支援地理位置服務');
+    }
+}
 
 // Model: 獲得外送預計時間
 function countTime(currentPosition) {

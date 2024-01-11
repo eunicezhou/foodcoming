@@ -179,10 +179,6 @@ def getDeliverRoadData(data):
 		'destination':destination
 	})
 
-@socketio.on('requestDeliverPosition')
-def requestDeliverPosition():
-	socketio.emit('getDeliverPosition')
-
 @socketio.on('deliverPositionReply')
 def deliverPositionReply(data):
 	print(data)

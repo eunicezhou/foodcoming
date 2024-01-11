@@ -70,55 +70,51 @@ socket.on('getDeliverRoad',(data)=>{
         zoom: 10,
         center: { lat: deliverPosition.lat, lng: deliverPosition.lng }  // 起始地點的經緯度
         });
-        directionsRenderer.setMap(map);
+    directionsRenderer.setMap(map);
 
-        // 這邊設置路線中間目的地
-        const waypoints = [
-            { location: restaursntPosition['address'], stopover: true },
-        ];
-        
-        let request = {
-            origin: {lat:deliverPosition.lat, lng:deliverPosition.lng},
-            destination: destination['address'],
-            travelMode: 'DRIVING',
-            waypoints: waypoints,
-        };
-        directionsService.route(request, function (response, status) {
-            if (status == 'OK') {
-                const customIcon = {
-                    url: '../static/image/box.png', // 設定自訂的標記路徑
-                    scaledSize: new google.maps.Size(40, 40), // 圖示的大小
+    // 這邊設置路線中間目的地
+    const waypoints = [
+        { location: restaursntPosition['address'], stopover: true },
+    ];
+    
+    let request = {
+        origin: {lat:deliverPosition.lat, lng:deliverPosition.lng},
+        destination: destination['address'],
+        travelMode: 'DRIVING',
+        waypoints: waypoints,
+    };
+    directionsService.route(request, function (response, status) {
+        if (status == 'OK') {
+            const customIcon = {
+                url: '../static/image/box.png', // 設定自訂的標記路徑
+                scaledSize: new google.maps.Size(40, 40), // 圖示的大小
+            };
+            
+            // 創建一個新的標記，並設定圖示
+            const marker = new google.maps.Marker({
+                position: deliverPosition, // 設定標記的位置
+                map: map, // 設定標記要畫到哪個地圖上
+                icon: customIcon // 設定標記的圖示
+            });
+            directionsRenderer.setDirections(response); // 將路線顯示在地圖上
+            socket.on('replyDeliverPositionToConsumer',data=>{
+                console.log(data);
+                request = {
+                    origin: {lat:data.latitude, lng:data.longitude},
+                    destination: destination['address'],
+                    travelMode: 'DRIVING',
+                    waypoints: waypoints,
                 };
-                
-                // 創建一個新的標記，並設定圖示
-                const marker = new google.maps.Marker({
-                    position: deliverPosition, // 設定標記的位置
-                    map: map, // 設定標記要畫到哪個地圖上
-                    icon: customIcon // 設定標記的圖示
-                });
-                directionsRenderer.setDirections(response); // 將路線顯示在地圖上
-                setInterval(()=>{
-                    socket.emit('requestDeliverPosition');
-                    socket.on('replyDeliverPositionToConsumer',data=>{
-                        console.log(data);
-                        request = {
-                            origin: {lat:data.lat, lng:data.lng},
-                            destination: destination['address'],
-                            travelMode: 'DRIVING',
-                            waypoints: waypoints,
-                        };
-                        directionsService.route(request, function (response, status) {
-                            if (status == 'OK') {
-                                directionsRenderer.setDirections(response); // 將路線顯示在地圖上
-                            }
-                        },5000)
-                    })
+                directionsService.route(request, function (response, status) {
+                    if (status == 'OK') {
+                        directionsRenderer.setDirections(response); // 將路線顯示在地圖上
+                    }
                 })
-            }else {
-                console.error('路線規劃失敗，錯誤狀態：', status);
-            }
-        });
-
+            })
+        }else {
+            console.error('路線規劃失敗，錯誤狀態：', status);
+        }
+    });
 })
 
 socket.on('order-arrived',(data)=>{
