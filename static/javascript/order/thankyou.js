@@ -11,14 +11,10 @@ window.addEventListener('load', async()=>{
     orderNum.textContent = `${orderId}`
     const memberData = await confirmUserStatement();
     let method = {
-        method: "POST",
-        headers:{
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify({'orderId':orderId})
+        method: "GET",
     }
     const fetchInfo = new FetchInfo();
-    let orderDetail = await fetchInfo.authAPI("/api/orderDetail", method);
+    let orderDetail = await fetchInfo.api(`/api/orders?order=${orderId}`, method);
     let orderContent = document.querySelector('.orderDetail')
 
     for(let [key, value] of Object.entries(orderDetail.data)){

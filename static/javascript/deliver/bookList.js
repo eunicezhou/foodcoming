@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
         })
     }
     const fetchInfo = new FetchInfo();
-    let orderList = await fetchInfo.authAPI("/api/delever/orderList", method);
+    let orderList = await fetchInfo.api("/api/delever/orderList", method);
     let num = 1;
     for(let list of orderList['data']){
         nearbyBookingList(list, num)

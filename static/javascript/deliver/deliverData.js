@@ -30,7 +30,7 @@ document.querySelector('.submitBTN').addEventListener('click',async()=>{
             method: "POST",
             body: formData
         }
-        let result = await fetchInfo.authAPI(url, method);
+        let result = await fetchInfo.api(url, method);
         if(result['error']){
             document.querySelector('.alert').textContent = `${result['message']}`;
         }else{

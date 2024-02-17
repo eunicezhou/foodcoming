@@ -5,23 +5,37 @@ function refreshinfo(name, refreshName){
 document.querySelector('.name').addEventListener('click',()=>refreshinfo('.name', '.refreshName'));
 document.querySelector('.phone').addEventListener('click',()=>refreshinfo('.phone', '.refreshPhone'));
 
-let selectPosition;
+// Model: 獲取地址欄輸入內容
+function getSelectPosition(){
+    let selectPosition;
+    if(document.querySelector('#address').value){
+        selectPosition = document.querySelector('#address').value;
+    }
+    return selectPosition;
+}
+
 window.addEventListener('load',async()=>{
     const memberData = await confirmUserStatement();
-    let currentPosition = await getCurrentLocation();
     document.querySelector('.name').innerHTML = `${memberData['name']}`;
     document.querySelector('.phone').innerHTML = `${memberData['phone']}`;
+    const cookie = new Cookie();
+    let cookies = cookie.showCookie().split(";");
+    let targetcookie = cookies.filter((item)=>item.includes("foodcoming-search-history"));
+    document.querySelector('#address').value = targetcookie[0].split("=")[1];
+
+    let currentPosition = await getCurrentLocation();
     document.querySelector('#address').addEventListener('click',async()=>{
         const autocomplete = createAutocomplete(currentPosition);
         if(autocomplete){
-            selectPosition = await searchLocation(autocomplete);
+            let selectPosition = await searchLocation(autocomplete);
             console.log(selectPosition);
         }else{
             location.reload();
         }
     })
+
     let method = {
-        method: "PUT",
+        method: "POST",
         headers:{
             'Content-Type':'application/json'
         },
@@ -30,7 +44,7 @@ window.addEventListener('load',async()=>{
         })
     }
     const fetchInfo = new FetchInfo();
-    let cartInfo = await fetchInfo.authAPI("/api/order", method);
+    let cartInfo = await fetchInfo.api("/api/orders", method);
     if(cartInfo){
         document.querySelectorAll('.fakeItem').forEach(item=>{
             item.style.display = "none";
@@ -97,8 +111,9 @@ TPDirect.card.setup({
 })
 
 //獲取prime
-document.querySelector('#fakeButton').addEventListener('click', ()=>{
+document.querySelector('#fakeButton').addEventListener('click', async()=>{
     document.querySelector('.waiting').style.display = "flex";
+    let selectPosition = getSelectPosition();
     console.log(selectPosition);
 
     // 取得 TapPay Fields 的 status
@@ -114,19 +129,19 @@ document.querySelector('#fakeButton').addEventListener('click', ()=>{
     TPDirect.card.getPrime(async(result)=> { 
         const prime = result.card.prime;
         let whetherPay = await pay(prime);
+        console.log(whetherPay);
         let query = "";
         for(let key in whetherPay){
-            query += `${key}=${whetherPay[key]}&`;
-            
+            query += `${key}=${whetherPay[key]}&`;  
         }
-        console.log(query.slice(0,-1));
-
         window.location.href = `/paySuccess?${query.slice(0,-1)}`
     })
 })
 
 async function pay(prime){
     try{
+        let selectPosition = getSelectPosition();
+        let selectPositionLatLng = await geocodeAddress(selectPosition, await getGoogleApiKey());
         const memberData = await confirmUserStatement();
         const fetchInfo = new FetchInfo();
         let name;
@@ -141,28 +156,9 @@ async function pay(prime){
         }else{
             phone = document.querySelector('.refreshPhone').value;
         }
-        let method
-        if(selectPosition.location){
-            method = {
-                method: 'POST',
-                headers:{
-                    'Content-Type':'application/json'
-                },
-                body:JSON.stringify({
-                    "prime":prime,
-                    "id":memberData['id'],
-                    "name":name,
-                    "email":memberData['email'],
-                    "phone":phone,
-                    "address":selectPosition.address,
-                    "lat":selectPosition.location.lat,
-                    "lng":selectPosition.location.lng,
-                    'pay':document.querySelector('#total').textContent
-                })
-            }
-        }else{
-            method = {
-                method: 'POST',
+
+        let method = {
+                method: 'PUT',
                 headers:{
                     'Content-Type':'application/json'
                 },
@@ -173,14 +169,14 @@ async function pay(prime){
                     "email":memberData['email'],
                     "phone":phone,
                     "address":document.querySelector('#address').value,
-                    "lat":selectPosition.latitude,
-                    "lng":selectPosition.longitude,
+                    "lat":selectPositionLatLng.latitude,
+                    "lng":selectPositionLatLng.longitude,
                     'pay':document.querySelector('#total').textContent
                 })
             } 
-        }
-        let order = await fetchInfo.authAPI("/api/order", method);
+        let order = await fetchInfo.api("/api/orders", method);
         return order;
+
     }catch(error){
         console.log(error);
     }

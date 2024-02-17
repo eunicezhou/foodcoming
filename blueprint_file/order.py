@@ -79,14 +79,14 @@ class Order:
         else:
             return results_convert({'error':True, 'message':response.status_code}), 500
 
-@order_blueprint.route("/order",methods=["PUT"])
+@order_blueprint.route("/orders",methods=["POST"])
 def getCartList():
     data = request.get_json()
     order_instance = Order()
     result = order_instance.memberOrder(member_id = data['id'])
     return results_convert({'data':result}), 200
 
-@order_blueprint.route("/order",methods=["POST"])
+@order_blueprint.route("/orders",methods=["PUT"])
 def payOrder():
     try:
         data = request.get_json()
@@ -107,11 +107,11 @@ def payOrder():
     except Exception as err:
         return results_convert({'error':True, 'message':err}), 500
     
-@order_blueprint.route("/orderDetail",methods=["POST"])
+@order_blueprint.route("/orders",methods=["GET"])
 def getOrderDetail():
     try: 
-        data = request.get_json()
-        orderItem = databaseConnect("SELECT item, piece FROM new_order WHERE order_id = %s",(data['orderId'],))
+        order_id = request.args.get('order')
+        orderItem = databaseConnect("SELECT item, piece FROM new_order WHERE order_id = %s",(order_id,))
         order = {}
         for item in orderItem:
             order[item[0]] = item[1]

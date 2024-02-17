@@ -3,8 +3,10 @@ import boto3
 bucket_name = "www.foodcoming.store"
 s3 = boto3.client(
     's3',
-    aws_access_key_id='AKIAWSBWBJWOJ2REXOHL',
-    aws_secret_access_key='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',
+    # aws_access_key_id='AKIAWSBWBJWOJ2REXOHL',
+    # aws_secret_access_key='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',
+    aws_access_key_id='AKIAWSBWBJWODEDPCZ5S',
+    aws_secret_access_key='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',
     region_name='ap-northeast-1')
 
 
