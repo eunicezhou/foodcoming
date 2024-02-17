@@ -3,11 +3,13 @@ from flask_socketio import SocketIO, emit, join_room, leave_room
 from flask_cors import CORS
 from module.database import *
 from module.jsonify import *
+from module.get_env import *
 from blueprint_file.merchant_file import merchant_file_blueprint
 from blueprint_file.member import auth_blueprint
 from blueprint_file.store import store_blueprint
-from blueprint_file.delever import delever_blueprint
+from blueprint_file.deliver import delever_blueprint
 from blueprint_file.order import order_blueprint
+from blueprint_file.google import google_blueprint
 import urllib.parse
 
 app=Flask(__name__)
@@ -16,7 +18,7 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 wsgi_app = app.wsgi_app
 socketio = SocketIO(app,cors_allowed_origins="*")
 # socketio = SocketIO(app,path='/mysocket',cors_allowed_origins="*")
-app.secret_key = 'your_secret_key'
+app.secret_key = app_key
 
 #api
 app.register_blueprint(merchant_file_blueprint,url_prefix= '/api')
@@ -24,13 +26,14 @@ app.register_blueprint(auth_blueprint,url_prefix= '/api/auth')
 app.register_blueprint(store_blueprint,url_prefix= '/api')
 app.register_blueprint(delever_blueprint,url_prefix= '/api/delever')
 app.register_blueprint(order_blueprint,url_prefix= '/api')
+app.register_blueprint(google_blueprint,url_prefix= '/api/google')
 
 #頁面路徑
 @app.route("/")
 def index():
 	return render_template("index.html")
 
-@app.route("/store/<id>")
+@app.route("/stores/<id>")
 def Store(id):
 	try:
 		int_value = int(id)
@@ -92,6 +95,10 @@ def paySuccess():
 		'pay':request.args.get('pay'),
     }
 	return render_template("thankyou.html", data = order_info)
+
+# @app.route('/swagger')
+# def swagger():
+#     return send_file('./swagger.yaml', mimetype='text/yaml')
 
 @socketio.on('connect')
 def connect():
@@ -178,10 +185,6 @@ def getDeliverRoadData(data):
 		'restaurant':restaurant,
 		'destination':destination
 	})
-
-@socketio.on('requestDeliverPosition')
-def requestDeliverPosition():
-	socketio.emit('getDeliverPosition')
 
 @socketio.on('deliverPositionReply')
 def deliverPositionReply(data):

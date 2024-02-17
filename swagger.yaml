@@ -233,7 +233,7 @@ paths:
                   message: 
                     type: string
                     example: 伺服器回傳錯誤
-  /api/order:
+  /api/orders:
     put:
       tags:
         - order
@@ -303,8 +303,7 @@ paths:
                   message: 
                     type: string
                     example: error message
-  /api/orderDetail:
-    post:
+    get:
       tags:
         - order
       summary: get member order information
@@ -332,24 +331,8 @@ paths:
                   message: 
                     type: string
                     example: error message
-  /api/store:
-    put:
-      tags:
-        - store
-      summary: get store information
-      responses:
-        '200':
-          description: successful get datas
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    example: {'id': 1,'bossemail': example@gmail.com,'phone':0977888999,'shopname': store,'shopPhoto': store-img, 'shopAddress': store-address, 'lat': 20.366,'lng': 120.45, 'start': 08:30, 'end': 20:30, 'holiday': 星期一, 'category_photo': icon, 'category': 10, 'menu': {menudata}}
-  /api/searchstore:
-    put:
+  /api/stores:
+    get:
       tags:
         - store
       summary: get nearby stores' information
@@ -363,12 +346,30 @@ paths:
                 properties:
                   data:
                     type: object
-                    example: {'data1':['id': 1,'bossemail': example@gmail.com,'phone':0977888999,'shopname': store,'shopPhoto': store-img, 'shopAddress': store-address, 'lat': 20.366,'lng': 120.45, 'start': 08:30, 'end': 20:30, 'holiday': 星期一, 'category_photo': icon, 'category': 10], ...}
-  /api/item:
+                    example: {'id': 1,'bossemail': example@gmail.com,'phone':0977888999,'shopname': store,'shopPhoto': store-img, 'shopAddress': store-address, 'lat': 20.366,'lng': 120.45, 'start': 08:30, 'end': 20:30, 'holiday': 星期一, 'category_photo': icon, 'category': 10, 'menu': {menudata}}
+  
+  /api/stores/id:
+    get:
+      tags:
+        - store
+      summary: get specific store's information
+      responses:
+        '200':
+          description: successful get datas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    example: {'id': 1,'bossemail': example@gmail.com,'phone':0977888999,'shopname': store,'shopPhoto': store-img, 'shopAddress': store-address, 'lat': 20.366,'lng': 120.45, 'start': 08:30, 'end': 20:30, 'holiday': 星期一, 'category_photo': icon, 'category': 10, 'menu': {menudata}}
+
+  /api/items:
     put:
       tags:
         - store
-      summary: get store's item 
+      summary: get specific store's items
       responses:
         '200':
           description: successful get data
@@ -383,11 +384,11 @@ paths:
                   data:
                     type: object
                     example: [原味蛋餅, 泡菜蛋餅, ...]
-  /api/cart:
+  /api/carts:
     post:
       tags:
         - cart
-      summary: user insert item to cart's database
+      summary: user insert item to cart
       responses:
         '200':
           description: successful insert data

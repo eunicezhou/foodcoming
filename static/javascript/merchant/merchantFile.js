@@ -94,7 +94,7 @@ document.querySelector('.submitBTN').addEventListener('click',async()=>{
         body: formData
     }
     try {
-        let sendReply = await fetchInfo.authAPI('/api/merchant', method);
+        let sendReply = await fetchInfo.api('/api/merchant', method);
         console.log(sendReply);
     } catch (error) {
         console.error(error);
@@ -107,8 +107,8 @@ document.querySelector('.submitBTN').addEventListener('click',async()=>{
                     "Content-Type":"application/json",
                     "Authorization": `Bearer ${token}`
                 }}
-        memberData = await fetchInfo.authAPI("/api/auth/login",method);
+        memberData = await fetchInfo.api("/api/auth/login",method);
         id = parseInt(memberData['merchant_id']);
-        window.location.href = `/store/${id}`;
+        window.location.href = `/stores/${id}`;
     }
 })

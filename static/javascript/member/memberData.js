@@ -1,7 +1,28 @@
-const signUpForm = document.querySelector('.signUpForm');
-const logInForm = document.querySelector('.signInForm');
-const signupBTN = signUpForm.querySelector('#SignUp');
-const loginBTN = logInForm.querySelector('#SignIn');
+// Controller: 畫面載入時的身分驗證及頁面顯示
+window.addEventListener('DOMContentLoaded', async()=>{
+    const memberData = await confirmUserStatement();
+    const form = new MemberForm();
+    if(memberData.email){
+        if(document.querySelector('.sidebar--top')){showUpSidebar(memberData);}
+        if(document.querySelector('.member')){document.querySelector('.member').innerHTML=`<span class="signout title">登出系統</span>`}
+        if(document.querySelector('.storeNearby')){
+            document.querySelector('.storeNearby').innerHTML = `
+            <h3 class=".memberName">${memberData.name} 您好，</h3>
+            <h3>推薦您附近的熱門餐廳</h3>`;
+        }
+        if(document.querySelector('.startStore')){
+            document.querySelector('.startStore').innerHTML = `
+            <h3 class=".memberName">${memberData.name} 您好，</h3>
+            <h3>開始建立您的餐廳</h3>`;
+        }
+        if(document.querySelector('.signout')){
+            document.querySelector('.signout').addEventListener('click',form.signout);
+        }
+        if(document.querySelector('.sidebar')){
+            document.querySelector('.sidebar').querySelector('.signout').addEventListener('click',form.signout)
+        }
+    }
+})
 
 signupBTN.addEventListener('click',async()=>{
     let fetchInfo = new FetchInfo();
@@ -31,7 +52,7 @@ signupBTN.addEventListener('click',async()=>{
             headers: {'Content-Type': 'application/json'
             }
         }
-        let store = await fetchInfo.authAPI(url,method);
+        let store = await fetchInfo.api(url,method);
         if(store['error']){
             signUpForm.querySelector('.alert').textContent = `${store['message']}`
         }else{
@@ -64,7 +85,7 @@ loginBTN.addEventListener('click',async()=>{
                     body:loginData,
                     headers:{"Content-Type":"application/json"}
             }
-        let store = await fetchInfo.authAPI(url,method);
+        let store = await fetchInfo.api(url,method);
         if(store['error']){
             logInForm.querySelector('.alert').textContent = store['message'];
         }else{
