@@ -7,7 +7,7 @@ from module.get_env import *
 from blueprint_file.merchant_file import merchant_file_blueprint
 from blueprint_file.member import auth_blueprint
 from blueprint_file.store import store_blueprint
-from blueprint_file.deliver import delever_blueprint
+from blueprint_file.deliver import deliver_blueprint
 from blueprint_file.order import order_blueprint
 from blueprint_file.google import google_blueprint
 import urllib.parse
@@ -24,7 +24,7 @@ app.secret_key = app_key
 app.register_blueprint(merchant_file_blueprint,url_prefix= '/api')
 app.register_blueprint(auth_blueprint,url_prefix= '/api/auth')
 app.register_blueprint(store_blueprint,url_prefix= '/api')
-app.register_blueprint(delever_blueprint,url_prefix= '/api/delever')
+app.register_blueprint(deliver_blueprint,url_prefix= '/api/deliver')
 app.register_blueprint(order_blueprint,url_prefix= '/api')
 app.register_blueprint(google_blueprint,url_prefix= '/api/google')
 
@@ -59,11 +59,11 @@ def getGrocery():
 def setup_Store():
 	return render_template("merchantfile.html")
 
-@app.route("/deleverSetup")
+@app.route("/deliverSetup")
 def setup_Delever():
 	return render_template("deliverfile.html")
 
-@app.route("/delever")
+@app.route("/delivers")
 def Delever():
 	return render_template("deliverpage.html")
 

@@ -8,7 +8,7 @@ import uuid
 
 merchant_file_blueprint = Blueprint('api_merchant',__name__,template_folder= 'api')
 
-@merchant_file_blueprint.route("/merchant",methods=['POST'])
+@merchant_file_blueprint.route("/merchants",methods=['POST'])
 def setupStore():
     try:
         memberEmail = request.form['memberEmail']

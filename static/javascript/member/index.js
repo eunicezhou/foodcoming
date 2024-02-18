@@ -30,6 +30,7 @@ async function getHistory(){
         return history;
     }
 }
+
 // Model: 建立Google搜尋並存入Cookie
 async function getLocationInput(currentPosition){
     const cookie = new Cookie();

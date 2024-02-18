@@ -28,7 +28,7 @@ window.addEventListener('load',async()=>{
         const autocomplete = createAutocomplete(currentPosition);
         if(autocomplete){
             let selectPosition = await searchLocation(autocomplete);
-            console.log(selectPosition);
+            // console.log(selectPosition);
         }else{
             location.reload();
         }

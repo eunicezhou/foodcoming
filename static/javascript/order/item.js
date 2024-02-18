@@ -28,7 +28,6 @@ document.querySelector('.purchaseBTN').addEventListener('click',async()=>{
     }
 
     let itemData = await cart.getItemData();
-    // confirmLogIn();
 
     let cartItem = await cart.addCartItem(memberData, itemData);
     if(cartItem['data'] === "success"){

@@ -25,7 +25,7 @@ document.querySelector('.submitBTN').addEventListener('click',async()=>{
         formData.append('email', document.querySelector('#name').value);
         formData.append('phone', document.querySelector('#phone').value);
     
-        let url = "/api/delever/setup";
+        let url = "/api/delivers";
         let method = {
             method: "POST",
             body: formData

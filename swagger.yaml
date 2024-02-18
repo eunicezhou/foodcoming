@@ -5,10 +5,10 @@ info:
 servers:
   - url: https://formal.foodcoming.store
 paths:
-  /api/merchant:
+  /api/merchants:
     post:
       tags:
-        - merchant
+        - merchants
       summary: Setting up merchant's information
       responses:
         '200':
@@ -34,10 +34,10 @@ paths:
                     type: string
                     example: error message
             
-  /api/delever/setup:
+  /api/delivers:
     post:
       tags:
-        - deliver
+        - delivers
       summary: Setting up deliver person's information
       responses:
         '200':
@@ -62,40 +62,11 @@ paths:
                   message: 
                     type: string
                     example: error message
-  /api/delever/orderList:
-    put:
-      tags:
-        - deliver
-      summary: list orders nearby
-      responses:
-        '200':
-          description: get orders nearby
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data: 
-                    type: object
-                    example: [(order_id, item, piece, shopname, shopaddress, lat, lng, 
-                        destination, destination_lat, destination_lng),(第二筆訂單資料)]
-        '500':
-          description: Service error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error: 
-                    type: boolean
-                    example: true
-                  message: 
-                    type: string
-                    example: error message
+  
   /api/auth/signup:
     post:
       tags:
-        - member
+        - members
       summary: member signup
       responses:
         '200':
@@ -137,7 +108,7 @@ paths:
   /api/auth/login:
     put:
       tags:
-        - member
+        - members
       summary: member login
       responses:
         '200':
@@ -190,7 +161,7 @@ paths:
                     example: 伺服器回傳錯誤
     get:
       tags:
-        - member
+        - members
       summary: member login
       responses:
         '200':
@@ -234,25 +205,10 @@ paths:
                     type: string
                     example: 伺服器回傳錯誤
   /api/orders:
-    put:
-      tags:
-        - order
-      summary: get member order information
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    example: [shopname, item-picture]
     post:
       tags:
-        - order
-      summary: get member order information
+        - orders
+      summary: create member order information
       responses:
         '200':
           description: successful operation
@@ -303,9 +259,55 @@ paths:
                   message: 
                     type: string
                     example: error message
+    put:
+      tags:
+        - orders
+      summary: update member order information
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    example: [shopname, item-picture]
     get:
       tags:
-        - order
+        - orders
+      summary: list orders nearby to deliver
+      responses:
+        '200':
+          description: get orders nearby
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: 
+                    type: object
+                    example: [(order_id, item, piece, shopname, shopaddress, lat, lng, 
+                        destination, destination_lat, destination_lng),(第二筆訂單資料)]
+        '500':
+          description: Service error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: boolean
+                    example: true
+                  message: 
+                    type: string
+                    example: error message
+    
+  /api/orders/id:
+    get:
+      tags:
+        - orders
       summary: get member order information
       responses:
         '200':
@@ -334,7 +336,7 @@ paths:
   /api/stores:
     get:
       tags:
-        - store
+        - stores
       summary: get nearby stores' information
       responses:
         '200':
@@ -351,7 +353,7 @@ paths:
   /api/stores/id:
     get:
       tags:
-        - store
+        - stores
       summary: get specific store's information
       responses:
         '200':
@@ -368,7 +370,7 @@ paths:
   /api/items:
     put:
       tags:
-        - store
+        - stores
       summary: get specific store's items
       responses:
         '200':
@@ -387,7 +389,7 @@ paths:
   /api/carts:
     post:
       tags:
-        - cart
+        - carts
       summary: user insert item to cart
       responses:
         '200':
@@ -402,7 +404,7 @@ paths:
                     example: success
     put:
       tags:
-        - cart
+        - carts
       summary: get user's cart information
       responses:
         '200':
@@ -417,7 +419,7 @@ paths:
                     example: [member_id, merchant_id, item, piece, price]
     delete:
       tags:
-        - cart
+        - carts
       summary: delete item in cart
       responses:
         '200':
