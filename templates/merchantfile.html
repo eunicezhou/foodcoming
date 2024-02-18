@@ -4,7 +4,6 @@
     <link rel="stylesheet" href="../static/css/text.css">
     <link rel="stylesheet" href="../static/css/base.css">
     <link rel="stylesheet" href="../static/css/merchantfile.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"/>
 {% endblock css %}
 {% block nav %}
     <a href="/" class="title textDeUnderline">
@@ -120,10 +119,21 @@
     </div>
 </section>
 {% endblock content %}
+{% block otherelement %}
+<section class="waiting">
+    <div class="loading">
+        <div class="title">正在建立商家資訊，請稍後...</div>
+        <div class="text percent">100%</div>
+        <div class="text-blink">complete!!</div>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+    </div>
+    <div class="shelder"></div>
+</section>
+{% endblock otherelement %}
 {% block script %}
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2sw2FO9nxUBiPPFC0ZDN8kqtdANk7sEQ&libraries=places&callback=initMap&region=TW&language=zh-TW">
-    </script>
-    <script src="../static/javascript/location/maps.js"></script>
+    <script src="../static/javascript/tools/maps.js"></script>
     <script src="../static/javascript/member/previewPhoto.js"></script>
     <script src="../static/javascript/merchant/menu.js"></script>
     <script src="../static/javascript/merchant/merchantFile.js"></script>

@@ -57,15 +57,37 @@ class MemberForm{
     closeForm(form){
         form.style.display = 'none';
     }
+
     // View: 警告未登入，跳出登入表單
-    async confirmLogIn(){
-        const memberData = await confirmUserStatement();
-        if(!memberData.email){
-            showUpForm(document.querySelector('.signInForm'));
+    async confirmLogIn(memberData){
+        if(memberData === undefined){
+            this.showUpForm(document.querySelector('.signInForm'));
             document.querySelector('.notMember').addEventListener('click',()=>{
-                closeForm(document.querySelector('.signInForm'))
-                showUpForm(document.querySelector('.signUpForm'));
+                this.closeForm(document.querySelector('.signInForm'))
+                this.showUpForm(document.querySelector('.signUpForm'));
             })
+        }else{
+            if(document.querySelector('.sidebar--top')){showUpSidebar(memberData);}
+            if(document.querySelector('.member')){document.querySelector('.member').innerHTML=`<span class="signout title">登出系統</span>`}
+            if(document.querySelector('.storeNearby')){
+                document.querySelector('.storeNearby').innerHTML = `
+                <h3 class=".memberName">${memberData.name} 您好，</h3>
+                <h3>推薦您附近的熱門餐廳</h3>`;
+            }
+            if(document.querySelector('.startStore')){
+                document.querySelector('.startStore').innerHTML = `
+                <h3 class=".memberName">${memberData.name} 您好，</h3>
+                <h3>開始建立您的餐廳</h3>`;
+                document.querySelector("#bossname").value = `${memberData.name}`;
+                document.querySelector("#bossemail").value = `${memberData.email}`;
+                document.querySelector("#bossphone").value = `${memberData.phone}`;
+            }
+            if(document.querySelector('.signout')){
+                document.querySelector('.signout').addEventListener('click',this.signout);
+            }
+            if(document.querySelector('.sidebar')){
+                document.querySelector('.sidebar').querySelector('.signout').addEventListener('click',this.signout)
+            }
         }
     }
 }
@@ -83,8 +105,8 @@ function showUpSidebar(memberData){
     }
     if(memberData['delever_id'] !== null){
         document.querySelector('.deliverfellow').textContent = "外送員專區 : 您的鄰近訂單";
-        document.querySelector('.deliverfellow').href = `/delever`;
+        document.querySelector('.deliverfellow').href = `/delivers`;
     }else{
-        document.querySelector('.deliverfellow').href="/deleverSetup"
+        document.querySelector('.deliverfellow').href="/deliverSetup"
     }
 }

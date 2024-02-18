@@ -11,17 +11,10 @@ window.addEventListener('DOMContentLoaded',async()=>{
     setMapCenterAndMarker(currentPosition);
     
     let method = {
-        method: "PUT",
-        headers: {
-            'Content-Type':'application/JSON'
-        },
-        body:JSON.stringify({
-            'lat':currentPosition.lat,
-            'lng':currentPosition.lng
-        })
+        method: "GET",
     }
     const fetchInfo = new FetchInfo();
-    let orderList = await fetchInfo.api("/api/delever/orderList", method);
+    let orderList = await fetchInfo.api(`/api/orders?lat=${currentPosition.lat}&lng=${currentPosition.lng}`, method);
     let num = 1;
     for(let list of orderList['data']){
         nearbyBookingList(list, num)
