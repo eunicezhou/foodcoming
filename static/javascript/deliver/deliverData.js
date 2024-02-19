@@ -1,5 +1,5 @@
-document.querySelector('#name').addEventListener('click',confirmLogIn)
-document.querySelector('.member').addEventListener('click', confirmLogIn)
+// document.querySelector('#name').addEventListener('click',confirmLogIn)
+// document.querySelector('.member').addEventListener('click', confirmLogIn)
 
 document.querySelector('.submitBTN').addEventListener('click',async()=>{
     const fetchInfo = new FetchInfo();
@@ -43,3 +43,4 @@ document.querySelector('.submitBTN').addEventListener('click',async()=>{
         }
     }
 })
+
