@@ -34,6 +34,42 @@ color:var(--forth-color);
 .nav{
     background-color: var(--primary-color);
 }
+.historyFrame{
+    background-color: var(--forth-color);
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding:5px;
+    position: absolute;
+    top:-15px;
+    right: calc(50vw - 245px);
+    width: 400px;
+    box-shadow:1px 1px 8px var(--secondary-color);
+    z-index: 15;
+    display:none;
+}
+.frame-title{
+    width:100px;
+    box-sizing: border-box;
+    padding:0px 16px;
+    border-radius: 20px;
+    border:2px solid var(--title-color);
+}
+.search-location{
+    margin-top: 5px;
+    display: flex;
+    gap:2px;
+    align-items: center;
+}
+.history-icon{
+    height:28px;
+}
+.search-location:hover{
+    background-color: var(--third-color);
+    box-shadow: 1px 1px 3px var(--secondary-color);
+}
+.search-location:active{
+    box-shadow: inset 1px 1px 3px var(--secondary-color);
+}
 .searchPosition{
     position:relative;
 }
@@ -86,6 +122,7 @@ color:var(--forth-color);
     position: relative;
 }
 .category{
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;

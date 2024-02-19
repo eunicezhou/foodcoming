@@ -1,6 +1,15 @@
 // 地圖API-Key
-const googleApiKey = "AIzaSyA2sw2FO9nxUBiPPFC0ZDN8kqtdANk7sEQ";
-
+async function getGoogleApiKey(){
+    const fetchInfo = new FetchInfo();
+    let method = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json" 
+        }
+    }
+    let response = await fetchInfo.api("/api/google/map-key", method);
+    return response.key;
+}
 // Model: 獲取使用者當前位置
 function getCurrentLocation(){
     return new Promise((resolve, reject)=>{
@@ -16,10 +25,20 @@ function getCurrentLocation(){
     })
 }
 
+// Controller: 將輸入的地址轉為經緯度(目前只有商家的merchantfile有用到一次，之後改程式碼可以刪掉)
+async function inputAddress(){
+    const currentPosition = await getCurrentLocation();
+    showMap(currentPosition);
+    const autocomplete = createAutocomplete(currentPosition);
+    let inputPosition = await searchLocation(autocomplete);
+    return inputPosition;
+}
+
 // Model:獲取使用者輸入地址之位置
 async function searchLocation(autocomplete) {
     return new Promise((resolve, reject) => {
         autocomplete.addListener('place_changed', async() => {
+            const googleApiKey = await getGoogleApiKey();
             const place = autocomplete.getPlace();
             let lat;
             let lng;
@@ -40,6 +59,8 @@ async function searchLocation(autocomplete) {
             if(document.querySelector('#map')){
                 setMapCenterAndMarker(selectedRestaurant.location);
             }
+
+            console.log(selectedRestaurant);
             resolve(selectedRestaurant);
         });
         },(error) => {reject(console.error({'message':error}));}
@@ -88,9 +109,11 @@ function getInstancePosition(){
 
 // View: 獲取附近可選區域
 function createAutocomplete(currentPosition){
+    let lat = currentPosition.lat? currentPosition.lat:currentPosition.latitude;
+    let lng = currentPosition.lng? currentPosition.lng:currentPosition.longitude;
     let bounds = new google.maps.LatLngBounds(
-        new google.maps.LatLng(currentPosition.lat - 0.001, currentPosition.lng - 0.001),
-        new google.maps.LatLng(currentPosition.lat + 0.001, currentPosition.lng + 0.001)
+        new google.maps.LatLng(lat - 0.001, lng - 0.001),
+        new google.maps.LatLng(lat + 0.001, lng + 0.001)
     );
     return new google.maps.places.Autocomplete(
         document.getElementById('address'),
@@ -178,14 +201,6 @@ function getRoad(currentPosition, locationData){
     })
 }
 
-// Controller: 將輸入的地址轉為經緯度
-async function inputAddress(){
-    const currentPosition = await getCurrentLocation();
-    showMap(currentPosition);
-    const autocomplete = createAutocomplete(currentPosition);
-    let inputPosition = await searchLocation(autocomplete);
-    return inputPosition;
-}
 
 // Controller: 獲取inputAddress的經緯度
 function transformToLatLng(inputAddress){

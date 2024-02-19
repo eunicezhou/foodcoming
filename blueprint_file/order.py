@@ -1,6 +1,7 @@
 from flask import *
 from module.database import *
 from module.jsonify import *
+from module.countDistance import *
 import json
 import uuid
 import requests
@@ -10,6 +11,35 @@ order_blueprint = Blueprint('api_order',__name__,template_folder= 'api')
 class Order:
     def __init__(self):
         pass
+
+    def acceptOrder(self, order_id):
+        itemList = databaseConnect("SELECT new_order.item FROM new_order WHERE order_id = %s",(order_id,))
+        pieceList = databaseConnect("SELECT new_order.piece FROM new_order WHERE order_id = %s",(order_id,))
+        orderContent = {}
+        for item in itemList[0]:
+            orderContent[item] = pieceList.pop(0)[0]
+        return orderContent
+    
+    def listOrder(self, lat, lng):
+        orderShops = databaseConnect("SELECT new_order.order_id, new_order.destination, new_order.lat, new_order.lng,\
+                    merchant.shopname, merchant.shopaddress, merchant.lat, merchant.lng \
+                    FROM new_order INNER JOIN merchant ON new_order.merchant_id = merchant.merchant_id WHERE new_order.status = 'pending'")
+        reachable = []
+        for ordershop in orderShops:
+            destination_distance = distance(float(lat), float(lng), float(ordershop[2]), float(ordershop[3]))
+            store_distance = distance(float(lat), float(lng), float(ordershop[6]), float(ordershop[7]))
+            if store_distance < 25:
+                # if destination_distance < 25: //這邊之後要打開，以便篩選目的地
+                #     print(destination_distance)
+                reachable.append(ordershop[0])
+        orderList = []
+        for order_id in reachable:
+            order_detail = databaseConnect("SELECT new_order.order_id, new_order.item, new_order.piece, merchant.shopname, merchant.shopaddress, merchant.lat, merchant.lng, \
+                        new_order.destination, new_order.lat, new_order.lng FROM new_order INNER JOIN merchant ON new_order.merchant_id = merchant.merchant_id\
+                        WHERE new_order.order_id = %s",(order_id,))
+            orderList.append(order_detail)
+        return orderList
+    
     def memberOrder(self, member_id):
         cartList = databaseConnect("SELECT * FROM cart WHERE member_id = %s",(member_id,))
         new_cartList = []
@@ -22,6 +52,7 @@ class Order:
             item.append(dishPict[0][0])
             new_cartList.append(item)
             return new_cartList
+        
     def memberPay(self, member_id, prime, order_number, amount, cardholder_name, 
                   cardholder_phone, cardholder_address, cardholder_lat, cardholder_lng):
         cartList = databaseConnect("SELECT * FROM cart WHERE member_id = %s",(member_id,))
@@ -79,14 +110,14 @@ class Order:
         else:
             return results_convert({'error':True, 'message':response.status_code}), 500
 
-@order_blueprint.route("/order",methods=["PUT"])
+@order_blueprint.route("/orders",methods=["POST"])
 def getCartList():
     data = request.get_json()
     order_instance = Order()
     result = order_instance.memberOrder(member_id = data['id'])
     return results_convert({'data':result}), 200
 
-@order_blueprint.route("/order",methods=["POST"])
+@order_blueprint.route("/orders",methods=["PUT"])
 def payOrder():
     try:
         data = request.get_json()
@@ -107,14 +138,24 @@ def payOrder():
     except Exception as err:
         return results_convert({'error':True, 'message':err}), 500
     
-@order_blueprint.route("/orderDetail",methods=["POST"])
+@order_blueprint.route("/orders",methods=["GET"])
 def getOrderDetail():
-    try: 
-        data = request.get_json()
-        orderItem = databaseConnect("SELECT item, piece FROM new_order WHERE order_id = %s",(data['orderId'],))
-        order = {}
-        for item in orderItem:
-            order[item[0]] = item[1]
-        return results_convert({'data':order}), 200
+    try:
+        if  request.args.get('order'):
+            order_id = request.args.get('order')
+            orderItem = databaseConnect("SELECT item, piece FROM new_order WHERE order_id = %s",(order_id,))
+            order = {}
+            for item in orderItem:
+                order[item[0]] = item[1]
+            return results_convert({'data':order}), 200
+        elif request.args.get('lat') and request.args.get('lng'):
+            lat = request.args.get('lat')
+            lng = request.args.get('lng')
+            order_instance = Order()
+            result = order_instance.listOrder(
+                lat = lat,
+                lng = lng
+            )
+            return results_convert({'data':result})
     except Exception as err:
         return results_convert({'error':True, 'message':err}), 500

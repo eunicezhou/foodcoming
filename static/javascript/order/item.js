@@ -1,4 +1,4 @@
-// View: 生成產品頁面
+// View: 生成產品頁面store/
 window.addEventListener('load',async()=>{
     const cart = new Cart();
     let itemData = await cart.getItemData();
@@ -19,7 +19,6 @@ document.querySelector('.purchaseNum').addEventListener('click',()=>{
     }
 })
 
-
 // Controller: 點擊購買
 document.querySelector('.purchaseBTN').addEventListener('click',async()=>{
     const memberData = await confirmUserStatement();
@@ -29,18 +28,23 @@ document.querySelector('.purchaseBTN').addEventListener('click',async()=>{
     }
 
     let itemData = await cart.getItemData();
-    confirmLogIn();
 
     let cartItem = await cart.addCartItem(memberData, itemData);
     if(cartItem['data'] === "success"){
         let itemInCart = await cart.getCartItem(memberData);
         cart.createCartList(itemInCart);
-        document.querySelector('.close').addEventListener('click', ()=>cart.closeCart());
-        document.querySelector('.totalMoney').addEventListener('click', ()=>cart.order());
+        document.querySelector('.close').addEventListener('click', cart.closeCart);
+        document.querySelector('.totalMoney').addEventListener('click', cart.order);
         document.querySelectorAll('.deleteItemInCart').forEach(deleteItem=>{
             deleteItem.addEventListener('click', ()=>cart.deleteItemFromCart(memberData, deleteItem));
         })
     }
 })
-
+document.querySelector('.purchase').addEventListener('click',async()=>{
+    const cart = new Cart();
+    const memberData = await confirmUserStatement();
+    await cart.checkCart(memberData);
+    document.querySelector('.close').addEventListener('click', cart.closeCart)
+    document.querySelector('.totalMoney').addEventListener('click', cart.order)
+})
 

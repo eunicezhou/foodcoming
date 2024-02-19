@@ -1,11 +1,3 @@
-class FetchInfo{
-    async authAPI(url,method){
-        let authData = await fetch(url, method)
-        let response = await authData.json();
-        return response;
-    }
-}
-
 class Cart{
     closeCart(){
         if(document.querySelector('.cart').style.display === "block"){
@@ -17,20 +9,18 @@ class Cart{
     }
     // Model: 獲取使用者購物車資訊
     async getCartItem(memberData){
-        let url = "/api/cart";
+        let url = `/api/carts/${memberData['id']}`;
         let method = {
-            method: "PUT",
+            method: "GET",
             headers:{
                 'Content-Type':'application/json',
-            },
-            body:JSON.stringify({
-                'id':memberData['id']
-            })
+            }
         };
         const fetchInfo = new FetchInfo();
-        let cartItem = await fetchInfo.authAPI(url, method);
+        let cartItem = await fetchInfo.api(url, method);
         return cartItem;
     } 
+
     // View: 生成購物車名單
     createCartList(itemInCart){
         for(let item of itemInCart['data']){
@@ -76,7 +66,7 @@ class Cart{
             })
         }
         const fetchInfo = new FetchInfo();
-        let deleteResult = await fetchInfo.authAPI("/api/cart", method);
+        let deleteResult = await fetchInfo.api("/api/carts", method);
         let totalMoney = document.querySelector('.totalMoney').innerHTML;
         let total = totalMoney.match(/\d+/)[0];
         let new_total = parseInt(total) - parseInt(price);
@@ -96,7 +86,7 @@ class Cart{
     // Model: 獲取訂購物品資訊
     async getItemData(){
         let query = window.location.search;
-        let url = "/api/item";
+        let url = "/api/items";
         let method = {
             method: "PUT",
             headers:{
@@ -107,7 +97,7 @@ class Cart{
             })
         }
         const fetchInfo = new FetchInfo();
-        let itemData = await fetchInfo.authAPI(url, method);
+        let itemData = await fetchInfo.api(url, method);
         return itemData;
     }
 
@@ -119,7 +109,7 @@ class Cart{
         let itemPrice = parseInt(groceryMoney) * parseInt(groceryCount);
 
         document.querySelector('.cart--contain').innerHTML = "";
-        let url = `/api/cart`;
+        let url = `/api/carts`;
         let method = {
             method: "POST",
             headers:{
@@ -134,20 +124,19 @@ class Cart{
             })
         }
         const fetchInfo = new FetchInfo();
-        let cartItem = await fetchInfo.authAPI(url, method);
+        let cartItem = await fetchInfo.api(url, method);
         return cartItem;
     }
     // View: 查看購物車
     async checkCart(memberData){
-        const cart = new Cart();
-        let cartItem = await cart.getCartItem(memberData);
+        let cartItem = await this.getCartItem(memberData);
         if(Object.values(cartItem.data).length === 0){
             document.querySelector('.cart').style.display = "block";
         }else{
             document.querySelector('.cart--contain').innerHTML = "";
-            await cart.createCartList(cartItem);
+            this.createCartList(cartItem);
             document.querySelectorAll('.deleteItemInCart').forEach(deleteItem=>{
-                deleteItem.addEventListener('click', ()=>cart.deleteItemFromCart(memberData, deleteItem))  
+                deleteItem.addEventListener('click', ()=>this.deleteItemFromCart(memberData, deleteItem))  
             })
         }
     }

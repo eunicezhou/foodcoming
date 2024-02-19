@@ -1,7 +1,9 @@
-const signUpForm = document.querySelector('.signUpForm');
-const logInForm = document.querySelector('.signInForm');
-const signupBTN = signUpForm.querySelector('#SignUp');
-const loginBTN = logInForm.querySelector('#SignIn');
+// Controller: 畫面載入時的身分驗證及頁面顯示
+window.addEventListener('DOMContentLoaded', async()=>{
+    const form = new MemberForm();
+    const memberData = await confirmUserStatement();
+    await form.confirmLogIn(memberData);
+})
 
 signupBTN.addEventListener('click',async()=>{
     let fetchInfo = new FetchInfo();
@@ -31,7 +33,7 @@ signupBTN.addEventListener('click',async()=>{
             headers: {'Content-Type': 'application/json'
             }
         }
-        let store = await fetchInfo.authAPI(url,method);
+        let store = await fetchInfo.api(url,method);
         if(store['error']){
             signUpForm.querySelector('.alert').textContent = `${store['message']}`
         }else{
@@ -64,7 +66,7 @@ loginBTN.addEventListener('click',async()=>{
                     body:loginData,
                     headers:{"Content-Type":"application/json"}
             }
-        let store = await fetchInfo.authAPI(url,method);
+        let store = await fetchInfo.api(url,method);
         if(store['error']){
             logInForm.querySelector('.alert').textContent = store['message'];
         }else{
