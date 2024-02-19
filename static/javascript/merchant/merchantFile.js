@@ -106,7 +106,7 @@ document.querySelector('.submitBTN').addEventListener('click',async()=>{
             document.querySelector(".progress").style.width = per + "px";
             document.querySelector(".percent").textContent = count + "%";
         }
-    }, 100)
+    }, 50)
     
     let memberData = await confirmUserStatement();
     let formData = await storeSettingUpInfo(memberData);
